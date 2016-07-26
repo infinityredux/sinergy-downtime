@@ -1,0 +1,116 @@
+/* Styles go here */
+
+body {
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 10pt;
+
+/*
+*** computer screen theme...
+  background:black;
+  color: lime;
+  */
+}
+
+th {
+  text-align: left;
+}
+
+td, td span {
+  vertical-align: top;
+}
+
+.pad-right {
+  padding-right: 10px;
+}
+
+
+
+
+
+
+
+
+.help {
+  color: blue;
+  font-style: italic;
+  text-align: left;
+}
+
+.help-box {
+  background: blue;
+  color: white;
+  cursor: help;
+}
+
+.opt-float-right {
+  float: right;
+}
+
+.btn-float-size {
+  width: 55px;
+}
+
+.sel-sizematch {
+  width: 55px;
+}
+
+.inp-aligned {
+  position: absolute;
+  left: 165px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.fieldset-open {
+  border: 1px solid;
+}
+
+.fieldset-closed {
+  border: 1px solid;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-right-width: 0;    
+}  
+
+
+/* Styles go here */
+
+.pane-link-group {
+  display: block;
+  margin: 15px 0;
+}
+
+.pane-link-active {
+  border: 5px solid red;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.pane-link-passive {
+  border: 5px solid silver;
+  padding: 4px;
+  cursor: pointer;
+}
+
+#left-pane-links {
+  float: left;
+  /*margin: 0 10px;*/
+  width: 90px;
+}
+
+#left-pane-links .pane-link-active {
+  border: 0 solid white;
+  padding: 0;
+  background: red;
+  color: white;
+}
+#left-pane-links .pane-link-passive {
+  border: 0 solid white;
+  padding: 0;
+  background: silver;
+  color: black;
+}
+
+

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!-- HTML fragment / template for money transactions -->
+
+<div ng-controller="MoneyController as mo">
+
+{{"NewMoney: " + money.listMoney(); }}<br />
+
+<sin-fieldset legend="Money:" ng-form="actMoney">
+  Starting funds:
+  <input type="number" min="0" ng-model="money.start" ng-change="money.calcFinal()">
+  <hr />
+  
+  <table cellspacing=0 cellpadding=0>
+    <tr>
+      <th>Description &nbsp;</th>
+      <th>Income &nbsp;</th>
+      <th>Expenditure &nbsp;</th>
+    </tr>
+    <tr ng-repeat="entry in money.getMoney()">
+      <td>{{entry.desc}} &nbsp;</td>
+      <td>{{entry.money >0 ? entry.money : ''}}</td>
+      <td>{{entry.money >0 ? '' : entry.money}}</td>
+      <td></td>
+    </tr>
+  </table>
+  
+  <hr />
+  Final funds: {{money.final}}cr
+</sin-fieldset>
+
+</div>
+<br />

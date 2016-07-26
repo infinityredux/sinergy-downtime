@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<!--HTML fragment / template for opening segment of downtime  -->
+
+<fieldset>
+  <legend>Main Information:</legend>
+  <span class="opt-float-right">
+    <input  type="button" 
+            ng-click="dtime.sendClick()" 
+            name="send" 
+            value="Send Downtime" 
+            title="Generate and submit the downtime email. This will wipe any saved downtime information that is not re-usable." />
+    <br />
+    <input  type="button" 
+            ng-click="dtime.resetClick()" 
+            name="reset" 
+            value="Reset Form" 
+            title="" />
+    <br />
+    <br />
+    
+    <sin-help ng-show="dtime.helpon" help="dtime.help.auto_load"></sin-help>
+    <input  type="checkbox" 
+            ng-model="dtime.load" />
+    Auto load <br />
+    
+    <sin-help ng-show="dtime.helpon" help="dtime.help.direct"></sin-help>
+    <input  type="checkbox" 
+            ng-model="dtime.direct" />
+    Direct submit <br />
+    
+    <sin-help ng-show="dtime.helpon" help="dtime.help.helpon"></sin-help>
+    <input  type="checkbox" 
+            ng-model="dtime.helpon" />
+    Enable help <br />
+    
+    <br />
+        
+    <span   ng-show="dtime.persist.isStorageAvailable()">
+    <input  type="button" 
+            class="btn-float-size" 
+            name="load" 
+            ng-click="dtime.loadClick()" 
+            ng-disabled="!dtime.persist.isStorageSaved()"
+            value="Load" 
+            title="Load details that have been previously saved in the browser. Will not load temporary (non-reusable) information after a downtime has been submitted." />
+    <input  type="button" 
+            class="btn-float-size" 
+            name="save" 
+            ng-click="dtime.saveClick()" 
+            value="Save" 
+            title="Save details from the curent state of downtime in the browser. Any temporary (non-reusable) information, such as the downtime actions, will only be saved until the downtime is submitted." />
+    <br />
+    </span>
+        
+    <!--input type="file" /-->
+    <!--input  type="button" 
+            class="btn-float-size" 
+            name="impo" 
+            ng-click="dtime.impoClick()" 
+            value="Import" />
+    <input  type="button" 
+            class="btn-float-size" 
+            name="expo" 
+            ng-click="dtime.expoClick()" 
+            value="Export" /-->
+  </span>
+  <br />
+  
+  
+  <table cellpadding=0 cellspacing=0>
+    <tr>
+      <td>Name:</td>
+      <td>
+        <input  type="text"
+                ng-model="dtime.player" 
+                placeholder="Your name" 
+                title="The name of the player, i.e. your name." />
+        <sin-help ng-show="dtime.helpon" help="dtime.help.player"></sin-help>
+      </td>
+    </tr>
+    <tr>
+      <td>Character:</td>
+      <td>
+        <input  type="text" 
+                ng-model="dtime.char" 
+                placeholder="Character name" 
+                title="The name of the character submitting the downtime." />
+        <sin-help ng-show="dtime.helpon" help="dtime.help.char"></sin-help>
+      </td>
+    </tr>  
+    <tr>
+      <td>Email:</td>
+      <td>
+        <input  type="text" 
+                ng-model="dtime.email" 
+                placeholder="Email address" 
+                title="Your email address, used to submit the downtime and/or to receive a copy." />
+        <sin-help ng-show="dtime.helpon" help="dtime.help.email"></sin-help>
+      </td>
+    </tr>
+  </table>
+  
+  <br />
+  <!--Simple or Advanced here --><br />
+  <br />
+  
+  Submission month:
+  <select ng-model="dtime.state.month_num" 
+          ng-change="dtime.startChange()" 
+          ng-options="item.num as item.month for item in dtime.data.months">
+  </select>
+  <sin-help ng-show="dtime.helpon" help="dtime.help.month"></sin-help>
+
+  <!--br/>
+  Months to submit:
+  <select ng-model="dtime.state.month_option" 
+          ng-change="dtime.monthChange()"
+          ng-options="num for num in [1,2,3,4]" >
+  </select-->
+  <input type="hidden" ng-model="dtime.state.month_option" value="1">
+</fieldset>
+<br />

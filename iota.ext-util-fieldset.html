@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<!--HTML fragment / template for   -->
+
+<fieldset>
+  <legend ng-click="toggleCollapse()" class="clickable">
+    <span ng-show="hide">&gt;</span>
+    <span ng-hide="hide">v</span>
+    {{legend}}
+  </legend>
+  <div ng-hide="hide" ng-transclude></div>
+</fieldset>
+<br ng-hide="hide" />
