@@ -1,59 +1,59 @@
-<!DOCTYPE html>
+<!--!DOCTYPE html -->
 <!--HTML fragment / template for downtime actions  -->
 
 <div ng-controller="ActionController as act">
 <sin-tabbed-panes initial="{{act.state.month_tab}}">
 
-{{actions.getFilterActions("player");}}<br />
-{{actions.getFilterActions("contact");}}<br />
-{{actions.getFilterActions("hireling");}}<br />
+    {{actions.getFilterActions("player");}}<br/>
+    {{actions.getFilterActions("contact");}}<br/>
+    {{actions.getFilterActions("hireling");}}<br/>
 
-<!--sin-pane tab="month1">{{actions.getCurrentMonthName('long', 0);}}</sin-pane>
-<sin-pane tab="month2">{{actions.getCurrentMonthName('long', 1);}}</sin-pane>
-<sin-pane tab="month3">{{actions.getCurrentMonthName('long', 2);}}</sin-pane>
-<sin-pane tab="month4">{{actions.getCurrentMonthName('long', 3);}}</sin-pane-->
+    <!--sin-pane tab="month1">{{actions.getCurrentMonthName('long', 0);}}</sin-pane>
+    <sin-pane tab="month2">{{actions.getCurrentMonthName('long', 1);}}</sin-pane>
+    <sin-pane tab="month3">{{actions.getCurrentMonthName('long', 2);}}</sin-pane>
+    <sin-pane tab="month4">{{actions.getCurrentMonthName('long', 3);}}</sin-pane-->
 
-<!-- div class="pane-link-group" ng-show="actions.getMonths()>=2" >
-  <sin-pane-link ng-show="actions.getMonths()>=2" tab="month1" action="act.monthPaneChange(1)">{{actions.getCurrentMonthName('med', 0);}}</sin-pane-link>
-  <sin-pane-link ng-show="actions.getMonths()>=2" tab="month2" action="act.monthPaneChange(2)">{{actions.getCurrentMonthName('med', 1);}}</sin-pane-link>
-  <sin-pane-link ng-show="actions.getMonths()>=3" tab="month3" action="act.monthPaneChange(3)">{{actions.getCurrentMonthName('med', 2);}}</sin-pane-link>
-  <sin-pane-link ng-show="actions.getMonths()>=4" tab="month4" action="act.monthPaneChange(4)">{{actions.getCurrentMonthName('med', 3);}}</sin-pane-link>
-</div-->
+    <!-- div class="pane-link-group" ng-show="actions.getMonths()>=2" >
+        <sin-pane-link ng-show="actions.getMonths()>=2" tab="month1" action="act.monthPaneChange(1)">{{actions.getCurrentMonthName('med', 0);}}</sin-pane-link>
+        <sin-pane-link ng-show="actions.getMonths()>=2" tab="month2" action="act.monthPaneChange(2)">{{actions.getCurrentMonthName('med', 1);}}</sin-pane-link>
+        <sin-pane-link ng-show="actions.getMonths()>=3" tab="month3" action="act.monthPaneChange(3)">{{actions.getCurrentMonthName('med', 2);}}</sin-pane-link>
+        <sin-pane-link ng-show="actions.getMonths()>=4" tab="month4" action="act.monthPaneChange(4)">{{actions.getCurrentMonthName('med', 3);}}</sin-pane-link>
+    </div-->
 
-<sin-fieldset legend="Actions:" ng-form="actForm">
-  <span class="opt-float-right">
-      <input type="radio" ng-model="act.state.person" ng-change="act.personChange()" ng-disabled="actions.getFilterCount('player') >= 4" value="player">Player
-      <input type="radio" ng-model="act.state.person" ng-change="act.personChange()" value="contact">Contact
-      <input type="radio" ng-model="act.state.person" ng-change="act.personChange()" value="hireling">Hireling
-  </span>
+    <sin-fieldset legend="Actions:" ng-form="actForm">
+        <span class="opt-float-right">
+            <input type="radio" ng-model="act.state.person" ng-change="act.personChange()"
+                   ng-disabled="actions.getFilterCount('player') >= 4" value="player" />Player
+            <input type="radio" ng-model="act.state.person" ng-change="act.personChange()" value="contact" />Contact
+            <input type="radio" ng-model="act.state.person" ng-change="act.personChange()" value="hireling" />Hireling
+        </span>
 
-  <select name="action"
-          ng-model="act.state.add" 
-          ng-change="act.optChange()" 
-          ng-options="key as opt.desc disable when act.state.option_disable[key] for (key, opt) in act.data.options" >
-    <option value="">--- select action ---</option>
-  </select>
-  <input
-    type="button" 
-    name="add" 
-    id="add" 
-    value="Add action" 
-    ng-click="act.addClick(dtime)" />
-  <span class="help" ng-show="act.state.add && dtime.help">
-    <br/>
-    {{act.data.options[act.state.add].help}}
-  </span>
-</sin-fieldset>
+        <select name="action"
+                ng-model="act.state.add"
+                ng-change="act.optChange()"
+                ng-options="key as opt.desc disable when act.state.option_disable[key] for (key, opt) in act.data.options">
+            <option value="">--- select action ---</option>
+        </select>
+        <input type="button"
+               name="add"
+               id="add"
+               value="Add action"
+               ng-click="act.addClick(dtime)" />
+        <span class="help" ng-show="act.state.add && dtime.helpon">
+            <br/>
+            {{act.data.options[act.state.add].help}}
+        </span>
+    </sin-fieldset>
 
-<div ng-repeat="slot in actions.getFilterActions('player')">
-  <dt-action-slot slot="slot" num="$index" ctrl="act"></dt-action-slot>
-</div>
-<div ng-repeat="slot in actions.getFilterActions('contact')">
-  <dt-action-slot slot="slot" num="$index" ctrl="act"></dt-action-slot>
-</div>
-<div ng-repeat="slot in actions.getFilterActions('hireling')">
-  <dt-action-slot slot="slot" num="$index" ctrl="act"></dt-action-slot>
-</div>
+    <div ng-repeat="slot in actions.getFilterActions('player')">
+        <dt-action-slot slot="slot" num="$index" ctrl="act"></dt-action-slot>
+    </div>
+    <div ng-repeat="slot in actions.getFilterActions('contact')">
+        <dt-action-slot slot="slot" num="$index" ctrl="act"></dt-action-slot>
+    </div>
+    <div ng-repeat="slot in actions.getFilterActions('hireling')">
+        <dt-action-slot slot="slot" num="$index" ctrl="act"></dt-action-slot>
+    </div>
 
 </sin-tabbed-panes>
 </div>
