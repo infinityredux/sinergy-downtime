@@ -11,7 +11,7 @@ mod.directive('dtLifestyle', function() {
     scope: {
       dtime: '=',
     },
-    templateUrl: 'iota.dtime-lifestyle.html',
+    templateUrl: 'fragments/dtime-lifestyle.html',
   };
 });
 

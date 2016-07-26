@@ -16,7 +16,7 @@ mod.directive('dtActions', function() {
     scope: {
       dtime: '=',
     },
-    templateUrl: 'iota.dtime-actions.html',
+    templateUrl: 'fragments/dtime-actions.html',
   };
 });
 
@@ -42,7 +42,7 @@ mod.directive('dtActionSlot', function(actions, assets, money, skills) {
       num: '=',
       ctrl: '=',
     },
-    templateUrl: 'iota.dtime-actions-slot.html',
+    templateUrl: 'dtime-actions-slot.html',
     controller: function($scope) {
       $scope.skills = skills;
       this.disableJobEdit = (assets.getJob().level>0);

@@ -15,7 +15,7 @@ mod.directive('dtEquip', function() {
     scope: {
       dtime: '=',
     },
-    templateUrl: 'iota.dtime-equip.html',
+    templateUrl: 'fragments/dtime-equip.html',
   };
 });
 

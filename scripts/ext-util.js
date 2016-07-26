@@ -10,7 +10,7 @@ mod.directive('sinFieldset', function() {
       legend: '@',
       collapsed: '@',
     },
-    templateUrl: 'iota.ext-util-fieldset.html',
+    templateUrl: 'fragments/ext-util-fieldset.html',
     link: function(scope, element, attrs, controllers) {
       scope.test = attrs;
       scope.hide = (attrs.collapsed == "true");

@@ -10,7 +10,7 @@ mod.directive('dtMoney', function() {
     scope: {
       dtime: '=',
     },
-    templateUrl: 'iota.dtime-money.html',
+    templateUrl: 'fragments/dtime-money.html',
   };
 });
 

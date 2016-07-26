@@ -36,7 +36,7 @@ mod.directive('dtMain', function() {
     scope: {
       dtime: '=',
     },
-    templateUrl: 'iota.dtime.html',
+    templateUrl: 'fragments/dtime.html',
   };
 });
 
@@ -46,7 +46,7 @@ mod.directive('dtEvents', function() {
     scope: {
       dtime: '=',
     },
-    templateUrl: 'iota.dtime-events.html',
+    templateUrl: 'fragments/dtime-events.html',
   };
 });
 

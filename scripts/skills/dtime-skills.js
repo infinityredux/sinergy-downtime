@@ -11,7 +11,7 @@ mod.directive('dtSkills', function() {
     scope: {
       dtime: '=',
     },
-    templateUrl: 'iota.dtime-skills.html',
+    templateUrl: 'fragments/dtime-skills.html',
   };
 });
 
