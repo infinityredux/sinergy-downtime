@@ -1,12 +1,13 @@
 <!--!DOCTYPE html -->
 <!--HTML fragment / template for downtime actions  -->
 
-<div ng-controller="ActionController as act">
+<div> <!--ng-controller="ActionController as act"-->
 <sin-tabbed-panes initial="{{act.state.month_tab}}">
 
     {{actions.getFilterActions("player");}}<br/>
     {{actions.getFilterActions("contact");}}<br/>
     {{actions.getFilterActions("hireling");}}<br/>
+    {{dtime.helpon}}<br/>
 
     <!--sin-pane tab="month1">{{actions.getCurrentMonthName('long', 0);}}</sin-pane>
     <sin-pane tab="month2">{{actions.getCurrentMonthName('long', 1);}}</sin-pane>

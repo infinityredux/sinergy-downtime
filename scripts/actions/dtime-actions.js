@@ -1,5 +1,7 @@
 // Code goes here
 
+// TODO: update to angular components ?
+
 mod = angular.module('sin.dtime.actions', [
   'sin.dtime.skills',
   'sin.ext.util',
@@ -10,6 +12,17 @@ mod = angular.module('sin.dtime.actions', [
   'sin.fact.skills'
   ]);
 
+
+mod.component('dtActions', {
+    templateUrl: 'fragments/dtime-actions.html',
+    bindings: {
+        dtime: '='
+    },
+    controller: 'ActionController',
+    controllerAs: 'act'
+});
+
+/*
 mod.directive('dtActions', function() {
   return {
     restrict: 'E',
@@ -19,6 +32,7 @@ mod.directive('dtActions', function() {
     templateUrl: 'fragments/dtime-actions.html'
   };
 });
+*/
 
 /*
 mod.directive('integer', function(){
