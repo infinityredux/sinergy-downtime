@@ -3,10 +3,10 @@
 mod = angular.module('sin.fact.actions', ['sin.fact.persist']);
 
 mod.factory('actions', function(persist) {
-  var serv = {};
+  var factory = {};
   var state = {};
   
-  serv.data = {
+  factory.data = {
     months: [
       {short: 'Jan', med: 'Jan',   long: 'January'},
       {short: 'Feb', med: 'Feb',   long: 'February'},
@@ -19,8 +19,8 @@ mod.factory('actions', function(persist) {
       {short: 'Sep', med: 'Sept',  long: 'September'},
       {short: 'Oct', med: 'Oct',   long: 'October'},
       {short: 'Nov', med: 'Nov',   long: 'November'},
-      {short: 'Dec', med: 'Dec',   long: 'December'},
-    ],
+      {short: 'Dec', med: 'Dec',   long: 'December'}
+    ]
   };
   
   var defaultState = function() {
@@ -28,27 +28,27 @@ mod.factory('actions', function(persist) {
        months: 1,
        current: 0,
        selected: 0,
-       actions: [],
+       actions: []
     };
     state.actions[0] = {
       player: [],
       contact: [],
-      hireling: [],
+      hireling: []
     };
     state.actions[1] = {
       player: [],
       contact: [],
-      hireling: [],
+      hireling: []
     };
     state.actions[2] = {
       player: [],
       contact: [],
-      hireling: [],
+      hireling: []
     };
     state.actions[3] = {
       player: [],
       contact: [],
-      hireling: [],
+      hireling: []
     };
     state.current = new Date().getMonth();
   };
@@ -73,24 +73,24 @@ mod.factory('actions', function(persist) {
 
   // --------------------------------------------------
 
-  serv.getMonths = function() {
+  factory.getMonths = function() {
     return state.months;
   };
   
-  serv.setMonths = function(change) {
+  factory.setMonths = function(change) {
     if ((change < 1) || (change > 4)) {
       return false;
     }
     state.months = change;
-    serv.months = change;
+    factory.months = change;
     return true;
   };
   
-  serv.getCurrentMonth = function() {
+  factory.getCurrentMonth = function() {
     return state.current;
   };
   
-  serv.getCurrentMonthName = function(type, offset) {
+  factory.getCurrentMonthName = function(type, offset) {
     if (type === undefined)
       type = 'short';
     if (offset === undefined) 
@@ -98,10 +98,10 @@ mod.factory('actions', function(persist) {
     
     //alert(state.current + ' / ' + offset + ' / ' + (state.current + offset)%12);
     
-    return serv.data.months[(state.current + offset)%12][type];
+    return factory.data.months[(state.current + offset)%12][type];
   };
   
-  serv.setCurrentMonth = function(change) {
+  factory.setCurrentMonth = function(change) {
     if ((change < 0) || (change > 11)) {
       return false;
     }
@@ -109,11 +109,11 @@ mod.factory('actions', function(persist) {
     return true;
   };
   
-  serv.getSelectedMonth = function() {
+  factory.getSelectedMonth = function() {
     return state.selected + 1;
   };
   
-  serv.setSelectedMonth = function(change) {
+  factory.setSelectedMonth = function(change) {
     if ((change < 1) || (change > state.months)) {
       return false;
     }
@@ -123,7 +123,7 @@ mod.factory('actions', function(persist) {
   
   // --------------------------------------------------
 
-  serv.hasFilterAction = function(filter, type) {
+  factory.hasFilterAction = function(filter, type) {
     for (var slot in state.actions[state.selected][filter]) {
       if (state.actions[state.selected][filter][slot].action == type) {
         return slot;
@@ -134,22 +134,22 @@ mod.factory('actions', function(persist) {
 
   // --------------------------------------------------
 
-  serv.getFilterActions = function(filter) {
+  factory.getFilterActions = function(filter) {
     return state.actions[state.selected][filter];
   };
   
-  serv.getActions = function() {
+  factory.getActions = function() {
     return state.actions[state.selected].player
       .concat(state.actions[state.selected].contact)
       .concat(state.actions[state.selected].hireling);
   };
   
-  serv.addAction = function(filter, action) {
+  factory.addAction = function(filter, action) {
     action.filter = filter;
     state.actions[state.selected][filter].push(action);
   };
   
-  serv.removeActionNum = function(filter, num) {
+  factory.removeActionNum = function(filter, num) {
     state.actions[state.selected][filter].splice(num, 1);
   };
 
@@ -158,7 +158,7 @@ mod.factory('actions', function(persist) {
   // TODO this fixes the issue...
   // BUT.. the underlying cause is still unknown
   // Why is the selected state disappearing?
-  serv.getFilterCount = function(filter) {
+  factory.getFilterCount = function(filter) {
     if (state.selected === undefined)
       state.selected = 0;
     
@@ -167,5 +167,5 @@ mod.factory('actions', function(persist) {
 
   // --------------------------------------------------
 
-  return serv;
+  return factory;
 });

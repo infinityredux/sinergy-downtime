@@ -7,16 +7,16 @@ mod = angular.module('sin.dtime.actions', [
   'sin.fact.assets',
   'sin.fact.money',
   'sin.fact.persist',
-  'sin.fact.skills',
+  'sin.fact.skills'
   ]);
 
 mod.directive('dtActions', function() {
   return {
     restrict: 'E',
     scope: {
-      dtime: '=',
+      dtime: '='
     },
-    templateUrl: 'fragments/dtime-actions.html',
+    templateUrl: 'fragments/dtime-actions.html'
   };
 });
 
@@ -40,7 +40,7 @@ mod.directive('dtActionSlot', function(actions, assets, money, skills) {
     bindToController: {
       slot: '=',
       num: '=',
-      ctrl: '=',
+      ctrl: '='
     },
     templateUrl: 'dtime-actions-slot.html',
     controller: function($scope) {

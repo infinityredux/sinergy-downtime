@@ -1,238 +1,226 @@
 <!DOCTYPE html>
 <!-- HTML fragment for downtime the slots of each downtime action -->
 
-<sin-fieldset legend="{{actSlot.getLegend()}}" 
-              ng-switch="actSlot.slot.action" >
-  
-  <!-- General controls that always apply -->
-  <span class="opt-float-right">
-    <input type="button" value="Remove" ng-click="actSlot.removeClick()" />
-  </span>
-  
-  <span ng-switch-when="do">
-    <span ng-if="actSlot.slot.filter='player'">
-      <dt:skill-select 
-        filter="skills.treeFilterTrained()"
-        skill="actSlot.slot.skill" 
-        rank="actSlot.slot.ranks_skill" >
-      </dt:skill-select>
-      <br />
-    
-      <dt:spec-select 
-        skill="actSlot.slot.skill" 
-        spec="actSlot.slot.spec" 
-        rank="actSlot.slot.ranks_spec" >
-      </dt:spec-select>
-      <br />
-    
-      {{'Total skill: ' + actSlot.getTotalSkill() }}
-      <br />
-    </span>
-    
-    <br />
-    What is being attempted:
-  </span>
-  
-  <span ng-switch-when="care">
-    Additional details of the care provided or training:
-  </span>
-  
-  <span ng-switch-when="buy">
-    Any notes or special instructions related to the transactions:
-  </span>
-  
-  <span ng-switch-when="doc">
-    Doctor stuff here
-    Selection of installed components
-  </span>
-  
-  <span ng-switch-when="emp">
-    <span ng-if="actSlot.disableJobEdit">
-      Employment by {{actSlot.slot.employer}} 
-      using {{actSlot.getSkillName()}} 
-      generating {{actSlot.slot.money}}cr. 
-      ({{ (1*actSlot.slot.level + 1) * 50 }}cr per skill rank
-      and {{actSlot.getTotalSkill()}} skill ranks.) 
-    </span>
-    
-    <span ng-if="!actSlot.disableJobEdit">
-      <span class="opt-float-right">
-        <input type="button" value="Update Job" ng-click="actSlot.updateJob()" />
-        &nbsp; &nbsp; 
-      </span>
-  
-      <table cellpadding="0" cellspacing="0">
-        <tr>
-          <td>Skill:</td>
-          <td>
-            <dt:skill-select 
-              filter="skills.treeFilterTrained()"
-              skill="actSlot.slot.skill" 
-              rank="actSlot.slot.ranks_skill" >
-            </dt:skill-select>
-            <br />
-            
-            <dt:spec-select 
-              skill="actSlot.slot.skill" 
-              spec="actSlot.slot.spec" 
-              rank="actSlot.slot.ranks_spec" >
-            </dt:spec-select>
-            <br />
-            
-            {{'Total skill: ' + actSlot.getTotalSkill() }}
-            <br />
-            &nbsp;
-          </td>
-        </tr>
-        
-        <tr>
-          <td>Employer: &nbsp; </td>
-          <td>
-            <input 
-              type="text"
-              placeholder="Company name" 
-              ng-model="actSlot.slot.employer" />
-            <br />
-            <select
-              ng-model="actSlot.slot.level" >
-              <option value="">--- no job ---</option>
-              <option value="0">50cr, level 0 @ 0pt</option>
-              <option value="1">100cr, level 1</option>
-              <option value="2">150cr, level 2</option>
-              <option value="3">200cr, level 3</option>
-              <option value="4">250cr, level 4</option>
-              <option value="5">300cr, level 5 @ 1pt</option>
-              <option value="6">350cr, level 6</option>
-              <option value="7">400cr, level 7</option>
-              <option value="8">450cr, level 8</option>
-              <option value="9">500cr, level 9 @ 2pts</option>
-              <option value="10">550cr, level 10</option>
-              <option value="11">600cr, level 11</option>
-              <option value="12">650cr, level 12</option>
-              <option value="13">700cr, level 13</option>
-            </select>
-            <br />
-            &nbsp;
-          </td>
-        </tr>
-      </table>
-      Monthly salary:
-      {{ actSlot.calcSalary() }}cr
-    </span>
-    
-    <hr/>
-    {{ assetJob }}
-  </span>
-  
-  <span ng-switch-when="over">
-    <span ng-if="!actSlot.disableJobEdit">
-      Job not defined. Please remove this slot until after the employment details are set.
-    </span>
-    <span ng-if="actSlot.disableJobEdit">
-      Overtime generating a further {{this.slot.money}}cr.
-    </span>
-  </span>
-  
-  <span ng-switch-when="make">
-    Make stuff
-  </span>
-  
-  <span ng-switch-when="net">
-    Netrunning
-  </span>
-  
-  <br />
-  <textarea
-    ng-if="(actSlot.slot.action!='emp')&&(actSlot.slot.action!='over')"
-    rows="3" 
-    cols="50" 
-  ></textarea>
+<sin-fieldset legend="{{actSlot.getLegend()}}"
+              ng-switch="actSlot.slot.action">
 
-  <table ng-if="false" cellspacing=0 cellpadding=0 ng-show="act.state.add" width="100%">
-    <tr ng-show="act.state.person=='contact'">
-      <td>Contact name:</td>
-      <td>
-        <input  type="text" 
-                ng-model="act.state.contact" 
-                placeholder="Contact name"  />
-      </td>
-    </tr>
-    <tr ng-hide="act.state.add=='doc'">
-      <td>Skill:</td>
-      <td>
-        
-        <dt:skill-select skill="act.state.add" rank="act.state.ranks_skill" >
-        </dt:skill-select>
-        <select ng-options="skill as skills.getSkillData(skill, 'name') group by skills.getSkillData(skill, 'parent') for skill in skills.getCurrentSkills()"
-                ng-model="act.state.skill" >
-        </select>
-        <!--input  type="text" 
-                ng-model="act.state.skill" 
-                placeholder="Skill name" 
-                ng-disabled="act.state.add=='net'" /-->
-                
-                
-        
-        <select name="skill-select-player"
-                ng-model="act.state.ranks_skill"
-                ng-options="opt.val as opt.desc for opt in act.data.option_skill.player"
-                ng-show="act.state.person=='player'"
-                class="sel-sizematch" >
-        </select>
-        <select name="skill-select-contat"
-                ng-model="act.state.ranks_skill"
-                ng-options="opt.val as opt.desc for opt in act.data.option_skill.contact"
-                ng-show="act.state.person=='contact'"
-                class="sel-sizematch" >
-        </select>
-        <select name="skill-select-hireling"
-                ng-model="act.state.ranks_skill"
-                ng-options="opt.val as opt.desc for opt in act.data.option_skill.hireling"
-                ng-show="act.state.person=='hireling'"
-                class="sel-sizematch" >
-        </select>
-        <input  type="text" 
-                ng-model="act.state.bonus_skill" 
-                size="3" 
-                placeholder="Bonus" 
-                min=0 />
-      </td>
-    </tr>
-    <tr ng-hide="(act.state.add=='doc')||(act.state.person!='player')">
-      <td>Spec (optional):</td>
-      <td>
-        <input  type="text" 
-                ng-model="act.state.spec" 
-                placeholder="Specialisation name"
-                ng-disabled="act.state.add=='net'" />
-        <select name="spec-select"
-                ng-model="act.state.ranks_spec"
-                ng-options="opt.val as opt.desc for opt in act.data.option_skill.spec"
-                class="sel-sizematch"
-        ></select>
-        <input  type="text" 
-                ng-model="act.state.bonus_spec" 
-                size="3" 
-                placeholder="Bonus" 
-                min=0 />
-      </td>
-    </tr>
-    <tr ng-show="(act.state.add=='emp')||(act.state.add=='over')">
-      <td>Employment level:</td>
-      <td>
-        <input  type="text" 
-                ng-model="act.state.employ" 
-                size="3" 
-                placeholder="Level" 
-                min=0 
-                max=30 />
-      </td>
-    </tr>
-    <tr>
-      <td width="150px">
-      </td>
-      <td width="450px">&nbsp;</td>
-    </tr>
-  </table>
+    <!-- General controls that always apply -->
+    <span class="opt-float-right">
+        <input type="button" value="Remove" ng-click="actSlot.removeClick()"/>
+    </span>
   
+    <span ng-switch-when="do">
+        <span ng-if="actSlot.slot.filter='player'">
+            <dt:skill-select
+                    filter="skills.treeFilterTrained()"
+                    skill="actSlot.slot.skill"
+                    rank="actSlot.slot.ranks_skill">
+            </dt:skill-select>
+            <br/>
+    
+            <dt:spec-select
+                    skill="actSlot.slot.skill"
+                    spec="actSlot.slot.spec"
+                    rank="actSlot.slot.ranks_spec">
+            </dt:spec-select>
+            <br/>
+
+            {{'Total skill: ' + actSlot.getTotalSkill() }}
+            <br/>
+        </span>
+    
+        <br/>
+        What is being attempted:
+    </span>
+  
+    <span ng-switch-when="care">
+        Additional details of the care provided or training:
+    </span>
+  
+    <span ng-switch-when="buy">
+        Any notes or special instructions related to the transactions:
+    </span>
+  
+    <span ng-switch-when="doc">
+        Doctor stuff here
+        Selection of installed components
+    </span>
+  
+    <span ng-switch-when="emp">
+        <span ng-if="actSlot.disableJobEdit">
+            Employment by {{actSlot.slot.employer}}
+            using {{actSlot.getSkillName()}}
+            generating {{actSlot.slot.money}}cr.
+            ({{ (1*actSlot.slot.level + 1) * 50 }}cr per skill rank
+            and {{actSlot.getTotalSkill()}} skill ranks.)
+        </span>
+    
+        <span ng-if="!actSlot.disableJobEdit">
+            <span class="opt-float-right">
+                <input type="button" value="Update Job" ng-click="actSlot.updateJob()"/>
+                &nbsp; &nbsp;
+            </span>
+  
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>Skill:</td>
+                    <td>
+                        <dt:skill-select filter="skills.treeFilterTrained()" skill="actSlot.slot.skill" rank="actSlot.slot.ranks_skill">
+                        </dt:skill-select>
+                        <br/>
+
+                        <dt:spec-select skill="actSlot.slot.skill" spec="actSlot.slot.spec" rank="actSlot.slot.ranks_spec">
+                        </dt:spec-select>
+                        <br/>
+
+                        {{'Total skill: ' + actSlot.getTotalSkill() }}
+                        <br/>
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td>Employer: &nbsp; </td>
+                    <td>
+                        <input type="text" placeholder="Company name" ng-model="actSlot.slot.employer"/>
+                        <br/>
+                        <select ng-model="actSlot.slot.level">
+                            <option value="">--- no job ---</option>
+                            <option value="0">50cr, level 0 @ 0pt</option>
+                            <option value="1">100cr, level 1</option>
+                            <option value="2">150cr, level 2</option>
+                            <option value="3">200cr, level 3</option>
+                            <option value="4">250cr, level 4</option>
+                            <option value="5">300cr, level 5 @ 1pt</option>
+                            <option value="6">350cr, level 6</option>
+                            <option value="7">400cr, level 7</option>
+                            <option value="8">450cr, level 8</option>
+                            <option value="9">500cr, level 9 @ 2pts</option>
+                            <option value="10">550cr, level 10</option>
+                            <option value="11">600cr, level 11</option>
+                            <option value="12">650cr, level 12</option>
+                            <option value="13">700cr, level 13</option>
+                        </select>
+                        <br/>
+                        &nbsp;
+                    </td>
+                </tr>
+            </table>
+
+            Monthly salary:
+            {{ actSlot.calcSalary() }}cr
+        </span>
+
+        <hr/>
+        {{ assetJob }}
+    </span>
+  
+    <span ng-switch-when="over">
+        <span ng-if="!actSlot.disableJobEdit">
+            Job not defined. Please remove this slot until after the employment details are set.
+        </span>
+        <span ng-if="actSlot.disableJobEdit">
+            Overtime generating a further {{this.slot.money}}cr.
+        </span>
+    </span>
+  
+    <span ng-switch-when="make">
+        Make stuff
+    </span>
+  
+    <span ng-switch-when="net">
+        Netrunning
+    </span>
+
+    <br/>
+    <textarea ng-if="(actSlot.slot.action!='emp')&&(actSlot.slot.action!='over')"
+              rows="3"
+              cols="50"
+    ></textarea>
+
+    <table ng-if="false" cellspacing=0 cellpadding=0 ng-show="act.state.add" width="100%">
+        <tr ng-show="act.state.person=='contact'">
+            <td>Contact name:</td>
+            <td>
+                <input type="text"
+                       ng-model="act.state.contact"
+                       placeholder="Contact name"/>
+            </td>
+        </tr>
+        <tr ng-hide="act.state.add=='doc'">
+            <td>Skill:</td>
+            <td>
+
+                <dt:skill-select skill="act.state.add" rank="act.state.ranks_skill">
+                </dt:skill-select>
+                <select ng-options="skill as skills.getSkillData(skill, 'name') group by skills.getSkillData(skill, 'parent') for skill in skills.getCurrentSkills()"
+                        ng-model="act.state.skill">
+                </select>
+                <!--input  type="text"
+                        ng-model="act.state.skill"
+                        placeholder="Skill name"
+                        ng-disabled="act.state.add=='net'" /-->
+
+
+                <select name="skill-select-player"
+                        ng-model="act.state.ranks_skill"
+                        ng-options="opt.val as opt.desc for opt in act.data.option_skill.player"
+                        ng-show="act.state.person=='player'"
+                        class="sel-sizematch">
+                </select>
+                <select name="skill-select-contat"
+                        ng-model="act.state.ranks_skill"
+                        ng-options="opt.val as opt.desc for opt in act.data.option_skill.contact"
+                        ng-show="act.state.person=='contact'"
+                        class="sel-sizematch">
+                </select>
+                <select name="skill-select-hireling"
+                        ng-model="act.state.ranks_skill"
+                        ng-options="opt.val as opt.desc for opt in act.data.option_skill.hireling"
+                        ng-show="act.state.person=='hireling'"
+                        class="sel-sizematch">
+                </select>
+                <input type="text"
+                       ng-model="act.state.bonus_skill"
+                       size="3"
+                       placeholder="Bonus"
+                       min=0/>
+            </td>
+        </tr>
+        <tr ng-hide="(act.state.add=='doc')||(act.state.person!='player')">
+            <td>Spec (optional):</td>
+            <td>
+                <input type="text"
+                       ng-model="act.state.spec"
+                       placeholder="Specialisation name"
+                       ng-disabled="act.state.add=='net'"/>
+                <select name="spec-select"
+                        ng-model="act.state.ranks_spec"
+                        ng-options="opt.val as opt.desc for opt in act.data.option_skill.spec"
+                        class="sel-sizematch"
+                ></select>
+                <input type="text"
+                       ng-model="act.state.bonus_spec"
+                       size="3"
+                       placeholder="Bonus"
+                       min=0/>
+            </td>
+        </tr>
+        <tr ng-show="(act.state.add=='emp')||(act.state.add=='over')">
+            <td>Employment level:</td>
+            <td>
+                <input type="text"
+                       ng-model="act.state.employ"
+                       size="3"
+                       placeholder="Level"
+                       min=0
+                       max=30/>
+            </td>
+        </tr>
+        <tr>
+            <td width="150px">
+            </td>
+            <td width="450px">&nbsp;</td>
+        </tr>
+    </table>
+
 </sin-fieldset>
