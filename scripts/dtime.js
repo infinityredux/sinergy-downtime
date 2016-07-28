@@ -10,21 +10,21 @@
 //
 
 mod = angular.module('sin.dtime', [
-  'sin.dtime.actions',
-  'sin.dtime.equip',
-  'sin.dtime.lifestyle',
-  'sin.dtime.money',
-  'sin.dtime.skills',
-  'sin.ext.panes',
-  'sin.ext.util',
-  'sin.fact.actions',
-  'sin.fact.assets',
-  'sin.fact.equip',
-  'sin.fact.lifestyle',
-  'sin.fact.money',
-  'sin.fact.persist',
-  'sin.fact.skills'
-  ]);
+    'sin.dtime.actions',
+    'sin.dtime.equip',
+    'sin.dtime.lifestyle',
+    'sin.dtime.money',
+    'sin.dtime.skills',
+    'sin.fact.actions',
+    'sin.fact.assets',
+    'sin.fact.equip',
+    'sin.fact.lifestyle',
+    'sin.fact.money',
+    'sin.fact.skills',
+    'sin.lib.general',
+    'sin.lib.persist',
+    'sin.lib.panes'
+]);
 
 /*mod.factory('dtime', function(persist) {
   
@@ -60,30 +60,18 @@ mod.controller('DowntimeController', function($scope, actions, lifestyle, money,
   dc.data = {};
   
   dc.data.months =[
-    { num: 0,
-      month: 'January'},
-    { num: 1,
-      month: 'February'},
-    { num: 2,
-      month: 'March'},
-    { num: 3,
-      month: 'April'},
-    { num: 4,
-      month: 'May'},
-    { num: 5,
-      month:'June'},
-    { num: 6,
-      month: 'July'},
-    { num: 7,
-      month: 'August'},
-    { num: 8,
-      month: 'September'},
-    { num: 9, 
-      month: 'October'},
-    { num: 10,
-      month: 'November'},
-    { num: 11,
-      month: 'December'}
+    { num: 0,  month: 'January' },
+    { num: 1,  month: 'February' },
+    { num: 2,  month: 'March' },
+    { num: 3,  month: 'April' },
+    { num: 4,  month: 'May' },
+    { num: 5,  month:'June' },
+    { num: 6,  month: 'July' },
+    { num: 7,  month: 'August' },
+    { num: 8,  month: 'September' },
+    { num: 9,  month: 'October' },
+    { num: 10, month: 'November' },
+    { num: 11, month: 'December' }
   ];
 
   // --------------------------------------------------

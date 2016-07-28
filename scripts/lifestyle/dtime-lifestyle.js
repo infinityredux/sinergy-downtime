@@ -2,7 +2,7 @@
 
 mod = angular.module('sin.dtime.lifestyle', [
   'sin.fact.lifestyle',
-  'sin.fact.persist',
+  'sin.lib.persist',
   ]);
 
 mod.directive('dtLifestyle', function() {

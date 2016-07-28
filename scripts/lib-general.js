@@ -1,6 +1,6 @@
 // Code goes here
 
-mod = angular.module('sin.ext.util', []);
+mod = angular.module('sin.lib.general', []);
 
 mod.directive('sinFieldset', function() {
   return {
@@ -8,9 +8,9 @@ mod.directive('sinFieldset', function() {
     transclude: true,
     scope: {
       legend: '@',
-      collapsed: '@',
+      collapsed: '@'
     },
-    templateUrl: 'fragments/ext-util-fieldset.html',
+    templateUrl: 'fragments/lib-general-fieldset.html',
     link: function(scope, element, attrs, controllers) {
       scope.test = attrs;
       scope.hide = (attrs.collapsed == "true");
@@ -32,7 +32,7 @@ mod.directive('sinFieldset', function() {
           element.children().removeClass("fieldset-closed");
         }
       };
-    },
+    }
   };
 });
 
@@ -42,9 +42,9 @@ mod.directive('sinHelp', function() {
     transclude: true,
     scope: {
       show: '=',
-      help: '=',
+      help: '='
     },
-    template: '<span class="help-box" ng-attr-title="{{help}}">[?]</span>',
+    template: '<span class="help-box" ng-attr-title="{{help}}">[?]</span>'
 /*    link: function(scope, element, attrs){
       $(element).hover(function(){
         $(element).tooltip('show');

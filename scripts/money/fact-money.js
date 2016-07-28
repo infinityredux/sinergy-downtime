@@ -1,6 +1,6 @@
 // Code goes here
 
-mod = angular.module('sin.fact.money', ['sin.fact.persist']);
+mod = angular.module('sin.fact.money', ['sin.lib.persist']);
 
 mod.factory('money', function(persist) {
   var serv = {};

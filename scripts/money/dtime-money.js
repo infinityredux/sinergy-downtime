@@ -1,8 +1,6 @@
 // Code goes here
 
-mod = angular.module('sin.dtime.money', [
-  'sin.fact.money',
-  ]);
+mod = angular.module('sin.dtime.money', ['sin.fact.money']);
 
 mod.directive('dtMoney', function() {
   return {

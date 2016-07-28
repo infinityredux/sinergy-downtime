@@ -1,6 +1,6 @@
 // Code goes here
 
-mod = angular.module('sin.fact.lifestyle', ['sin.fact.persist']);
+mod = angular.module('sin.fact.lifestyle', ['sin.lib.persist']);
 
 mod.factory('lifestyle', function(persist) {
   var serv = {};

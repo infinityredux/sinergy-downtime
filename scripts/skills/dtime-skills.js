@@ -1,9 +1,9 @@
 // Code goes here
 
 mod = angular.module('sin.dtime.skills', [
-  'sin.fact.persist',
-  'sin.fact.skills',
-  ]);
+    'sin.fact.skills',
+    'sin.lib.persist',
+]);
 
 mod.directive('dtSkills', function() {
   return {

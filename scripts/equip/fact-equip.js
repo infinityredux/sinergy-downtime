@@ -1,6 +1,6 @@
 // Code goes here
 
-mod = angular.module('sin.fact.equip', ['sin.fact.persist']);
+mod = angular.module('sin.fact.equip', ['sin.lib.persist']);
 
 mod.factory('equip', function(persist) {
   var serv = {};

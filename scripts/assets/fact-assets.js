@@ -1,8 +1,8 @@
 // Code goes here
 
 mod = angular.module('sin.fact.assets', [
-  'sin.fact.persist',
   'sin.fact.skills',
+  'sin.lib.persist'
   ]);
 
 mod.factory('assets', function(persist, skills) {
@@ -17,13 +17,13 @@ mod.factory('assets', function(persist, skills) {
         skill: 0,
         spec: 0,
         ranks: 0,
-        level: 0,
+        level: 0
       },
       finances: {
         onHand: 0,
         stored: 0,
-        debt: 0,
-      },
+        debt: 0
+      }
     };
   };
   

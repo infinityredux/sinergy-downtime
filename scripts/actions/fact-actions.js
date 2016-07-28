@@ -1,6 +1,6 @@
 // Code goes here
 
-mod = angular.module('sin.fact.actions', ['sin.fact.persist']);
+mod = angular.module('sin.fact.actions', ['sin.lib.persist']);
 
 mod.factory('actions', function(persist) {
     var factory = {};

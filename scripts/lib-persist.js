@@ -1,6 +1,6 @@
 // Code goes here
 
-mod = angular.module('sin.fact.persist', []);
+mod = angular.module('sin.lib.persist', []);
 
 mod.factory('persist', function($rootScope) {
   var serv = {};
@@ -82,7 +82,7 @@ mod.factory('persist', function($rootScope) {
         key: key,
         ajax: ajax,
         cache_expire: Date.now() + cache,
-        result: JSON.parse(response),
+        result: JSON.parse(response)
       };
       localStorage[key] = JSON.stringify(data);
       data_func(data.result);

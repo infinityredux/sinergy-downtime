@@ -1,6 +1,6 @@
 // Code goes here
 
-var mod = angular.module("sin.ext.panes", []);
+var mod = angular.module("sin.lib.panes", []);
 
 mod.directive('sinTabbedPanes', function() {
   return {
@@ -20,7 +20,7 @@ mod.directive('sinTabbedPanes', function() {
       this.setCurrent = function(change) {
         this.current = change;
       };
-    },
+    }
   };
 });
 
@@ -30,7 +30,7 @@ mod.directive('sinPaneLink', function() {
     restrict: 'E',
     scope: {
       tab: '@',
-      action: '&',
+      action: '&'
     },
     transclude: true,
     template: '<span ng-transclude ng-click="doClick()" ng-class="getClass()"></span>',
@@ -51,7 +51,7 @@ mod.directive('sinPaneLink', function() {
           return 'pane-link-passive';
         }
       };
-    },
+    }
   };
 });
 
@@ -60,7 +60,7 @@ mod.directive('sinPane', function() {
     require: '^^sinTabbedPanes',
     restrict: 'E',
     scope: {
-      tab: '@',
+      tab: '@'
     },
     transclude: true,
     template: '<span ng-transclude ng-show="canShow()"></span>',
@@ -68,6 +68,6 @@ mod.directive('sinPane', function() {
       scope.canShow = function() {
         return tabCtrl.isCurrent(attrs.tab) || tabCtrl.isCurrent('all');
       };
-    },
+    }
   };
 });

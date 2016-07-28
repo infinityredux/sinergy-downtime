@@ -3,12 +3,12 @@
 mod = angular.module('sin.dtime.actions', [
     'sin.dtime.actions-slot',
     'sin.dtime.skills',
-    'sin.ext.util',
     'sin.fact.actions',
     'sin.fact.assets',
     'sin.fact.money',
-    'sin.fact.persist',
-    'sin.fact.skills'
+    'sin.fact.skills',
+    'sin.lib.general',
+    'sin.lib.persist'
 ]);
 
 /*

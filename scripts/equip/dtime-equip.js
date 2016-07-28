@@ -1,12 +1,12 @@
 // Code goes here
 
 mod = angular.module('sin.dtime.equip', [
-  'sin.ext.util',
   'sin.fact.assets',
   'sin.fact.equip',
   'sin.fact.lifestyle',
   'sin.fact.skills',
-  'sin.fact.persist',
+  'sin.lib.general',
+  'sin.lib.persist'
   ]);
 
 mod.directive('dtEquip', function() {
