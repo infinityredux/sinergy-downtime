@@ -8,7 +8,7 @@ mod = angular.module('sin.dtime.actions-slot', [
     'sin.fact.skills'
 ]);
 
-mod.directive('dtActionSlot', function(actions, assets, money, skills) {
+mod.directive('dtActionSlot', function() {
     return {
         restrict: 'E',
         scope: true,
@@ -17,13 +17,13 @@ mod.directive('dtActionSlot', function(actions, assets, money, skills) {
             num: '=',
             ctrl: '='
         },
-        templateUrl: 'dtime-actions-slot.html',
+        templateUrl: 'fragments/dtime-actions-slot.html',
         controllerAs: 'actSlot',
         controller: ActionSlotController
     };
 });
 
-function ActionSlotController($scope) {
+function ActionSlotController($scope, actions, assets, money, skills) {
     $scope.skills = skills;
     this.disableJobEdit = (assets.getJob().level>0);
 

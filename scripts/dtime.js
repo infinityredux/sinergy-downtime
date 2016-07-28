@@ -23,7 +23,7 @@ mod = angular.module('sin.dtime', [
   'sin.fact.lifestyle',
   'sin.fact.money',
   'sin.fact.persist',
-  'sin.fact.skills',
+  'sin.fact.skills'
   ]);
 
 /*mod.factory('dtime', function(persist) {
@@ -34,9 +34,9 @@ mod.directive('dtMain', function() {
   return {
     restrict: 'E',
     scope: {
-      dtime: '=',
+      dtime: '='
     },
-    templateUrl: 'fragments/dtime.html',
+    templateUrl: 'fragments/dtime.html'
   };
 });
 
@@ -44,9 +44,9 @@ mod.directive('dtEvents', function() {
   return {
     restrict: 'E',
     scope: {
-      dtime: '=',
+      dtime: '='
     },
-    templateUrl: 'fragments/dtime-events.html',
+    templateUrl: 'fragments/dtime-events.html'
   };
 });
 
@@ -114,13 +114,13 @@ mod.controller('DowntimeController', function($scope, actions, lifestyle, money,
     player: 'Player',
     char:   'Character',
     email:  'Email',
-    month:  'Month',
+    month:  'Month'
   };
   
   var defaultState = function() {
     ctrl.state.current_tab = 'none';
     ctrl.state.month_num = actions.getCurrentMonth();
-    ctrl.state.month_option = actions.getMonths();
+    //ctrl.state.month_option = actions.getMonths();
   };
   
   defaultState();
