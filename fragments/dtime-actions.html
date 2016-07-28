@@ -9,18 +9,6 @@
     {{actions.getFilterActions("hireling");}}<br/>
     {{dtime}}<br/>
 
-    <!--sin-pane tab="month1">{{actions.getCurrentMonthName('long', 0);}}</sin-pane>
-    <sin-pane tab="month2">{{actions.getCurrentMonthName('long', 1);}}</sin-pane>
-    <sin-pane tab="month3">{{actions.getCurrentMonthName('long', 2);}}</sin-pane>
-    <sin-pane tab="month4">{{actions.getCurrentMonthName('long', 3);}}</sin-pane-->
-
-    <!-- div class="pane-link-group" ng-show="actions.getMonths()>=2" >
-        <sin-pane-link ng-show="actions.getMonths()>=2" tab="month1" action="act.monthPaneChange(1)">{{actions.getCurrentMonthName('med', 0);}}</sin-pane-link>
-        <sin-pane-link ng-show="actions.getMonths()>=2" tab="month2" action="act.monthPaneChange(2)">{{actions.getCurrentMonthName('med', 1);}}</sin-pane-link>
-        <sin-pane-link ng-show="actions.getMonths()>=3" tab="month3" action="act.monthPaneChange(3)">{{actions.getCurrentMonthName('med', 2);}}</sin-pane-link>
-        <sin-pane-link ng-show="actions.getMonths()>=4" tab="month4" action="act.monthPaneChange(4)">{{actions.getCurrentMonthName('med', 3);}}</sin-pane-link>
-    </div-->
-
     <sin-fieldset legend="Actions:" ng-form="actForm">
         <span class="opt-float-right">
             <input type="radio" ng-model="act.state.person" ng-change="act.personChange()"

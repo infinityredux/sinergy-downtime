@@ -1,7 +1,3 @@
-/**
- * Created by Nick on 28/07/2016.
- */
-
 mod = angular.module('sin.dtime.actions-slot', [
     'sin.dtime.skills',
     'sin.ext.util',
