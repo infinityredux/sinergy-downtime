@@ -10,18 +10,18 @@ mod.factory('dtime', function(actions, persist) {
     var changed;
 
     data.calendar = [
-        {short: 'Jan', med: 'Jan',   long: 'January'},
-        {short: 'Feb', med: 'Feb',   long: 'February'},
-        {short: 'Mar', med: 'March', long: 'March'},
-        {short: 'Apr', med: 'April', long: 'April'},
-        {short: 'May', med: 'May',   long: 'May'},
-        {short: 'Jun', med: 'June',  long: 'June'},
-        {short: 'Jul', med: 'July',  long: 'July'},
-        {short: 'Aug', med: 'Aug',   long: 'August'},
-        {short: 'Sep', med: 'Sept',  long: 'September'},
-        {short: 'Oct', med: 'Oct',   long: 'October'},
-        {short: 'Nov', med: 'Nov',   long: 'November'},
-        {short: 'Dec', med: 'Dec',   long: 'December'}
+        {num: 0,  short: 'Jan', med: 'Jan',   long: 'January'},
+        {num: 1,  short: 'Feb', med: 'Feb',   long: 'February'},
+        {num: 2,  short: 'Mar', med: 'March', long: 'March'},
+        {num: 3,  short: 'Apr', med: 'April', long: 'April'},
+        {num: 4,  short: 'May', med: 'May',   long: 'May'},
+        {num: 5,  short: 'Jun', med: 'June',  long: 'June'},
+        {num: 6,  short: 'Jul', med: 'July',  long: 'July'},
+        {num: 7,  short: 'Aug', med: 'Aug',   long: 'August'},
+        {num: 8,  short: 'Sep', med: 'Sept',  long: 'September'},
+        {num: 9,  short: 'Oct', med: 'Oct',   long: 'October'},
+        {num: 10, short: 'Nov', med: 'Nov',   long: 'November'},
+        {num: 11, short: 'Dec', med: 'Dec',   long: 'December'}
     ];
 
     function defaultState() {
@@ -42,21 +42,15 @@ mod.factory('dtime', function(actions, persist) {
 
     // --------------------------------------------------
 
-    persist.registerLoad(function() {
-        state = persist.doLoad('sin.core', state);
-    });
-
+    persist.registerLoad(function() { state = persist.doLoad('sin.core', state); });
     persist.registerSave(function() {
         persist.doSave('sin.core', state);
         changed = false;
     });
-
-    persist.registerWipe(function() {
-        defaultState();
-    });
+    persist.registerWipe(defaultState);
+    persist.registerLongTerm(isChanged);
 
     //persist.registerShortTerm(isChanged);
-    persist.registerLongTerm(isChanged);
 
     // --------------------------------------------------
 
@@ -84,17 +78,6 @@ mod.factory('dtime', function(actions, persist) {
         },
         enumerable: true
     });
-
-    /*
-    Object.defineProperty(factory, 'session', {
-        get: function() {return state.session;},
-        set: function(val) {
-            state.session = val;
-            changed = true;
-        },
-        enumerable: true
-    });
-    */
 
     return factory;
 });
