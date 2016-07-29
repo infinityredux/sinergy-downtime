@@ -10,6 +10,7 @@
 //
 
 mod = angular.module('sin.dtime', [
+    'sin.core',
     'sin.dtime.actions',
     'sin.dtime.equip',
     'sin.dtime.events',

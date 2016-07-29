@@ -7,9 +7,4 @@ mod.component('dtEvents', {
 
 function EventsController($scope, events) {
     $scope.events = events;
-
-
-
-
-
 }
