@@ -17,14 +17,6 @@ mod.factory('events', function(persist) {
 
     // --------------------------------------------------
 
-    function doChange() {
-        changed = true;
-    }
-
-    function resetChange() {
-        changed = false;
-    }
-
     function isChanged() {
         return changed;
     }
@@ -37,12 +29,14 @@ mod.factory('events', function(persist) {
 
     persist.registerSave(function() {
         persist.doSave('sin.fact.events', state);
-        resetChange();
+        changed = false;
     });
 
     persist.registerWipe(function() {
         defaultState();
     });
+
+    persist.registerShortTerm(isChanged);
 
     // --------------------------------------------------
 
@@ -50,7 +44,7 @@ mod.factory('events', function(persist) {
         get: function() {return state.session;},
         set: function(val) {
             state.session = val;
-            doChange();
+            changed = true;
         },
         enumerable: true
     });
@@ -59,7 +53,7 @@ mod.factory('events', function(persist) {
         get: function() {return state.minor;},
         set: function(val) {
             state.minor = val;
-            doChange();
+            changed = true;
         },
         enumerable: true
     });
