@@ -1,12 +1,10 @@
 // Code goes here
-// Note to self:
-// https://docs.angularjs.org/guide/directive
-// http://blog.thoughtram.io/angularjs/2015/01/02/exploring-angular-1.3-bindToController.html
 //
+// Note to self:
+// http://blog.thoughtram.io/angularjs/2015/01/02/exploring-angular-1.3-bindToController.html
 // http://www.w3schools.com/angular/angular_sql.asp
 //
 // http://newrelic.com/
-// http://ibm-bluemix.coderpower.com/?utm_source=carbon&utm_medium=ads&utm_content=&utm_campaign=nordic#/
 //
 
 mod = angular.module('sin.dtime', [
@@ -34,6 +32,8 @@ mod = angular.module('sin.dtime', [
 
 mod.directive('dtMain', function() {
     return {
+        controller: 'DowntimeController',
+        controllerAs: 'dt',
         restrict: 'E',
         bindings: {
             dtime: '='
