@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="Angular Local" type="javaScript">
+  <library name="Angular Desktop" type="javaScript">
     <properties>
       <sourceFilesUrls>
         <item url="file://$PROJECT_DIR$/../angular.js" />
