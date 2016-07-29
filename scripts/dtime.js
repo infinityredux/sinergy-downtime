@@ -8,13 +8,13 @@
 //
 
 mod = angular.module('sin.dtime', [
-    'sin.core',
     'sin.dtime.actions',
     'sin.dtime.equip',
     'sin.dtime.events',
     'sin.dtime.lifestyle',
     'sin.dtime.money',
     'sin.dtime.skills',
+    'sin.fact',
     'sin.fact.actions',
     'sin.fact.assets',
     'sin.fact.equip',
@@ -29,11 +29,11 @@ mod = angular.module('sin.dtime', [
 /*mod.factory('dtime', function(persist) {
   
 });*/
-
+/*
 mod.directive('dtMain', function() {
     return {
         controller: 'DowntimeController',
-        controllerAs: 'dt',
+        controllerAs: 'ctrl',
         restrict: 'E',
         bindings: {
             dtime: '='
@@ -41,45 +41,29 @@ mod.directive('dtMain', function() {
         templateUrl: 'fragments/dtime-main.html'
     };
 });
-
-/*
-mod.component('dtMain', {
-    controller: 'DowntimeController',
-    controllerAs: 'dt',
-    templateUrl: 'fragments/dtime-main.html'
-});
 */
 
-mod.controller('DowntimeController', function($scope, actions, lifestyle, money, persist) {
+mod.component('dtMain', {
+    controller: 'DowntimeController',
+    controllerAs: 'ctrl',
+    templateUrl: 'fragments/dtime-main.html'
+});
+
+mod.controller('DowntimeController', function($scope, actions, lifestyle, money, persist, dtime) {
     var dc = this;
     var ctrl = this;
 
+    $scope.dtime_new = dtime;
     $scope.actions = actions;
+    $scope.persist = persist;
   
     dc.state = {};
     dc.data = {};
   
-    dc.data.months =[
-        { num: 0,  month: 'January' },
-        { num: 1,  month: 'February' },
-        { num: 2,  month: 'March' },
-        { num: 3,  month: 'April' },
-        { num: 4,  month: 'May' },
-        { num: 5,  month:'June' },
-        { num: 6,  month: 'July' },
-        { num: 7,  month: 'August' },
-        { num: 8,  month: 'September' },
-        { num: 9,  month: 'October' },
-        { num: 10, month: 'November' },
-        { num: 11, month: 'December' }
-    ];
-
     // --------------------------------------------------
     // General variables
     // --------------------------------------------------
 
-    dc.persist = persist;
-  
     // TODO: delete these once I'm happy with the money & lifestyle
     // implementations and the other iterations.
     dc.money_link = money;
@@ -95,9 +79,9 @@ mod.controller('DowntimeController', function($scope, actions, lifestyle, money,
     dc.events = "";
     dc.minor = "";
     ctrl.help = {
-        auto_load: 'Automatically load the last saved data when the page is opened.',
+        autoLoad: 'Automatically load the last saved data when the page is opened.',
+        showHelp: 'Enable help descriptions, in addition to these tooltips, for extra context with certain selections.',
         direct: 'Submit the email to the downtime address, copied to your email; if disabled, will only be sent to your email.',
-        helpon: 'Enable help descriptions, in addition to these tooltips, for extra context with certain selections.',
         player: 'Player',
         char:   'Character',
         email:  'Email',
@@ -106,8 +90,6 @@ mod.controller('DowntimeController', function($scope, actions, lifestyle, money,
   
     var defaultState = function() {
         ctrl.state.current_tab = 'none';
-        ctrl.state.month_num = actions.getCurrentMonth();
-        //ctrl.state.month_option = actions.getMonths();
     };
   
     defaultState();
