@@ -6,12 +6,12 @@ mod = angular.module('sin.fact.assets', [
   ]);
 
 mod.factory('assets', function(persist, skills) {
-  var serv = {};
+  var factory = {};
 
-  var details = {};
+  var state = {};
 
   var defaultState = function() {
-    details = {
+    state = {
       job: {
         employer: 'Default Employer',
         skill: 0,
@@ -32,11 +32,11 @@ mod.factory('assets', function(persist, skills) {
   // --------------------------------------------------
 
   persist.registerLoad(function() {
-    details = persist.doLoad('sin.fact.assets:details', details);
+    state = persist.doLoad('sin.fact.assets', state);
   });
 
   persist.registerSave(function() {
-    persist.doSave('sin.fact.assets:details', details);
+    persist.doSave('sin.fact.assets', state);
   });
   
   persist.registerWipe(function() {
@@ -45,17 +45,17 @@ mod.factory('assets', function(persist, skills) {
 
   // --------------------------------------------------
   
-  serv.getJob = function() {
-    return details.job;
+  factory.getJob = function() {
+    return state.job;
   };
   
-  serv.getFinances = function() {
-    return details.finances;
+  factory.getFinances = function() {
+    return state.finances;
   };
   
   // --------------------------------------------------
 
-  serv.calcSalary = function(level, ranks) {
+  factory.calcSalary = function(level, ranks) {
     return (level + 1) * ranks * 50;
   };
 
@@ -63,5 +63,5 @@ mod.factory('assets', function(persist, skills) {
   // --------------------------------------------------
   // --------------------------------------------------
   
-  return serv;
+  return factory;
 });
