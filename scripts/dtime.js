@@ -9,15 +9,18 @@
 // Ensures that all modules actually get loaded
 
 mod = angular.module('sin.dtime', [
+    'sin.dtime.form',
+    'sin.dtime.main',
+
     'sin.dtime.actions',
+    'sin.dtime.actions-slot',
     'sin.dtime.assets',
     'sin.dtime.equip',
     'sin.dtime.events',
-    'sin.dtime.form',
     'sin.dtime.lifestyle',
-    'sin.dtime.main',
     'sin.dtime.money',
     'sin.dtime.skills',
+
     'sin.fact',
     'sin.fact.actions',
     'sin.fact.assets',
@@ -25,6 +28,7 @@ mod = angular.module('sin.dtime', [
     'sin.fact.lifestyle',
     'sin.fact.money',
     'sin.fact.skills',
+
     'sin.lib.general',
     'sin.lib.persist',
     'sin.lib.panes'

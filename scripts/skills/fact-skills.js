@@ -3,15 +3,15 @@
 mod = angular.module('sin.fact.skills', ['sin.lib.persist']);
 
 mod.factory('skills', function(persist) {
-  var serv = {};
+    var serv = {};
   
-  var data_cache_time = 7 * 24 * 60 * 60 * 1000;  //one week in milliseconds
-  var raw_data = {
-    1: {id:1, parent:0, name: 'Mind'},
-    2: {id:2, parent:0, name: 'Body'},
-    3: {id:3, parent:0, name: 'Tech'},
-    4: {id:4, parent:0, name: 'Soul'},
-  //---------------
+    var data_cache_time = 7 * 24 * 60 * 60 * 1000;  //one week in milliseconds
+    var raw_data = {
+        1: {id:1, parent:0, name: 'Mind'},
+        2: {id:2, parent:0, name: 'Body'},
+        3: {id:3, parent:0, name: 'Tech'},
+        4: {id:4, parent:0, name: 'Soul'},
+        //---------------
      5: {id:5,  parent:1, name:'CorpDeal'},
      6: {id:6,  parent:1, name:'Forensics'},
      7: {id:7,  parent:1, name:'Knowledge'},
