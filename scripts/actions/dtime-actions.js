@@ -11,18 +11,6 @@ mod = angular.module('sin.dtime.actions', [
     'sin.lib.persist'
 ]);
 
-/*
-mod.directive('dtActions', function() {
-    return {
-        restrict: 'E',
-        scope: {
-            dtime: '='
-        },
-        templateUrl: 'fragments/actions.html'
-    };
-});
-*/
-
 mod.component('dtActions', {
     controller: ActionController,
     controllerAs: 'act',
@@ -31,7 +19,6 @@ mod.component('dtActions', {
 
 function ActionController ($scope, actions, assets, money, persist, skills) {
     var ctrl = this;
-    // Necessary for the ng-repeat(s) to work
     $scope.actions = actions;
     $scope.skills = skills;
 
