@@ -68,10 +68,8 @@ td, td span {
 }
 
 .fieldset-closed {
-  border: 1px solid;
-  border-bottom-width: 0;
-  border-left-width: 0;
-  border-right-width: 0;    
+    border: 0 solid;
+    border-top-width: 1px;
 }  
 
 

@@ -23,18 +23,18 @@ mod.factory('persist', function($rootScope) {
 
     factory.beginExport = function(file) {
         external_on = true;
-        external_file = file;
+        //external_file = file;
         factory.eventSave();
         external_on = false;
-        external_file = '';
+        //external_file = '';
     };
 
     factory.beginImport = function(file) {
         external_on = true;
-        external_file = file;
+        //external_file = file;
         factory.eventLoad();
         external_on = false;
-        external_file = '';
+        //external_file = '';
     };
 
     // --------------------------------------------------
@@ -43,12 +43,12 @@ mod.factory('persist', function($rootScope) {
         if (localStorage[key] === undefined) {
             return data;
         }
-        //if (external_on) {}
+        if (external_on) {;}
         return JSON.parse(localStorage[key]);
     };
 
     factory.doSave = function(key, data) {
-        //if (external_on) {}
+        if (external_on) {;}
         localStorage[key] = JSON.stringify(data);
     };
 

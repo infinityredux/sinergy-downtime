@@ -38,7 +38,7 @@ mod.factory('money', function(persist) {
     
     money[key] = {
       money: m,
-      desc: d,
+      desc: d
     };
     
     serv.calcFinal();

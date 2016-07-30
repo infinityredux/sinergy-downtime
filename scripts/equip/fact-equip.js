@@ -16,7 +16,7 @@ mod.factory('equip', function(persist) {
       bio: {},
       deck: {},
       software: {},
-      contact: {},
+      contact: {}
     };
   };
   

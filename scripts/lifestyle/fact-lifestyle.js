@@ -35,14 +35,14 @@ mod.factory('lifestyle', function(persist) {
     lifestyle[key] = {
       type: t,
       lifestyle: l,
-      desc: d,
+      desc: d
     };
     
     if (!types.hasOwnProperty(t)) {
       types[t] = {};
     }
     types[t][key] = {
-      key: key,
+      key: key
     };
     
     return key;

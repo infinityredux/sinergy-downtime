@@ -221,7 +221,7 @@ mod.factory('skills', function(persist) {
     210: {id:210, parent:22, name:'Projectile'},
     211: {id:211, parent:27, name:'Whips / Chains'},
     212: {id:212, parent:28, name:'Martial Art Weapon'},
-    301: {id:301, parent:15, name:'System Exploits'},
+    301: {id:301, parent:15, name:'System Exploits'}
   //---------------
     //1001: {id:1001, parent:1, name: 'Generic Mind Skill'},
     //1011: {id:1011, parent:1001, name: 'Generic Mind Spec A'},
@@ -269,7 +269,7 @@ mod.factory('skills', function(persist) {
           trained: raw_data[skill].trained ? true : false,
           rank: 0,
           slots: 0,
-          specs: {},
+          specs: {}
         }; 
       }
     }
@@ -281,7 +281,7 @@ mod.factory('skills', function(persist) {
           name: raw_data[spec].name,
           trained: raw_data[spec].trained ? true : false,
           rank: 0,
-          slots: 0,
+          slots: 0
         }; 
       }
     }
@@ -450,7 +450,7 @@ mod.factory('skills', function(persist) {
     if (rank>5) return -1;
     
     var slots = 0;
-    for (i=0;i<rank;i++) {
+    for (var i = 0; i < rank; i++) {
       slots += raw_slot_skill[i];
     }
     return slots;
@@ -461,7 +461,7 @@ mod.factory('skills', function(persist) {
     if (rank>3) return -1;
 
     var slots = 0;
-    for (i=0;i<rank;i++) {
+    for (var i = 0; i < rank; i++) {
       slots += raw_slot_spec[i];
     }
     return slots;

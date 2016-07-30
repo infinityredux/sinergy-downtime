@@ -6,9 +6,9 @@ mod.directive('dtMoney', function() {
   return {
     restrict: 'E',
     scope: {
-      dtime: '=',
+      dtime: '='
     },
-    templateUrl: 'fragments/money.html',
+    templateUrl: 'fragments/money.html'
   };
 });
 
