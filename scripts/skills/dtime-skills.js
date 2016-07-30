@@ -2,16 +2,16 @@
 
 mod = angular.module('sin.dtime.skills', [
     'sin.fact.skills',
-    'sin.lib.persist',
+    'sin.lib.persist'
 ]);
 
 mod.directive('dtSkills', function() {
   return {
     restrict: 'E',
     scope: {
-      dtime: '=',
+      dtime: '='
     },
-    templateUrl: 'fragments/dtime-skills.html',
+    templateUrl: 'fragments/skills.html'
   };
 });
 
@@ -20,7 +20,7 @@ mod.directive('dtRankSelect', function() {
     restrict: 'E',
     scope: {
       skill: '=',
-      disabled: '=',
+      disabled: '='
     },
     controller: 'SkillController',
     controllerAs: 'sk',
@@ -35,7 +35,7 @@ mod.directive('dtRankSelect', function() {
     link: function(scope, elem, attrs) {
       if(!attrs.disabled)
         attrs.disabled = 'false';
-    },
+    }
   };
 });
 
@@ -45,7 +45,7 @@ mod.directive('dtSkillSelect', function() {
     scope: {
       bindFilter: '&filter',
       bindRank: '=rank',
-      bindSkill: '=skill',
+      bindSkill: '=skill'
     },
     controller: function($scope, skills) {
       $scope.skills = skills;
@@ -87,7 +87,7 @@ mod.directive('dtSkillSelect', function() {
         }
         scope.bindRank = scope.skillTree[scope.bindSkill].rank;
       };
-    },
+    }
   };
 });
 
@@ -140,7 +140,7 @@ mod.directive('dtSpecSelect', function() {
         }
         scope.bindRank = scope.skillTree[scope.bindSkill].specs[scope.bindSpec].rank;
       };
-    },
+    }
   };
 });
 
@@ -156,14 +156,14 @@ mod.controller('SkillController', function($scope, persist, skills) {
       2: { val: 2, desc: "2" },
       3: { val: 3, desc: "3" },
       4: { val: 4, desc: "4" },
-      5: { val: 5, desc: "5" },
+      5: { val: 5, desc: "5" }
     },
     spec_opt: {
       0: { val: 0, desc: "+0" },
       1: { val: 1, desc: "+1" },
       2: { val: 2, desc: "+2" },
-      3: { val: 3, desc: "+3" },
-    },
+      3: { val: 3, desc: "+3" }
+    }
   };
   ctrl.state = {};
   

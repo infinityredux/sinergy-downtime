@@ -26,58 +26,41 @@ mod = angular.module('sin.dtime', [
     'sin.lib.panes'
 ]);
 
-/*mod.factory('dtime', function(persist) {
-  
-});*/
-/*
-mod.directive('dtMain', function() {
-    return {
-        controller: 'DowntimeController',
-        controllerAs: 'ctrl',
-        restrict: 'E',
-        bindings: {
-            dtime: '='
-        },
-        templateUrl: 'fragments/dtime-main.html'
-    };
+// --------------------------------------------------
+
+mod.component('dtForm', {
+    controller: DowntimeFormController,
+    templateUrl: 'fragments/dtime-form.html'
 });
-*/
+
+function DowntimeFormController($scope, dtime) {
+    $scope.dtime = dtime;
+}
+
+// --------------------------------------------------
 
 mod.component('dtMain', {
-    controller: 'DowntimeController',
+    controller: DowntimeMainController,
     controllerAs: 'ctrl',
     templateUrl: 'fragments/dtime-main.html'
 });
 
-mod.controller('DowntimeController', function($scope, actions, lifestyle, money, persist, dtime) {
-    var dc = this;
+function DowntimeMainController($scope, dtime, actions, lifestyle, money, persist) {
     var ctrl = this;
 
-    $scope.dtime_new = dtime;
+    $scope.dtime = dtime;
     $scope.actions = actions;
     $scope.persist = persist;
-  
-    dc.state = {};
-    dc.data = {};
-  
+
+    // TODO: delete these once I'm happy with the money & lifestyle
+    // implementations and the other iterations.
+    ctrl.money_link = money;
+    ctrl.lifestyle_link = lifestyle;
+
     // --------------------------------------------------
     // General variables
     // --------------------------------------------------
 
-    // TODO: delete these once I'm happy with the money & lifestyle
-    // implementations and the other iterations.
-    dc.money_link = money;
-    dc.lifestyle_link = lifestyle;
-
-    dc.load = false;
-    dc.direct = true;
-    dc.helpon = true;
-
-    dc.player = "";
-    dc.char = "";
-    dc.email = "";
-    dc.events = "";
-    dc.minor = "";
     ctrl.help = {
         autoLoad: 'Automatically load the last saved data when the page is opened.',
         showHelp: 'Enable help descriptions, in addition to these tooltips, for extra context with certain selections.',
@@ -88,74 +71,26 @@ mod.controller('DowntimeController', function($scope, actions, lifestyle, money,
         month:  'Month'
     };
   
-    var defaultState = function() {
-        ctrl.state.current_tab = 'none';
-    };
-  
-    defaultState();
-
     // --------------------------------------------------
     // Storage functions
     // --------------------------------------------------
 
     // Done to resolve bug with load event called before the functions registered
-    // in other modules are set up.
+    // in other modules are set up
+    // TODO Does this definitely still work? with the dtime module? if not can implement work around
     if (persist.isStorageAvailable()) {
         if (persist.isStorageSaved()) {
-            if (JSON.parse(localStorage.load)) {
+            //if (JSON.parse(localStorage.load)) {
+            if (dtime.autoLoad) {
                 persist.setAutoLoad();
             }
         }
     }
 
     // --------------------------------------------------
-
-    persist.registerLoad(function() {
-        // Permanent details
-        dc.load   = JSON.parse(localStorage.load);
-        dc.direct = JSON.parse(localStorage.direct);
-        dc.helpon = JSON.parse(localStorage.helpon);
-        dc.player = localStorage.player;
-        dc.char   = localStorage.char;
-        dc.email  = localStorage.email;
-
-        // Temporary details
-        dc.events = localStorage.events;
-        dc.minor  = localStorage.minor;
-    });
-
-    persist.registerSave(function() {
-        // Permanent details
-        localStorage.saved  = true;
-        localStorage.load   = dc.load;
-        localStorage.direct = dc.direct;
-        localStorage.helpon = dc.helpon;
-        localStorage.player = dc.player;
-        localStorage.char   = dc.char;
-        localStorage.email  = dc.email;
-      
-        // Temporary details
-        localStorage.events    = dc.events;
-        localStorage.minor     = dc.minor;
-    });
-  
-    persist.registerLoad(function() {
-        ctrl.state = persist.doLoad('sin.dtime:state', ctrl.state);
-    });
-
-    persist.registerSave(function() {
-        persist.doSave('sin.dtime:state', ctrl.state);
-    });
-
-    persist.registerWipe(function() {
-        dc.events    = "";
-        dc.minor     = "";
-        defaultState();
-    });
-
-    // --------------------------------------------------
     // User interactions
     // --------------------------------------------------
+
     ctrl.startChange = function() {
         actions.setCurrentMonth(ctrl.state.month_num);
     };
@@ -168,7 +103,7 @@ mod.controller('DowntimeController', function($scope, actions, lifestyle, money,
         ctrl.state.current_tab = change;
     };
   
-    dc.sendClick = function() {
+    ctrl.sendClick = function() {
         if (confirm('Submit downtime and wipe temporary data?')) {
             if (persist.isStorageAvailable()) {
                 persist.eventWipe();
@@ -176,19 +111,19 @@ mod.controller('DowntimeController', function($scope, actions, lifestyle, money,
         }
     };
   
-    dc.resetClick = function() {
+    ctrl.resetClick = function() {
         if (confirm('Reset?')) {
             persist.eventReset();
         }
     };
 
-    dc.loadClick = function() {
+    ctrl.loadClick = function() {
         if (confirm('This will revert to the last saved details. Are you sure?')) {
             persist.eventLoad();
         }
     };
   
-    dc.saveClick = function() {
+    ctrl.saveClick = function() {
         if (persist.isStorageSaved()) {
             if (!confirm('Overwrite existing details?')) {
                 return;
@@ -201,11 +136,11 @@ mod.controller('DowntimeController', function($scope, actions, lifestyle, money,
         }
     };
 
-    dc.impoClick = function() {
+    ctrl.impoClick = function() {
         alert('Importing');
     };
 
-    dc.expoClick = function() {
+    ctrl.expoClick = function() {
         alert('Exporting');
     };
-});
+}

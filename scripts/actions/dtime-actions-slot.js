@@ -17,7 +17,7 @@ mod.directive('dtActionSlot', function() {
             num: '=',
             ctrl: '='
         },
-        templateUrl: 'fragments/dtime-actions-slot.html',
+        templateUrl: 'fragments/actions-slot.html',
         controllerAs: 'actSlot',
         controller: ActionSlotController
     };

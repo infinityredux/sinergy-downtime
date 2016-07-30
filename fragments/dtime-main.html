@@ -15,19 +15,19 @@
         <br />
         <br />
 
-        <sin-help ng-show="dtime_new.showHelp" help="ctrl.help.autoLoad"></sin-help>
+        <sin-help ng-show="dtime.showHelp" help="ctrl.help.autoLoad"></sin-help>
         <input type="checkbox"
-               ng-model="ctrl.load" />
+               ng-model="dtime.autoLoad" />
         Auto load <br />
 
-        <sin-help ng-show="dtime_new.showHelp" help="ctrl.help.direct"></sin-help>
+        <sin-help ng-show="dtime.showHelp" help="ctrl.help.direct"></sin-help>
         <input type="checkbox"
-               ng-model="ctrl.direct" />
+               ng-model="dtime.directSumbit" />
         Direct submit <br />
 
-        <sin-help ng-show="dtime_new.showHelp" help="ctrl.help.showHelp"></sin-help>
+        <sin-help ng-show="dtime.showHelp" help="ctrl.help.showHelp"></sin-help>
         <input type="checkbox"
-               ng-model="dtime_new.showHelp" />
+               ng-model="dtime.showHelp" />
         Enable help <br />
         <br />
 
@@ -67,30 +67,30 @@
             <td>Name:</td>
             <td>
                 <input  type="text"
-                        ng-model="ctrl.player"
+                        ng-model="dtime.player"
                         placeholder="Your name"
                         title="The name of the player, i.e. your name." />
-                <sin-help ng-show="dtime_new.showHelp" help="ctrl.help.player"></sin-help>
+                <sin-help ng-show="dtime.showHelp" help="ctrl.help.player"></sin-help>
             </td>
         </tr>
         <tr>
             <td>Character:</td>
             <td>
                 <input  type="text"
-                        ng-model="ctrl.char"
+                        ng-model="dtime.name"
                         placeholder="Character name"
                         title="The name of the character submitting the downtime." />
-                <sin-help ng-show="dtime_new.showHelp" help="ctrl.help.char"></sin-help>
+                <sin-help ng-show="dtime.showHelp" help="ctrl.help.char"></sin-help>
             </td>
         </tr>
         <tr>
             <td>Email:</td>
             <td>
                 <input  type="text"
-                        ng-model="ctrl.email"
+                        ng-model="dtime.email"
                         placeholder="Email address"
                         title="Your email address, used to submit the downtime and/or to receive a copy." />
-                <sin-help ng-show="dtime_new.showHelp" help="ctrl.help.email"></sin-help>
+                <sin-help ng-show="dtime.showHelp" help="ctrl.help.email"></sin-help>
             </td>
         </tr>
     </table>
@@ -100,11 +100,11 @@
     <br />
 
     Submission month:
-    <select ng-model="dtime_new.month"
+    <select ng-model="dtime.month"
             ng-change="ctrl.startChange()"
-            ng-options="item.num as item.long for item in dtime_new.calendar">
+            ng-options="item.num as item.long for item in dtime.calendar">
     </select>
-    <sin-help ng-show="dtime_new.showHelp" help="ctrl.help.month"></sin-help>
+    <sin-help ng-show="dtime.showHelp" help="ctrl.help.month"></sin-help>
 
     <!--br/>
     Months to submit:

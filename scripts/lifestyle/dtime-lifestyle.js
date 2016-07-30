@@ -2,19 +2,19 @@
 
 mod = angular.module('sin.dtime.lifestyle', [
   'sin.fact.lifestyle',
-  'sin.lib.persist',
+  'sin.lib.persist'
   ]);
 
 mod.directive('dtLifestyle', function() {
   return {
     restrict: 'E',
     scope: {
-      dtime: '=',
+      dtime: '='
     },
-    templateUrl: 'fragments/dtime-lifestyle.html',
+    templateUrl: 'fragments/lifestyle.html'
   };
 });
 
 mod.controller('LifestyleController', function(lifestyle) {
-  var c = this;
+  var ctrl = this;
 });

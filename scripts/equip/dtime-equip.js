@@ -13,9 +13,9 @@ mod.directive('dtEquip', function() {
   return {
     restrict: 'E',
     scope: {
-      dtime: '=',
+      dtime: '='
     },
-    templateUrl: 'fragments/dtime-equip.html',
+    templateUrl: 'fragments/equip.html'
   };
 });
 
@@ -33,8 +33,8 @@ mod.controller('EquipController', function($scope, assets, equip, lifestyle, ski
       bio:      {val: "bio", desc: "Bioware", help:"An item of bioware installed anywhere in the body."},
       deck:     {val: "deck", desc: "Cyberdeck", help:"Any variety of cyberdeck or server.  For a cyberware deck you will need to add the item in both this section and cyberware."},
       software: {val: "software", desc: "Software", help: "Software that runs on a cyberdeck."},
-      contact:  {val: "contact", desc: "Contact", help: "A contact or friend that can assist you in downtime"},
-    },
+      contact:  {val: "contact", desc: "Contact", help: "A contact or friend that can assist you in downtime"}
+    }
   };
   
   var defaultState = function() {

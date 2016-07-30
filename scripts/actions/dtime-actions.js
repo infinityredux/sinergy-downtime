@@ -18,7 +18,7 @@ mod.directive('dtActions', function() {
         scope: {
             dtime: '='
         },
-        templateUrl: 'fragments/dtime-actions.html'
+        templateUrl: 'fragments/actions.html'
     };
 });
 */
@@ -26,7 +26,7 @@ mod.directive('dtActions', function() {
 mod.component('dtActions', {
     controller: ActionController,
     controllerAs: 'act',
-    templateUrl: 'fragments/dtime-actions.html'
+    templateUrl: 'fragments/actions.html'
 });
 
 function ActionController ($scope, actions, assets, money, persist, skills) {

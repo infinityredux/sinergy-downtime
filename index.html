@@ -35,54 +35,8 @@
 </head>
 
 <body>
-<h1>Downtime</h1>
-<form name="dtForm" ng-controller="DowntimeController as dt">
-    <sin-tabbed-panes initial="{{dt.state.current_tab}}">
-
-        <div id="left-pane-links" class="pane-link-group">
-            <sin-pane-link tab="all" action="dt.paneChange('all')">All</sin-pane-link> <br />
-            <sin-pane-link tab="none" action="dt.paneChange('none')">None</sin-pane-link> <br />
-
-            <strong>Character</strong><br/>
-            <sin-pane-link tab="equip" action="dt.paneChange('equip')">Equipment</sin-pane-link> <br />
-            <sin-pane-link tab="skills" action="dt.paneChange('skills')">Skills</sin-pane-link> <br />
-
-            <strong>Downtime</strong><br/>
-            <sin-pane-link tab="events" action="dt.paneChange('events')">Events</sin-pane-link> <br />
-            <sin-pane-link tab="actions" action="dt.paneChange('actions')">Actions</sin-pane-link> <br />
-            <sin-pane-link tab="lifestyle" action="dt.paneChange('lifestyle')">Lifestyle</sin-pane-link> <br />
-            <sin-pane-link tab="money" action="dt.paneChange('money')">Money</sin-pane-link> <br />
-        </div>
-
-        <dt-main dtime="dt"></dt-main>
-        <sin-pane tab="equip">
-            <dt-equip dtime="dt"></dt-equip>
-        </sin-pane>
-
-        <sin-pane tab="skills">
-            <dt-skills></dt-skills>
-        </sin-pane>
-
-        <sin-pane tab="events">
-            <dt-events dtime="dt"></dt-events>
-        </sin-pane>
-
-        <sin-pane tab="actions">
-            <dt-actions></dt-actions>
-            <!--dt-actions dtime="Test string"></dt-actions-->
-        </sin-pane>
-
-        <sin-pane tab="lifestyle">
-            {{"NewLife: " + dt.lifestyle_link.listLifestyle(); }} <br/>
-            <dt-lifestyle dtime="dt"></dt-lifestyle>
-        </sin-pane>
-
-        <sin-pane tab="money">
-            <dt-money dtime="dt"></dt-money>
-        </sin-pane>
-
-    </sin-tabbed-panes>
-</form>
+    <h1>Downtime</h1>
+    <dt-form></dt-form>
 </body>
 
 </html>

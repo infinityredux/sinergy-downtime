@@ -26,7 +26,14 @@ mod.factory('dtime', function(actions, persist) {
 
     function defaultState() {
         state = {
+            currentTab: 'none',
+
             month: actions.getCurrentMonth(),
+            email: '',
+            name: '',
+            player: '',
+            autoLoad : false,
+            directSumbit: true,
             showHelp: true
         };
         changed = false;
@@ -42,9 +49,9 @@ mod.factory('dtime', function(actions, persist) {
 
     // --------------------------------------------------
 
-    persist.registerLoad(function() { state = persist.doLoad('sin.core', state); });
+    persist.registerLoad(function() { state = persist.doLoad('sin.fact', state); });
     persist.registerSave(function() {
-        persist.doSave('sin.core', state);
+        persist.doSave('sin.fact', state);
         changed = false;
     });
     persist.registerWipe(defaultState);
@@ -61,22 +68,15 @@ mod.factory('dtime', function(actions, persist) {
         enumerable: false
     });
 
-    Object.defineProperty(factory, 'month', {
-        get: function() {return state.month;},
-        set: function(val) {
-            state.month = val;
-            changed = true;
-        },
-        enumerable: true
-    });
-
-    Object.defineProperty(factory, 'showHelp', {
-        get: function() {return state.showHelp;},
-        set: function(val) {
-            state.showHelp = val;
-            changed = true;
-        },
-        enumerable: true
+    Object.keys(state).forEach(function(item) {
+        Object.defineProperty(factory, item, {
+            get: function() {return state[item];},
+            set: function(val) {
+                state[item] = val;
+                changed = true;
+            },
+            enumerable: true
+        });
     });
 
     return factory;

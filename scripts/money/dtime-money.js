@@ -8,7 +8,7 @@ mod.directive('dtMoney', function() {
     scope: {
       dtime: '=',
     },
-    templateUrl: 'fragments/dtime-money.html',
+    templateUrl: 'fragments/money.html',
   };
 });
 
