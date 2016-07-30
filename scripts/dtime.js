@@ -30,11 +30,23 @@ mod = angular.module('sin.dtime', [
 
 mod.component('dtForm', {
     controller: DowntimeFormController,
+    controllerAs: 'ctrl',
     templateUrl: 'fragments/dtime-form.html'
 });
 
 function DowntimeFormController($scope, dtime) {
+    var ctrl = this;
     $scope.dtime = dtime;
+
+    // --------------------------------------------------
+    // User interactions
+    // --------------------------------------------------
+
+    ctrl.paneChange = function(change) {
+        dtime.currentTab = change;
+        //ctrl.state.current_tab = change;
+        alert(change);
+    };
 }
 
 // --------------------------------------------------
@@ -97,10 +109,6 @@ function DowntimeMainController($scope, dtime, actions, lifestyle, money, persis
   
     ctrl.monthChange = function() {
         actions.setMonths(ctrl.state.month_option);
-    };
-  
-    ctrl.paneChange = function(change) {
-        ctrl.state.current_tab = change;
     };
   
     ctrl.sendClick = function() {

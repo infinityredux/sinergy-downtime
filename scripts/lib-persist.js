@@ -142,6 +142,7 @@ mod.factory('persist', function($rootScope) {
 
     factory.eventSave = function() {
         $rootScope.$emit('sinDTimeSave');
+        localStorage.saved = true;
     };
 
     factory.eventWipe = function() {
@@ -152,7 +153,7 @@ mod.factory('persist', function($rootScope) {
     factory.eventReset = function() {
         $rootScope.$emit('sinDTimeReset');
         localStorage.clear();
-        factory.eventWipe();
+        //factory.eventWipe();
     };
 
     // --------------------------------------------------
