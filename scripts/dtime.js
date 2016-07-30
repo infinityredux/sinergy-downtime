@@ -87,18 +87,6 @@ function DowntimeMainController($scope, dtime, actions, lifestyle, money, persis
     // Storage functions
     // --------------------------------------------------
 
-    // Done to resolve bug with load event called before the functions registered
-    // in other modules are set up
-    // TODO Does this definitely still work? with the dtime module? if not can implement work around
-    if (persist.isStorageAvailable()) {
-        if (persist.isStorageSaved()) {
-            //if (JSON.parse(localStorage.load)) {
-            if (dtime.autoLoad) {
-                persist.setAutoLoad();
-            }
-        }
-    }
-
     // --------------------------------------------------
     // User interactions
     // --------------------------------------------------

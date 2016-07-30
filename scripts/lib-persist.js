@@ -2,7 +2,8 @@ mod = angular.module('sin.lib.persist', []);
 
 mod.factory('persist', function($rootScope) {
     var factory = {};
-    var auto_load = false;
+    var autoLoad = false;
+
     var external_on = false;
     var external_file = '';
 
@@ -16,10 +17,81 @@ mod.factory('persist', function($rootScope) {
         return factory.isStorageAvailable() && (localStorage.saved);
     };
 
-    factory.setAutoLoad = function() {
-        auto_load = true;
+    factory.autoLoadOn = function() {
+        autoLoad = true;
         factory.eventLoad();
     };
+
+    // --------------------------------------------------
+
+    factory.eventLoad = function() {
+        $rootScope.$emit('sinDTimeLoad');
+    };
+
+    factory.eventSave = function() {
+        localStorage.saved = true;
+        $rootScope.$emit('sinDTimeSave');
+    };
+
+    factory.eventWipe = function() {
+        $rootScope.$emit('sinDTimeWipe');
+        factory.eventSave();
+    };
+
+    factory.eventReset = function() {
+        $rootScope.$emit('sinDTimeReset');
+        localStorage.clear();
+    };
+
+    // --------------------------------------------------
+
+    // Done to resolve bug with load event called before the functions registered
+    // in other modules are set up
+    if (factory.isStorageAvailable()) {
+        if (factory.isStorageSaved()) {
+            if (JSON.parse(localStorage.autoLoad)) {
+                factory.autoLoadOn();
+            }
+        }
+    }
+
+    // --------------------------------------------------
+
+    factory.registerLoad = function(listen) {
+        $rootScope.$on('sinDTimeLoad', listen);
+        if (autoLoad) {
+            listen();
+        }
+    };
+
+    factory.registerSave = function(listen) {
+        $rootScope.$on('sinDTimeSave', listen);
+    };
+
+    factory.registerWipe = function(listen) {
+        $rootScope.$on('sinDTimeWipe', listen);
+    };
+
+    factory.registerReset = function(listen) {
+        $rootScope.$on('sinDTimeReset', listen);
+    };
+
+    // --------------------------------------------------
+
+    factory.doLoad = function(key, data) {
+        if (localStorage[key] === undefined) {
+            return data;
+        }
+        if (external_on) {;}
+        return JSON.parse(localStorage[key]);
+    };
+
+    factory.doSave = function(key, data) {
+        if (external_on) {;}
+        localStorage[key] = JSON.stringify(data);
+    };
+
+    // --------------------------------------------------
 
     factory.beginExport = function(file) {
         external_on = true;
@@ -39,17 +111,41 @@ mod.factory('persist', function($rootScope) {
 
     // --------------------------------------------------
 
-    factory.doLoad = function(key, data) {
-        if (localStorage[key] === undefined) {
-            return data;
-        }
-        if (external_on) {;}
-        return JSON.parse(localStorage[key]);
+    var shortChange = [];
+    var longChange = [];
+
+    factory.registerShortTerm = function (register) {
+        if (typeof register !== "function")
+            return false;
+
+        shortChange += register;
+        return true;
     };
 
-    factory.doSave = function(key, data) {
-        if (external_on) {;}
-        localStorage[key] = JSON.stringify(data);
+    factory.registerLongTerm = function (register) {
+        if (typeof register !== "function")
+            return false;
+
+        longChange += register;
+        return true;
+    };
+
+    factory.isShortTermChange = function() {
+        for (var i = 0; i < shortChange.length; i++) {
+            if (shortChange[i]())
+                return true;
+        }
+
+        return false;
+    };
+
+    factory.isLongTermChange = function() {
+        for (var i = 0; i < longChange.length; i++) {
+            if (longChange[i]())
+                return true;
+        }
+
+        return false;
     };
 
     // --------------------------------------------------
@@ -112,90 +208,6 @@ mod.factory('persist', function($rootScope) {
     factory.dataPost = function(key, ajax, post, data_func, error_func, cache) {
         return false;
     };
-
-    // --------------------------------------------------
-
-    factory.registerLoad = function(listen) {
-        $rootScope.$on('sinDTimeLoad', listen);
-        if (auto_load) {
-            listen();
-        }
-    };
-
-    factory.registerSave = function(listen) {
-        $rootScope.$on('sinDTimeSave', listen);
-    };
-
-    factory.registerWipe = function(listen) {
-        $rootScope.$on('sinDTimeWipe', listen);
-    };
-
-    factory.registerReset = function(listen) {
-        $rootScope.$on('sinDTimeReset', listen);
-    };
-
-    // --------------------------------------------------
-
-    factory.eventLoad = function() {
-        $rootScope.$emit('sinDTimeLoad');
-    };
-
-    factory.eventSave = function() {
-        $rootScope.$emit('sinDTimeSave');
-        localStorage.saved = true;
-    };
-
-    factory.eventWipe = function() {
-        $rootScope.$emit('sinDTimeWipe');
-        factory.eventSave();
-    };
-
-    factory.eventReset = function() {
-        $rootScope.$emit('sinDTimeReset');
-        localStorage.clear();
-        //factory.eventWipe();
-    };
-
-    // --------------------------------------------------
-
-    var shortChange = [];
-    var longChange = [];
-
-    factory.registerShortTerm = function (register) {
-        if (typeof register !== "function")
-            return false;
-
-        shortChange += register;
-        return true;
-    };
-
-    factory.registerLongTerm = function (register) {
-        if (typeof register !== "function")
-            return false;
-
-        longChange += register;
-        return true;
-    };
-
-    factory.isShortTermChange = function() {
-        for (var i = 0; i < shortChange.length; i++) {
-            if (shortChange[i]())
-                return true;
-        }
-
-        return false;
-    };
-
-    factory.isLongTermChange = function() {
-        for (var i = 0; i < longChange.length; i++) {
-            if (longChange[i]())
-                return true;
-        }
-
-        return false;
-    };
-
-    // --------------------------------------------------
 
     return factory;
 });
