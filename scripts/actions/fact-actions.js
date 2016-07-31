@@ -1,5 +1,3 @@
-// Code goes here
-
 mod = angular.module('sin.fact.actions', ['sin.lib.persist']);
 
 mod.factory('actions', function(persist) {
@@ -22,8 +20,8 @@ mod.factory('actions', function(persist) {
             {short: 'Dec', med: 'Dec',   long: 'December'}
         ]
     };
-  
-    var defaultState = function() {
+
+    function defaultState() {
         state = {
             current: 0,
             actions: {
@@ -33,7 +31,7 @@ mod.factory('actions', function(persist) {
             }
         };
         state.current = new Date().getMonth();
-    };
+    }
 
     defaultState();
   
