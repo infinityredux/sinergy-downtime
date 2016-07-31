@@ -45,10 +45,11 @@ function DowntimeMainController($scope, dtime, actions, lifestyle, money, persis
     // --------------------------------------------------
 
     ctrl.startChange = function() {
-        actions.setCurrentMonth(ctrl.state.month_num);
+        actions.setCurrentMonth(dtime.month);
     };
 
     ctrl.monthChange = function() {
+        alert('depreciated');
         actions.setMonths(ctrl.state.month_option);
     };
 
