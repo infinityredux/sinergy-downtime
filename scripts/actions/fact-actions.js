@@ -3,6 +3,7 @@ mod = angular.module('sin.fact.actions', ['sin.lib.persist']);
 mod.factory('actions', function(persist) {
     var factory = {};
     var state = {};
+    var changed = false;
   
     factory.data = {
         months: [
@@ -34,12 +35,23 @@ mod.factory('actions', function(persist) {
     }
 
     defaultState();
-  
+
+    function isChanged() {
+        return changed;
+    }
+
     // --------------------------------------------------
 
-    persist.registerLoad(function() { state = persist.doLoad('sin.fact.actions', state); });
-    persist.registerSave(function() { persist.doSave('sin.fact.actions', state); });
+    persist.registerLoad(function() {
+        state = persist.doLoad('sin.fact.actions', state);
+        changed = false;
+    });
+    persist.registerSave(function() {
+        persist.doSave('sin.fact.actions', state);
+        changed = false;
+    });
     persist.registerWipe(function() { defaultState(); });
+    persist.registerLongTerm(isChanged);
 
     // --------------------------------------------------
 

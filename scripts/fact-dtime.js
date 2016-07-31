@@ -49,7 +49,10 @@ mod.factory('dtime', function(actions, persist) {
 
     // --------------------------------------------------
 
-    persist.registerLoad(function() { state = persist.doLoad('sin.fact', state); });
+    persist.registerLoad(function() {
+        state = persist.doLoad('sin.fact', state);
+        changed = false;
+    });
     persist.registerSave(function() {
         persist.doSave('sin.fact', state);
         persist.doSave('autoLoad', state.autoLoad);

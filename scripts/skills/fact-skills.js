@@ -3,6 +3,7 @@ mod = angular.module('sin.fact.skills', ['sin.lib.persist']);
 mod.factory('skills', function(persist) {
     var factory = {};
     var state = {};
+    var changed = false;
 
     factory.data = {
         dataCacheTime: (7 * 24 * 60 * 60 * 1000),   //one week in milliseconds
