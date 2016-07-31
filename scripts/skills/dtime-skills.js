@@ -1,6 +1,5 @@
-// Code goes here
-
 mod = angular.module('sin.dtime.skills', [
+    'sin.dtime.skills-selectors',
     'sin.fact.skills',
     'sin.lib.persist'
 ]);
@@ -11,10 +10,10 @@ mod.component('dtSkills', {
     templateUrl: 'fragments/skills.html'
 });
 
-function SkillController ($scope, persist, skills) {
-  var ctrl = this;
-  $scope.skills = skills;
-  $scope.skillTree = skills.getSkillTree();
+function SkillController($scope, persist, skills) {
+    var ctrl = this;
+    $scope.skills = skills;
+    $scope.skillTree = skills.getSkillTree();
   
   ctrl.data = {
     skill_opt: {

@@ -20,6 +20,7 @@ mod = angular.module('sin.dtime', [
     'sin.dtime.lifestyle',
     'sin.dtime.money',
     'sin.dtime.skills',
+    'sin.dtime.skills-selectors',
 
     'sin.fact',
     'sin.fact.actions',
