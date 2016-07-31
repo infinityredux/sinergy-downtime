@@ -39,6 +39,7 @@ mod.factory('persist', function($rootScope) {
     };
 
     factory.eventReset = function() {
+        factory.eventWipe();
         $rootScope.$emit('sinDTimeReset');
         localStorage.clear();
     };

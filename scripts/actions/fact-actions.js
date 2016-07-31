@@ -39,19 +39,9 @@ mod.factory('actions', function(persist) {
   
     // --------------------------------------------------
 
-    persist.registerLoad(function() {
-        // Temporary details
-        state = persist.doLoad('sin.fact.actions', state);
-    });
-
-    persist.registerSave(function() {
-        // Temporary details
-        persist.doSave('sin.fact.actions', state);
-    });
-  
-    persist.registerWipe(function() {
-        defaultState();
-    });
+    persist.registerLoad(function() { state = persist.doLoad('sin.fact.actions', state); });
+    persist.registerSave(function() { persist.doSave('sin.fact.actions', state); });
+    persist.registerWipe(function() { defaultState(); });
 
     // --------------------------------------------------
 

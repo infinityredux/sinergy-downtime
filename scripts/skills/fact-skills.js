@@ -3,7 +3,8 @@
 mod = angular.module('sin.fact.skills', ['sin.lib.persist']);
 
 mod.factory('skills', function(persist) {
-    var serv = {};
+    var factory = {};
+    var state = {};
   
     //var data_cache_time = 7 * 24 * 60 * 60 * 1000;  //one week in milliseconds
     var raw_data = {
@@ -293,15 +294,15 @@ mod.factory('skills', function(persist) {
   
     // --------------------------------------------------
 
-    serv.getSkillTree = function() {
+    factory.getSkillTree = function() {
         return tree;
     };
   
-    serv.getTreeTypes = function() {
+    factory.getTreeTypes = function() {
         return tree_types;
     };
   
-    serv.treeAddSkill = function(skill) {
+    factory.treeAddSkill = function(skill) {
         if (tree[skill] === undefined) return false;
         if (tree[skill].trained) return false;
     
@@ -309,7 +310,7 @@ mod.factory('skills', function(persist) {
         return true;
     };
   
-    serv.treeAddSpec = function(skill, spec) {
+    factory.treeAddSpec = function(skill, spec) {
         if (tree[skill] === undefined) return false;
         if (tree[skill].specs[spec] === undefined) return false;
         if (tree[skill].specs[spec].trained) return false;
@@ -318,7 +319,7 @@ mod.factory('skills', function(persist) {
         return true;
     };
   
-    serv.treeRemoveSkill = function(skill) {
+    factory.treeRemoveSkill = function(skill) {
         if (tree[skill] === undefined) return false;
         if (!tree[skill].trained) return false;
     
@@ -327,12 +328,12 @@ mod.factory('skills', function(persist) {
         tree[skill].slots = 0;
     
         for(var spec in tree[skill].specs)
-            serv.treeRemoveSpec(skill, spec);
+            factory.treeRemoveSpec(skill, spec);
 
         return true;
     };
 
-    serv.treeRemoveSpec = function(skill, spec) {
+    factory.treeRemoveSpec = function(skill, spec) {
         if (tree[skill] === undefined) return false;
         if (tree[skill].specs[spec] === undefined) return false;
         if (!tree[skill].specs[spec].trained) return false;
@@ -345,7 +346,7 @@ mod.factory('skills', function(persist) {
 
     // --------------------------------------------------
 
-    serv.treeHasTypeTrained = function(type) {
+    factory.treeHasTypeTrained = function(type) {
         for (var skill in tree) {
             if (tree[skill].type == type) {
                 if (tree[skill].trained) {
@@ -356,42 +357,42 @@ mod.factory('skills', function(persist) {
         return false;
     };
 
-    serv.treeFilterAll = function() {
+    factory.treeFilterAll = function() {
         return Object.keys(tree);
     };
 
-    serv.treeFilterNotType = function(type) {
+    factory.treeFilterNotType = function(type) {
         return Object.keys(tree).filter(function(val) {
             return (tree[val].type != type);
         });
     };
 
-    serv.treeFilterTrained = function() {
+    factory.treeFilterTrained = function() {
         return Object.keys(tree).filter(function(val) {
             return tree[val].trained;
         });
     };
 
-    serv.treeFilterUntrained = function() {
+    factory.treeFilterUntrained = function() {
         return Object.keys(tree).filter(function(val) {
             return !tree[val].trained;
         });
     };
 
-    serv.treeFilterTypeTrained = function(type) {
+    factory.treeFilterTypeTrained = function(type) {
         return Object.keys(tree).filter(function(val) {
             return (tree[val].type == type) && tree[val].trained;
         });
     };
 
-    serv.treeFilterSpecTrained = function(skill) {
+    factory.treeFilterSpecTrained = function(skill) {
         if (!skill) return [];
         return Object.keys(tree[skill].specs).filter(function(val) {
             return tree[skill].specs[val].trained;
         });
     };
 
-    serv.treeFilterSpecUntrained = function(skill) {
+    factory.treeFilterSpecUntrained = function(skill) {
         if (!skill) return [];
         return Object.keys(tree[skill].specs).filter(function(val) {
             return !tree[skill].specs[val].trained;
@@ -400,30 +401,30 @@ mod.factory('skills', function(persist) {
 
     // --------------------------------------------------
 
-    serv.treeSkillRank = function(skill) {
+    factory.treeSkillRank = function(skill) {
         if (!(skill in tree)) return 0;
         return tree[skill].rank;
     };
 
-    serv.treeSpecRank = function(skill, spec) {
+    factory.treeSpecRank = function(skill, spec) {
         if (!(skill in tree)) return 0;
         if (!(spec in tree[skill].specs)) return 0;
         return tree[skill].specs[spec].rank;
     };
 
-    serv.treeSkillSlot = function(skill) {
+    factory.treeSkillSlot = function(skill) {
         return raw_slot_skill[tree[skill].rank];
     };
 
-    serv.treeSpecSlot = function(skill, spec) {
+    factory.treeSpecSlot = function(skill, spec) {
         return raw_slot_spec[tree[skill].specs[spec].rank];
     };
 
-    serv.treeSkillName = function(skill) {
+    factory.treeSkillName = function(skill) {
         return tree[skill].name;
     };
 
-    serv.treeSpecName = function(skill, spec) {
+    factory.treeSpecName = function(skill, spec) {
         return tree[skill].specs[spec].name;
     };
 
@@ -469,5 +470,5 @@ mod.factory('skills', function(persist) {
 
     // --------------------------------------------------
 
-    return serv;
+    return factory;
 });
