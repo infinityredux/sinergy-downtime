@@ -19,7 +19,7 @@ mod.factory('skills', function(persist) {
 
     function defaultState() {
         state.lockSkillEdit = true;
-        state.newSelected = "";
+        state.newSelected = null;
         state.processed = false;
         state.tree = {};
         state.treeTypes = [];
