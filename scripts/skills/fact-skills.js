@@ -13,6 +13,10 @@ mod.factory('skills', function(persist) {
 
     // --------------------------------------------------
 
+    function isChanged() {
+        return changed;
+    }
+
     function defaultState() {
         state.tree = {};
         state.treeTypes = [];
@@ -35,14 +39,6 @@ mod.factory('skills', function(persist) {
 
     // --------------------------------------------------
 
-    factory.getSkillTree = function() {
-        return state.tree;
-    };
-  
-    factory.getTreeTypes = function() {
-        return state.treeTypes;
-    };
-  
     factory.treeAddSkill = function(skill) {
         if (state.tree[skill] === undefined) return false;
         if (state.tree[skill].trained) return false;
@@ -171,9 +167,16 @@ mod.factory('skills', function(persist) {
 
     // --------------------------------------------------
 
-    persist.registerLoad(function() { state = persist.doLoad('sin.fact.skills', state); });
-    persist.registerSave(function() { persist.doSave('sin.fact.skills', state); });
+    persist.registerLoad(function() {
+        state = persist.doLoad('sin.fact.skills', state);
+        changed = false;
+    });
+    persist.registerSave(function() {
+        persist.doSave('sin.fact.skills', state);
+        changed = false;
+    });
     persist.registerWipe(function() { defaultState(); });
+    persist.registerLongTerm(isChanged);
 
     // --------------------------------------------------
 

@@ -37,7 +37,7 @@ mod.directive('dtSkillSelect', function() {
         },
         controller: function($scope, skills) {
             $scope.skills = skills;
-            $scope.skillTree = skills.getSkillTree();
+            $scope.skillTree = skills.tree;
         },
         controllerAs: 'ctrl',
         template: ''+
@@ -80,7 +80,7 @@ mod.directive('dtSpecSelect', function() {
         },
         controller: function($scope, skills) {
             $scope.skills = skills;
-            $scope.skillTree = skills.getSkillTree();
+            $scope.skillTree = skills.tree;
         },
         controllerAs: 'ctrl',
         template: ''+

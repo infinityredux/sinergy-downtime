@@ -13,7 +13,7 @@ mod.component('dtSkills', {
 function SkillController($scope, persist, skills) {
     var ctrl = this;
     $scope.skills = skills;
-    $scope.skillTree = skills.getSkillTree();
+    $scope.skillTree = skills.tree;
   
   ctrl.data = {
     skill_opt: {

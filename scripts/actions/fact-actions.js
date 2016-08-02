@@ -22,6 +22,10 @@ mod.factory('actions', function(persist) {
         ]
     };
 
+    function isChanged() {
+        return changed;
+    }
+
     function defaultState() {
         state = {
             current: 0,
@@ -35,10 +39,6 @@ mod.factory('actions', function(persist) {
     }
 
     defaultState();
-
-    function isChanged() {
-        return changed;
-    }
 
     // --------------------------------------------------
 
