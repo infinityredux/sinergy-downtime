@@ -31,37 +31,27 @@ function SkillController($scope, persist, skills) {
       3: { val: 3, desc: "+3" }
     }
   };
-  ctrl.state = {};
-  
-  var defaultState = function() {
-    ctrl.state.lock_skill_edit = true;
-    ctrl.state.select_new = "";
-  };
-  
-  defaultState();
-  
-  ctrl.skill_select = "";
-  
+
   ctrl.addClick = function() {
-    if (ctrl.state.select_new === null) return;
-    skills.treeAddSkill(ctrl.state.select_new);
+    if (skills.newSelected === null) return;
+    skills.addSkill(skills.newSelected);
   };
 
   ctrl.addSpecClick = function(skill, spec) {
     if (skill === null) return;
     if (spec === null) return;
-    skills.treeAddSpec(skill, spec);
+    skills.addSpec(skill, spec);
   };
   
   ctrl.removeClick = function(skill) {
     if (skill === null) return;
-    skills.treeRemoveSkill(skill);
+    skills.removeSkill(skill);
   };
   
   ctrl.removeSpecClick = function(skill, spec) {
     if (skill === null) return;
     if (spec === null) return;
-    skills.treeRemoveSpec(skill, spec);
+    skills.removeSpec(skill, spec);
   };
   
 }

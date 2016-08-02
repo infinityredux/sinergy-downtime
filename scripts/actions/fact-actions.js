@@ -83,7 +83,7 @@ mod.factory('actions', function(persist) {
     factory.hasFilterAction = function(filter, type) {
         for (var i = 0; i < state.actions[filter].length; i++) {
             if (state.actions[filter][i].action == type) {
-                return slot;
+                return true;
             }
         }
         return false;
@@ -112,11 +112,6 @@ mod.factory('actions', function(persist) {
 
     // --------------------------------------------------
 
-    // TODO this fixes the issue...
-    // BUT.. the underlying cause is still unknown
-    // Why is the selected state disappearing?
-
-    // TODO: has multi-month removal fixed this?
     factory.getFilterCount = function(filter) {
         return state.actions[filter].length;
     };

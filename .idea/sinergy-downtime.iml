@@ -5,6 +5,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Angular JS" level="project" />
-    <orderEntry type="library" name="Angular Desktop" level="project" />
+    <orderEntry type="library" name="Angular Laptop" level="project" />
   </component>
 </module>

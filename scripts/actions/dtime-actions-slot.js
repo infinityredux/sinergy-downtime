@@ -41,11 +41,11 @@ function ActionSlotController($scope, actions, assets, money, skills) {
 
     this.getSkillName = function() {
         if (this.slot.spec) {
-            return (skills.treeSkillName(this.slot.skill) + '/' +
-            skills.treeSpecName(this.slot.skill,this.slot.spec));
+            return (skills.nameSkill(this.slot.skill) + '/' +
+            skills.nameSpec(this.slot.skill,this.slot.spec));
         }
         //Otherwise
-        return skills.treeSkillName(this.slot.skill);
+        return skills.nameSkill(this.slot.skill);
     };
 
     this.getTotalSkill = function() {
@@ -103,8 +103,8 @@ function ActionSlotController($scope, actions, assets, money, skills) {
         this.slot.employer = job.employer;
         this.slot.skill = job.skill;
         this.slot.spec = job.spec;
-        this.slot.ranks_skill = skills.treeSkillRank(job.skill);
-        this.slot.ranks_spec = skills.treeSpecRank(job.skill, job.spec);
+        this.slot.ranks_skill = skills.rankSkill(job.skill);
+        this.slot.ranks_spec = skills.rankSpec(job.skill, job.spec);
         this.slot.level = job.level;
         if (this.slot.action == 'emp')
             this.slot.money = this.calcSalary();

@@ -1,24 +1,24 @@
 <sin-fieldset legend="Skills:">
-    <span ng-show="skills.treeFilterUntrained().length>0">
-        <select ng-model="ctrl.state.select_new"
-                ng-disabled="ctrl.state.lock_skill_edit"
+    <span ng-show="skills.filterUntrained().length>0">
+        <select ng-model="ctrl.state.skills.newSelected"
+                ng-disabled="skills.lockSkillEdit"
                 ng-options="skillTree[skill].id as skillTree[skill].name group by skillTree[skill].type for skill in skills.treeFilterUntrained()" >
             <option value="">--- new skill ---</option>
         </select>
         <input type="button"
                value="Add"
                ng-click="ctrl.addClick()"
-               ng-disabled="ctrl.state.lock_skill_edit" />
+               ng-disabled="skills.lockSkillEdit" />
     </span>
   
     <div class="opt-float-right">
-        <input type="checkbox" ng-model="ctrl.state.lock_skill_edit">
+        <input type="checkbox" ng-model="skills.lockSkillEdit">
         Lock skills
     </div>
   
     <table width="100%">
         <thead>
-            <tr ng-show="skills.treeFilterTrained().length>0">
+            <tr ng-show="skills.filterTrained().length>0">
                 <th width="200px">Skill name</th>
                 <th width="65px">Ranks</th>
                 <th>Training</th>
@@ -28,44 +28,44 @@
     
         <tbody ng-repeat="type in skills.treeTypes">
       
-            <tr ng-show="skills.treeHasTypeTrained(type)">
+            <tr ng-show="skills.isTypeTrained(type)">
                 <th colspan=4>{{type}}</th>
             </tr>
 
-            <!-- {{skills.treeFilterTypeTrained(type)}}-->
+            <!-- {{skills.filterTypeTrained(type)}}-->
       
-      <tr ng-repeat-start="skill in skills.treeFilterTypeTrained(type)">
+      <tr ng-repeat-start="skill in skills.filterTypeTrained(type)">
         <td class="pad-right">
           {{skillTree[skill].name}}
         </td>
         <td class="pad-right">
           <dt-rank-select 
             skill="skill"
-            disabled="ctrl.state.lock_skill_edit" >
+            disabled="skills.lockSkillEdit" >
           </dt-rank-select>
         </td>
         <td class="pad-right" >
-          <span ng-show="skills.treeSkillSlot(skill)>0">
-          {{skillTree[skill].slots + '/' + skills.treeSkillSlot(skill) + ' slots'}}
+          <span ng-show="skills.slotsSkill(skill)>0">
+          {{skillTree[skill].slots + '/' + skills.slotsSkill(skill) + ' slots'}}
           <input  type="range" 
                   min="0" 
-                  max="{{skills.treeSkillSlot(skill)-1}}" 
+                  max="{{skills.slotsSkill(skill)-1}}"
                   ng-model="skillTree[skill].slots" 
-                  ng-hide="ctrl.state.lock_skill_edit"
-                  ng-disabled="ctrl.state.lock_skill_edit"
+                  ng-hide="skills.lockSkillEdit"
+                  ng-disabled="skills.lockSkillEdit"
                   class="sel-sizematch" />
           </span>
         </td>
         <td class="pad-right">
-          <span ng-show="skills.treeFilterSpecUntrained(skill).length>0">
+          <span ng-show="skills.filterSpecUntrained(skill).length>0">
           <select ng-model="spec" 
-                  ng-hide="ctrl.state.lock_skill_edit"
-                  ng-disabled="ctrl.state.lock_skill_edit"
+                  ng-hide="skills.lockSkillEdit"
+                  ng-disabled="skills.lockSkillEdit"
                   ng-options="spec as skillTree[skill].specs[spec].name for spec in skills.treeFilterSpecUntrained(skill)">
           </select>
           <input  type="button"
-                  ng-hide="ctrl.state.lock_skill_edit"
-                  ng-disabled="ctrl.state.lock_skill_edit"
+                  ng-hide="skills.lockSkillEdit"
+                  ng-disabled="skills.lockSkillEdit"
                   ng-click="ctrl.addSpecClick(skill,spec)"
                   value="Add Spec" />
           </span>
@@ -74,31 +74,31 @@
           <span class="opt-float-right">
           <input  type="button" 
                   ng-click="ctrl.removeClick(skill)" 
-                  ng-hide="ctrl.state.lock_skill_edit"
-                  ng-disabled="ctrl.state.lock_skill_edit"
+                  ng-hide="skills.lockSkillEdit"
+                  ng-disabled="skills.lockSkillEdit"
                   value="Remove" />
           </span>
         </td>
       </tr>
-      <tr ng-repeat-end ng-repeat="spec in skills.treeFilterSpecTrained(skill)">
+      <tr ng-repeat-end ng-repeat="spec in skills.filterSpecTrained(skill)">
         <td class="pad-right">+ {{skillTree[skill].specs[spec].name}}</td>
         <td class="pad-right">
           <select ng-model="skillTree[skill].specs[spec].rank"
                   ng-options="opt.val as opt.desc for opt in ctrl.data.spec_opt"
                   class="sel-sizematch" 
-                  ng-disabled="ctrl.state.lock_skill_edit" 
+                  ng-disabled="skills.lockSkillEdit" 
                   ng-change="skillTree[skill].specs[spec].slots=0" >
           </select>
         </td>
         <td class="pad-right">
-          <span ng-show="skills.treeSpecSlot(skill,spec)>0">
-          {{skillTree[skill].specs[spec].slots + '/' + skills.treeSpecSlot(skill,spec) + ' slots'}}
+          <span ng-show="skills.slotsSpec(skill,spec)>0">
+          {{skillTree[skill].specs[spec].slots + '/' + skills.slotsSpec(skill,spec) + ' slots'}}
           <input  type="range" 
                   min="0" 
-                  max="{{skills.treeSpecSlot(skill,spec)-1}}" 
+                  max="{{skills.slotsSpec(skill,spec)-1}}"
                   ng-model="skillTree[skill].specs[spec].slots" 
-                  ng-hide="ctrl.state.lock_skill_edit"
-                  ng-disabled="ctrl.state.lock_skill_edit"
+                  ng-hide="skills.lockSkillEdit"
+                  ng-disabled="skills.lockSkillEdit"
                   class="sel-sizematch" />
           </span>
         </td>
@@ -107,8 +107,8 @@
           <span class="opt-float-right">
           <input  type="button" 
                   ng-click="ctrl.removeSpecClick(skill,spec)" 
-                  ng-hide="ctrl.state.lock_skill_edit"
-                  ng-disabled="ctrl.state.lock_skill_edit"
+                  ng-hide="skills.lockSkillEdit"
+                  ng-disabled="skills.lockSkillEdit"
                   value="Remove" />
           </span>
         </td>
