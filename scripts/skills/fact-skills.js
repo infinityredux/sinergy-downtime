@@ -207,6 +207,10 @@ mod.factory('skills', function(persist) {
         return state.tree[skill].specs[spec].name;
     };
 
+    factory.typeSkill = function(skill) {
+        return state.tree[skill].type;
+    };
+
     // --------------------------------------------------
 
     function convertSkillRankToSlots (rank) {
@@ -476,6 +480,9 @@ mod.factory('skills', function(persist) {
                 state.treeTypes.push(factory.data.rawSkills[base].name);
             }
         }
+
+        //TODO: would filters be more efficient than iterating through everything?
+
         for (skill in factory.data.rawSkills) {
             if (factory.data.rawSkills[skill].parent > 0 && factory.data.rawSkills[skill].parent <=4) {
                 base = factory.data.rawSkills[skill].parent;

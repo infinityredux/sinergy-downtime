@@ -2,7 +2,7 @@
     <span ng-show="skills.filterUntrained().length>0">
         <select ng-model="skills.newSelected"
                 ng-disabled="skills.lockSkillEdit"
-                ng-options="skillTree[skill].id as skillTree[skill].name group by skillTree[skill].type for skill in skills.filterUntrained()" >
+                ng-options="skill as skills.nameSkill(skill) group by skills.typeSkill(skill) for skill in skills.filterUntrained()" >
             <option value="">--- new skill ---</option>
         </select>
         <input type="button"
@@ -36,7 +36,7 @@
 
             <tr ng-repeat-start="skill in skills.filterTypeTrained(type)">
                 <td class="pad-right">
-                    {{skillTree[skill].name}}
+                    {{skills.nameSkill(skill);}}
                 </td>
                 <td class="pad-right">
                     <dt-rank-select
