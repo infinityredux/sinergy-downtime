@@ -20,7 +20,10 @@ mod.factory('skills', function(persist) {
     function defaultState() {
         state.lockSkillEdit = true;
         state.newSelected = null;
+
         state.processed = false;
+        state.pendingData = false;
+
         state.tree = {};
         state.treeTypes = [];
     }
@@ -58,7 +61,7 @@ mod.factory('skills', function(persist) {
         enumerable: true
     });
 
-    Object.defineProperty(factory, 'treeTypes', {
+    Object.defineProperty(factory, 'types', {
         get: function() { return state.treeTypes; },
         enumerable: true
     });
@@ -463,12 +466,7 @@ mod.factory('skills', function(persist) {
 
     // --------------------------------------------------
 
-    var processDataTree = function() {
-        if (state.processed) {
-            console.log('Skill data state.tree already processed');
-            return;
-        }
-
+    function processDataTree() {
         var base;
         var skill;
         var spec;
@@ -506,9 +504,32 @@ mod.factory('skills', function(persist) {
         }
 
         state.processed = true;
-    };
+    }
 
-    processDataTree();
+    if (!state.processed)
+        processDataTree();
+
+    function skillUpdateSuccess(data) {
+        factory.data.rawSkills = data;
+        state.pendingData = false;
+        state.processed = false;
+        processDataTree();
+    }
+
+    function skillUpdateError(data) {
+        state.pendingData = false;
+    }
+
+    function pollServer() {
+        state.pendingData = true;
+        persist.dataFetch("rawSkills",
+            "https://inserturlhere.com/",
+            skillUpdateSuccess,
+            skillUpdateError,
+            factory.data.dataCacheTime);
+    }
+
+    //pollServer();
 
     // --------------------------------------------------
 

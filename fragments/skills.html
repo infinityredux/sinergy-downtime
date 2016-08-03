@@ -1,8 +1,8 @@
 <sin-fieldset legend="Skills:">
     <span ng-show="skills.filterUntrained().length>0">
-        <select ng-model="ctrl.state.skills.newSelected"
+        <select ng-model="skills.newSelected"
                 ng-disabled="skills.lockSkillEdit"
-                ng-options="skillTree[skill].id as skillTree[skill].name group by skillTree[skill].type for skill in skills.treeFilterUntrained()" >
+                ng-options="skillTree[skill].id as skillTree[skill].name group by skillTree[skill].type for skill in skills.filterUntrained()" >
             <option value="">--- new skill ---</option>
         </select>
         <input type="button"
@@ -26,94 +26,93 @@
             </tr>
         </thead>
     
-        <tbody ng-repeat="type in skills.treeTypes">
+        <tbody ng-repeat="type in skills.types">
       
             <tr ng-show="skills.isTypeTrained(type)">
                 <th colspan=4>{{type}}</th>
             </tr>
 
             <!-- {{skills.filterTypeTrained(type)}}-->
-      
-      <tr ng-repeat-start="skill in skills.filterTypeTrained(type)">
-        <td class="pad-right">
-          {{skillTree[skill].name}}
-        </td>
-        <td class="pad-right">
-          <dt-rank-select 
-            skill="skill"
-            disabled="skills.lockSkillEdit" >
-          </dt-rank-select>
-        </td>
-        <td class="pad-right" >
-          <span ng-show="skills.slotsSkill(skill)>0">
-          {{skillTree[skill].slots + '/' + skills.slotsSkill(skill) + ' slots'}}
-          <input  type="range" 
-                  min="0" 
-                  max="{{skills.slotsSkill(skill)-1}}"
-                  ng-model="skillTree[skill].slots" 
-                  ng-hide="skills.lockSkillEdit"
-                  ng-disabled="skills.lockSkillEdit"
-                  class="sel-sizematch" />
-          </span>
-        </td>
-        <td class="pad-right">
-          <span ng-show="skills.filterSpecUntrained(skill).length>0">
-          <select ng-model="spec" 
-                  ng-hide="skills.lockSkillEdit"
-                  ng-disabled="skills.lockSkillEdit"
-                  ng-options="spec as skillTree[skill].specs[spec].name for spec in skills.treeFilterSpecUntrained(skill)">
-          </select>
-          <input  type="button"
-                  ng-hide="skills.lockSkillEdit"
-                  ng-disabled="skills.lockSkillEdit"
-                  ng-click="ctrl.addSpecClick(skill,spec)"
-                  value="Add Spec" />
-          </span>
-        </td>
-        <td>
-          <span class="opt-float-right">
-          <input  type="button" 
-                  ng-click="ctrl.removeClick(skill)" 
-                  ng-hide="skills.lockSkillEdit"
-                  ng-disabled="skills.lockSkillEdit"
-                  value="Remove" />
-          </span>
-        </td>
-      </tr>
-      <tr ng-repeat-end ng-repeat="spec in skills.filterSpecTrained(skill)">
-        <td class="pad-right">+ {{skillTree[skill].specs[spec].name}}</td>
-        <td class="pad-right">
-          <select ng-model="skillTree[skill].specs[spec].rank"
-                  ng-options="opt.val as opt.desc for opt in ctrl.data.spec_opt"
-                  class="sel-sizematch" 
-                  ng-disabled="skills.lockSkillEdit" 
-                  ng-change="skillTree[skill].specs[spec].slots=0" >
-          </select>
-        </td>
-        <td class="pad-right">
-          <span ng-show="skills.slotsSpec(skill,spec)>0">
-          {{skillTree[skill].specs[spec].slots + '/' + skills.slotsSpec(skill,spec) + ' slots'}}
-          <input  type="range" 
-                  min="0" 
-                  max="{{skills.slotsSpec(skill,spec)-1}}"
-                  ng-model="skillTree[skill].specs[spec].slots" 
-                  ng-hide="skills.lockSkillEdit"
-                  ng-disabled="skills.lockSkillEdit"
-                  class="sel-sizematch" />
-          </span>
-        </td>
-        <td>&nbsp;</td>
-        <td>
-          <span class="opt-float-right">
-          <input  type="button" 
-                  ng-click="ctrl.removeSpecClick(skill,spec)" 
-                  ng-hide="skills.lockSkillEdit"
-                  ng-disabled="skills.lockSkillEdit"
-                  value="Remove" />
-          </span>
-        </td>
-      </tr>
-      
-    </tbody>
-  </table>
+
+            <tr ng-repeat-start="skill in skills.filterTypeTrained(type)">
+                <td class="pad-right">
+                    {{skillTree[skill].name}}
+                </td>
+                <td class="pad-right">
+                    <dt-rank-select
+                            skill="skill"
+                            disabled="skills.lockSkillEdit" >
+                    </dt-rank-select>
+                </td>
+                <td class="pad-right" >
+                    <span ng-show="skills.slotsSkill(skill)>0">
+                        {{skillTree[skill].slots + '/' + skills.slotsSkill(skill) + ' slots'}}
+                        <input type="range"
+                               min="0"
+                               max="{{skills.slotsSkill(skill)-1}}"
+                               ng-model="skillTree[skill].slots"
+                               ng-hide="skills.lockSkillEdit"
+                               ng-disabled="skills.lockSkillEdit"
+                               class="sel-sizematch" />
+                    </span>
+                </td>
+                <td class="pad-right">
+                    <span ng-show="skills.filterSpecUntrained(skill).length>0">
+                        <select ng-model="spec"
+                                ng-hide="skills.lockSkillEdit"
+                                ng-disabled="skills.lockSkillEdit"
+                                ng-options="spec as skillTree[skill].specs[spec].name for spec in skills.filterSpecUntrained(skill)">
+                        </select>
+                        <input type="button"
+                               ng-hide="skills.lockSkillEdit"
+                               ng-disabled="skills.lockSkillEdit"
+                               ng-click="ctrl.addSpecClick(skill,spec)"
+                               value="Add Spec" />
+                    </span>
+                </td>
+                <td>
+                    <span class="opt-float-right">
+                        <input type="button"
+                               ng-click="ctrl.removeClick(skill)"
+                               ng-hide="skills.lockSkillEdit"
+                               ng-disabled="skills.lockSkillEdit"
+                               value="Remove" />
+                    </span>
+                </td>
+            </tr>
+            <tr ng-repeat-end ng-repeat="spec in skills.filterSpecTrained(skill)">
+                <td class="pad-right">+ {{skillTree[skill].specs[spec].name}}</td>
+                <td class="pad-right">
+                    <select ng-model="skillTree[skill].specs[spec].rank"
+                            ng-options="opt.val as opt.desc for opt in ctrl.data.spec_opt"
+                            class="sel-sizematch"
+                            ng-disabled="skills.lockSkillEdit"
+                            ng-change="skillTree[skill].specs[spec].slots=0" >
+                    </select>
+                </td>
+                <td class="pad-right">
+                    <span ng-show="skills.slotsSpec(skill,spec)>0">
+                        {{skillTree[skill].specs[spec].slots + '/' + skills.slotsSpec(skill,spec) + ' slots'}}
+                        <input type="range"
+                               min="0"
+                               max="{{skills.slotsSpec(skill,spec)-1}}"
+                               ng-model="skillTree[skill].specs[spec].slots"
+                               ng-hide="skills.lockSkillEdit"
+                               ng-disabled="skills.lockSkillEdit"
+                               class="sel-sizematch" />
+                    </span>
+                </td>
+                <td>&nbsp;</td>
+                <td>
+                    <span class="opt-float-right">
+                        <input type="button"
+                               ng-click="ctrl.removeSpecClick(skill,spec)"
+                               ng-hide="skills.lockSkillEdit"
+                               ng-disabled="skills.lockSkillEdit"
+                               value="Remove" />
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </sin-fieldset>
