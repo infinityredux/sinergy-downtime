@@ -15,7 +15,7 @@ mod.directive('dtRankSelect', function() {
         controllerAs: 'ctrl',
         template: ''+
             '<select ng-model="skillTree[skill].rank" '+
-            '        ng-options="opt.val as opt.desc for opt in ctrl.data.skill_opt" '+
+            '        ng-options="opt.val as opt.desc for opt in ctrl.data.descSkill" '+
             '        class="sel-sizematch" '+
             '        ng-disabled="disabled" '+
             '        ng-change="skillTree[skill].slots=0" >'+

@@ -16,7 +16,7 @@ function SkillController($scope, persist, skills) {
     $scope.skillTree = skills.tree;
   
     ctrl.data = {
-        skill_opt: {
+        descSkill: {
             0: { val: 0, desc: "0" },
             1: { val: 1, desc: "1" },
             2: { val: 2, desc: "2" },
@@ -24,7 +24,7 @@ function SkillController($scope, persist, skills) {
             4: { val: 4, desc: "4" },
             5: { val: 5, desc: "5" }
         },
-        spec_opt: {
+        descSpec: {
             0: { val: 0, desc: "+0" },
             1: { val: 1, desc: "+1" },
             2: { val: 2, desc: "+2" },

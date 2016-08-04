@@ -36,7 +36,7 @@
 
             <tr ng-repeat-start="skill in skills.filterTypeTrained(type)">
                 <td class="pad-right">
-                    {{skills.nameSkill(skill);}}
+                    {{ skills.nameSkill(skill); }}
                 </td>
                 <td class="pad-right">
                     <dt-rank-select
@@ -46,10 +46,10 @@
                 </td>
                 <td class="pad-right" >
                     <span ng-show="skills.trainableSkill(skill)>0">
-                        {{skillTree[skill].slots + '/' + skills.trainableSkill(skill) + ' slots'}}
+                        {{ skills.slotsSkill(skill) + '/' + skills.trainableSkill(skill) + ' slots' }}
                         <input type="range"
                                min="0"
-                               max="{{skills.trainableSkill(skill)-1}}"
+                               max="{{ skills.trainableSkill(skill) - 1 }}"
                                ng-model="skillTree[skill].slots"
                                ng-hide="skills.lockSkillEdit"
                                ng-disabled="skills.lockSkillEdit"
@@ -61,7 +61,7 @@
                         <select ng-model="spec"
                                 ng-hide="skills.lockSkillEdit"
                                 ng-disabled="skills.lockSkillEdit"
-                                ng-options="spec as skillTree[skill].specs[spec].name for spec in skills.filterSpecUntrained(skill)">
+                                ng-options="spec as skills.nameSpec(skill,spec) for spec in skills.filterSpecUntrained(skill)">
                         </select>
                         <input type="button"
                                ng-hide="skills.lockSkillEdit"
@@ -81,10 +81,10 @@
                 </td>
             </tr>
             <tr ng-repeat-end ng-repeat="spec in skills.filterSpecTrained(skill)">
-                <td class="pad-right">+ {{skillTree[skill].specs[spec].name}}</td>
+                <td class="pad-right">+ {{ skills.nameSpec(skill,spec) }}</td>
                 <td class="pad-right">
                     <select ng-model="skillTree[skill].specs[spec].rank"
-                            ng-options="opt.val as opt.desc for opt in ctrl.data.spec_opt"
+                            ng-options="opt.val as opt.desc for opt in ctrl.data.descSpec"
                             class="sel-sizematch"
                             ng-disabled="skills.lockSkillEdit"
                             ng-change="skillTree[skill].specs[spec].slots=0" >
@@ -92,10 +92,10 @@
                 </td>
                 <td class="pad-right">
                     <span ng-show="skills.trainableSpec(skill,spec)>0">
-                        {{skillTree[skill].specs[spec].slots + '/' + skills.trainableSpec(skill,spec) + ' slots'}}
+                        {{ skills.slotsSpec(skill,spec) + '/' + skills.trainableSpec(skill,spec) + ' slots' }}
                         <input type="range"
                                min="0"
-                               max="{{skills.trainableSpec(skill,spec)-1}}"
+                               max="{{ skills.trainableSpec(skill,spec) - 1 }}"
                                ng-model="skillTree[skill].specs[spec].slots"
                                ng-hide="skills.lockSkillEdit"
                                ng-disabled="skills.lockSkillEdit"

@@ -18,6 +18,7 @@ mod.factory('skills', function(persist) {
     }
 
     function defaultState() {
+        state.hideSkillEdit = false;
         state.lockSkillEdit = true;
         state.newSelected = null;
 
