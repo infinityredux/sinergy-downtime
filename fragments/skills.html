@@ -45,11 +45,11 @@
                     </dt-rank-select>
                 </td>
                 <td class="pad-right" >
-                    <span ng-show="skills.slotsSkill(skill)>0">
-                        {{skillTree[skill].slots + '/' + skills.slotsSkill(skill) + ' slots'}}
+                    <span ng-show="skills.trainableSkill(skill)>0">
+                        {{skillTree[skill].slots + '/' + skills.trainableSkill(skill) + ' slots'}}
                         <input type="range"
                                min="0"
-                               max="{{skills.slotsSkill(skill)-1}}"
+                               max="{{skills.trainableSkill(skill)-1}}"
                                ng-model="skillTree[skill].slots"
                                ng-hide="skills.lockSkillEdit"
                                ng-disabled="skills.lockSkillEdit"
@@ -91,11 +91,11 @@
                     </select>
                 </td>
                 <td class="pad-right">
-                    <span ng-show="skills.slotsSpec(skill,spec)>0">
-                        {{skillTree[skill].specs[spec].slots + '/' + skills.slotsSpec(skill,spec) + ' slots'}}
+                    <span ng-show="skills.trainableSpec(skill,spec)>0">
+                        {{skillTree[skill].specs[spec].slots + '/' + skills.trainableSpec(skill,spec) + ' slots'}}
                         <input type="range"
                                min="0"
-                               max="{{skills.slotsSpec(skill,spec)-1}}"
+                               max="{{skills.trainableSpec(skill,spec)-1}}"
                                ng-model="skillTree[skill].specs[spec].slots"
                                ng-hide="skills.lockSkillEdit"
                                ng-disabled="skills.lockSkillEdit"

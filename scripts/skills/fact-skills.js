@@ -192,22 +192,37 @@ mod.factory('skills', function(persist) {
     };
 
     factory.slotsSkill = function(skill) {
-        return factory.data.rawSlotSkill[state.tree[skill].rank];
+        if (!(skill in state.tree)) return 0;
+        return state.tree[skill].slots;
     };
 
     factory.slotsSpec = function(skill, spec) {
+        if (!(skill in state.tree)) return 0;
+        if (!(spec in state.tree[skill].specs)) return 0;
+        return state.tree[skill].specs[spec].slots;
+    };
+
+    factory.trainableSkill = function(skill) {
+        return factory.data.rawSlotSkill[state.tree[skill].rank];
+    };
+
+    factory.trainableSpec = function(skill, spec) {
         return factory.data.rawSlotSpec[state.tree[skill].specs[spec].rank];
     };
 
     factory.nameSkill = function(skill) {
+        if (!(skill in state.tree)) return 'unknown';
         return state.tree[skill].name;
     };
 
     factory.nameSpec = function(skill, spec) {
+        if (!(skill in state.tree)) return 'unknown';
+        if (!(spec in state.tree[skill].specs)) return 'unknown';
         return state.tree[skill].specs[spec].name;
     };
 
     factory.typeSkill = function(skill) {
+        if (!(skill in state.tree)) return 'unknown';
         return state.tree[skill].type;
     };
 
