@@ -2,7 +2,7 @@ mod = angular.module('sin.dtime.events', ['sin.fact.events']);
 
 mod.component('dtEvents', {
     controller: EventsController,
-    templateUrl: 'fragments/events.html'
+    templateUrl: 'sections/events/template-events.html'
 });
 
 function EventsController($scope, events) {

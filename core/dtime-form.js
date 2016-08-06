@@ -8,7 +8,7 @@ mod = angular.module('sin.dtime.form', [
 mod.component('dtForm', {
     controller: DowntimeFormController,
     controllerAs: 'ctrl',
-    templateUrl: 'fragments/dtime-form.html'
+    templateUrl: 'core/template-form.html'
 });
 
 function DowntimeFormController($scope, dtime) {

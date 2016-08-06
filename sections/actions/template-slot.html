@@ -8,18 +8,18 @@
   
     <span ng-switch-when="do">
         <span ng-if="actSlot.slot.filter='player'">
-            <dt:skill-select
+            <dt-skill-select
                     filter="skills.treeFilterTrained()"
                     skill="actSlot.slot.skill"
                     rank="actSlot.slot.ranks_skill">
-            </dt:skill-select>
+            </dt-skill-select>
             <br/>
     
-            <dt:spec-select
+            <dt-spec-select
                     skill="actSlot.slot.skill"
                     spec="actSlot.slot.spec"
                     rank="actSlot.slot.ranks_spec">
-            </dt:spec-select>
+            </dt-spec-select>
             <br/>
 
             {{'Total skill: ' + actSlot.getTotalSkill() }}
@@ -62,12 +62,12 @@
                 <tr>
                     <td>Skill:</td>
                     <td>
-                        <dt:skill-select filter="skills.treeFilterTrained()" skill="actSlot.slot.skill" rank="actSlot.slot.ranks_skill">
-                        </dt:skill-select>
+                        <dt-skill-select filter="skills.treeFilterTrained()" skill="actSlot.slot.skill" rank="actSlot.slot.ranks_skill">
+                        </dt-skill-select>
                         <br/>
 
-                        <dt:spec-select skill="actSlot.slot.skill" spec="actSlot.slot.spec" rank="actSlot.slot.ranks_spec">
-                        </dt:spec-select>
+                        <dt-spec-select skill="actSlot.slot.skill" spec="actSlot.slot.spec" rank="actSlot.slot.ranks_spec">
+                        </dt-spec-select>
                         <br/>
 
                         {{'Total skill: ' + actSlot.getTotalSkill() }}
@@ -147,8 +147,8 @@
             <td>Skill:</td>
             <td>
 
-                <dt:skill-select skill="act.state.add" rank="act.state.ranks_skill">
-                </dt:skill-select>
+                <dt-skill-select skill="act.state.add" rank="act.state.ranks_skill">
+                </dt-skill-select>
                 <select ng-options="skill as skills.getSkillData(skill, 'name') group by skills.getSkillData(skill, 'parent') for skill in skills.getCurrentSkills()"
                         ng-model="act.state.skill">
                 </select>

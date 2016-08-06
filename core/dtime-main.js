@@ -11,7 +11,7 @@ mod = angular.module('sin.dtime.main', [
 mod.component('dtMain', {
     controller: DowntimeMainController,
     controllerAs: 'ctrl',
-    templateUrl: 'fragments/dtime-main.html'
+    templateUrl: 'core/template-main.html'
 });
 
 function DowntimeMainController($scope, dtime, actions, lifestyle, money, persist) {

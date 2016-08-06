@@ -7,14 +7,14 @@ mod = angular.module('sin.dtime.actions', [
     'sin.fact.assets',
     'sin.fact.money',
     'sin.fact.skills',
-    'sin.lib.general',
+    'sin.lib.fieldset',
     'sin.lib.persist'
 ]);
 
 mod.component('dtActions', {
     controller: ActionController,
     controllerAs: 'act',
-    templateUrl: 'fragments/actions.html'
+    templateUrl: 'sections/actions/template-actions.html'
 });
 
 function ActionController ($scope, actions, assets, money, persist, skills) {

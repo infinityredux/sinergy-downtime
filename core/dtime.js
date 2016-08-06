@@ -30,7 +30,8 @@ mod = angular.module('sin.dtime', [
     'sin.fact.money',
     'sin.fact.skills',
 
-    'sin.lib.general',
+    'sin.lib.fieldset',
+    'sin.lib.help',
     'sin.lib.persist',
     'sin.lib.panes'
 ]);

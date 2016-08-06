@@ -1,14 +1,11 @@
 // Code goes here
 
-mod = angular.module('sin.dtime.lifestyle', [
-  'sin.fact.lifestyle',
-  'sin.lib.persist'
-  ]);
+mod = angular.module('sin.dtime.lifestyle', ['sin.fact.lifestyle']);
 
 mod.component('dtLifestyle', {
     controller: LifestyleController,
     controllerAs: 'ctrl',
-    templateUrl: 'fragments/lifestyle.html'
+    templateUrl: 'sections/lifestyle/template-lifestyle.html'
 });
 
 function LifestyleController ($scope, lifestyle) {

@@ -6,7 +6,7 @@ mod = angular.module('sin.dtime.skills', [
 mod.component('dtSkills', {
     controller: SkillController,
     controllerAs: 'ctrl',
-    templateUrl: 'fragments/skills.html'
+    templateUrl: 'sections/skills/template-skills.html'
 });
 
 function SkillController($scope, skills) {

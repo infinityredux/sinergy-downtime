@@ -5,7 +5,7 @@ mod = angular.module('sin.dtime.equip', [
   'sin.fact.equip',
   'sin.fact.lifestyle',
   'sin.fact.skills',
-  'sin.lib.general',
+  'sin.lib.fieldset',
   'sin.lib.persist'
   ]);
 
@@ -15,7 +15,7 @@ mod.directive('dtEquip', function() {
     scope: {
       dtime: '='
     },
-    templateUrl: 'fragments/equip.html'
+    templateUrl: 'sections/equip/template-equip.html'
   };
 });
 

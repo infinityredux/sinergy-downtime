@@ -1,7 +1,6 @@
 mod = angular.module('sin.dtime.skills-selectors', [
     'sin.dtime.skills',
-    'sin.fact.skills',
-    'sin.lib.persist'
+    'sin.fact.skills'
 ]);
 
 mod.directive('dtRankSelect', function() {

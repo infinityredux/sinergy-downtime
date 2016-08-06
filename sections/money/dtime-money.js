@@ -5,10 +5,7 @@ mod = angular.module('sin.dtime.money', ['sin.fact.money']);
 mod.directive('dtMoney', function() {
   return {
     restrict: 'E',
-    scope: {
-      dtime: '='
-    },
-    templateUrl: 'fragments/money.html'
+    templateUrl: 'sections/money/template-money.html'
   };
 });
 
