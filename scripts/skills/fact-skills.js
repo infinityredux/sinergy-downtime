@@ -7,8 +7,8 @@ mod.factory('skills', function(persist) {
 
     factory.data = {
         dataCacheTime: (7 * 24 * 60 * 60 * 1000),   //one week in milliseconds
-        rawSlotSkill: [1,2,4,6,10,-1],
-        rawSlotSpec: [5,10,15,-1]
+        trainableSlotsSkill: [1,2,4,6,10,-1],
+        trainableSlotsSpec: [5,10,15,-1]
     };
 
     // --------------------------------------------------
@@ -32,7 +32,12 @@ mod.factory('skills', function(persist) {
     defaultState();
 
     // --------------------------------------------------
-    //Object.keys(state).forEach(function(item) { ?? });
+    // Object.keys(state).forEach(function(item) { ?? });
+
+    Object.defineProperty(factory, 'hideSkillEdit', {
+        get: function() {return state.hideSkillEdit;},
+        enumerable: true
+    });
 
     Object.defineProperty(factory, 'lockSkillEdit', {
         get: function() {return state.lockSkillEdit;},
@@ -204,11 +209,11 @@ mod.factory('skills', function(persist) {
     };
 
     factory.trainableSkill = function(skill) {
-        return factory.data.rawSlotSkill[state.tree[skill].rank];
+        return factory.data.trainableSlotsSkill[state.tree[skill].rank];
     };
 
     factory.trainableSpec = function(skill, spec) {
-        return factory.data.rawSlotSpec[state.tree[skill].specs[spec].rank];
+        return factory.data.trainableSlotsSpec[state.tree[skill].specs[spec].rank];
     };
 
     factory.nameSkill = function(skill) {
@@ -229,13 +234,14 @@ mod.factory('skills', function(persist) {
 
     // --------------------------------------------------
 
+    /*
     function convertSkillRankToSlots (rank) {
         if (rank<0) return -1;
         if (rank>5) return -1;
 
         var slots = 0;
         for (var i = 0; i < rank; i++) {
-            slots += factory.data.rawSlotSkill[i];
+            slots += factory.data.trainableSlotsSkill[i];
         }
         return slots;
     }
@@ -246,10 +252,11 @@ mod.factory('skills', function(persist) {
 
         var slots = 0;
         for (var i = 0; i < rank; i++) {
-            slots += factory.data.rawSlotSpec[i];
+            slots += factory.data.trainableSlotsSpec[i];
         }
         return slots;
     }
+    */
 
     // --------------------------------------------------
 
@@ -486,6 +493,7 @@ mod.factory('skills', function(persist) {
 
     // --------------------------------------------------
 
+    // TODO simplify this - multiple loops is redundant
     function processDataTree() {
         var base;
         var skill;
@@ -529,9 +537,7 @@ mod.factory('skills', function(persist) {
         state.processed = true;
     }
 
-    if (!state.processed)
-        processDataTree();
-
+    /*
     function skillUpdateSuccess(data) {
         factory.data.rawSkills = data;
         state.pendingData = false;
@@ -539,7 +545,7 @@ mod.factory('skills', function(persist) {
         processDataTree();
     }
 
-    function skillUpdateError(data) {
+    function skillUpdateError() {
         state.pendingData = false;
     }
 
@@ -552,7 +558,23 @@ mod.factory('skills', function(persist) {
             factory.data.dataCacheTime);
     }
 
-    //pollServer();
+    pollServer();
+
+    */
+
+    /**
+     * TODO consider moving this into the function calls
+     *
+     * This would ensure that we don't need to process it until the data is used
+     * Thus allowing time for the server poll to return
+     *
+     * Cons:
+     * - overhead? essentially adding an extra comparison to every function calls
+     * - is there realistically going to be any time delay between the function being returned by angual and the first
+     *   call being made to the functions?
+     */
+    if (!state.processed)
+        processDataTree();
 
     // --------------------------------------------------
 

@@ -5,7 +5,7 @@ mod.factory('persist', function($rootScope) {
     var autoLoad = false;
 
     var external_on = false;
-    var external_file = '';
+    //var external_file = '';
 
     // --------------------------------------------------
 
@@ -83,18 +83,22 @@ mod.factory('persist', function($rootScope) {
         if (localStorage[key] === undefined) {
             return data;
         }
-        if (external_on) {;}
-        return JSON.parse(localStorage[key]);
+
+        if (external_on) {}
+        else
+            return JSON.parse(localStorage[key]);
     };
 
     factory.doSave = function(key, data) {
-        if (external_on) {;}
-        localStorage[key] = JSON.stringify(data);
+        if (external_on) {}
+        else
+            localStorage[key] = JSON.stringify(data);
     };
 
     // --------------------------------------------------
 
-    factory.beginExport = function(file) {
+    factory.beginExport = function() { //file) {
+        //noinspection JSUnusedAssignment
         external_on = true;
         //external_file = file;
         factory.eventSave();
@@ -102,7 +106,8 @@ mod.factory('persist', function($rootScope) {
         //external_file = '';
     };
 
-    factory.beginImport = function(file) {
+    factory.beginImport = function() { //file) {
+        //noinspection JSUnusedAssignment
         external_on = true;
         //external_file = file;
         factory.eventLoad();
@@ -172,7 +177,7 @@ mod.factory('persist', function($rootScope) {
             }
         }
 
-        function success_call (response, status, headers, config) {
+        function success_call (response){ //, status, headers, config) {
             var data = {
                 key: key,
                 ajax: ajax,
@@ -183,7 +188,7 @@ mod.factory('persist', function($rootScope) {
             data_func(data.result);
         }
 
-        function error_call (response, status, headers, config) {
+        function error_call () { //response, status, headers, config) {
             // Ajax error
             // So if we have previously cached the data, we now use that
             // i.e. if we can't get more up to date information we use what we
@@ -203,12 +208,29 @@ mod.factory('persist', function($rootScope) {
 
     // --------------------------------------------------
 
-    // TODO implement this, but later
-    // needs to be one of the last stages of this, since will integrate
-    // with server database and allowed functions
-    factory.dataPost = function(key, ajax, post, data_func, error_func, cache) {
-        return false;
+    // Not currently used due to lack of server linked to this project
+
+    /*
+    factory.dataPost = function(key, ajax, post, data_func, error_func) {
+        if (ajax === undefined)                 return false;
+        if (typeof data_func !== "function")    return false;
+        if (typeof error_func !== "function")   return false;
+        if (localStorage[key] === undefined)    return false;
+        if (post === undefined)                 post = {};
+
+        function successCall () {
+            
+        }
+        
+        function errorCall () {
+            
+        }
+
+        $http.post(ajax, localStorage[key], post).then(successCall, errorCall);
+
+        return true;
     };
+    */
 
     return factory;
 });

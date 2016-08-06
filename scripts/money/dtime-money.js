@@ -13,6 +13,6 @@ mod.directive('dtMoney', function() {
 });
 
 mod.controller('MoneyController', function($scope, money) {
-  var c = this;
+  //var ctrl = this;
   $scope.money = money;
 });

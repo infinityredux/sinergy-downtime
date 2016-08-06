@@ -5,16 +5,13 @@ mod = angular.module('sin.dtime.lifestyle', [
   'sin.lib.persist'
   ]);
 
-mod.directive('dtLifestyle', function() {
-  return {
-    restrict: 'E',
-    scope: {
-      dtime: '='
-    },
+mod.component('dtLifestyle', {
+    controller: LifestyleController,
+    controllerAs: 'ctrl',
     templateUrl: 'fragments/lifestyle.html'
-  };
 });
 
-mod.controller('LifestyleController', function(lifestyle) {
-  var ctrl = this;
-});
+function LifestyleController ($scope, lifestyle) {
+    //var ctrl = this;
+    $scope.lifestyle = lifestyle;
+}

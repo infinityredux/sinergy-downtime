@@ -24,92 +24,93 @@ mod.directive('dtActionSlot', function() {
 });
 
 function ActionSlotController($scope, actions, assets, money, skills) {
+    var ctrl = this;
     $scope.skills = skills;
-    this.disableJobEdit = (assets.getJob().level>0);
+    ctrl.disableJobEdit = (assets.getJob().level>0);
 
-    this.getLegend = function() {
-        if (this.slot.filter === "player") {
-            return "Slot " + (this.num + 1) + " - " + this.slot.desc + ":";
+    ctrl.getLegend = function() {
+        if (ctrl.slot.filter === "player") {
+            return "Slot " + (ctrl.num + 1) + " - " + ctrl.slot.desc + ":";
         }
-        else if (this.slot.filter === "contact") {
-            return this.slot.desc +" (" + "insert contact name here" + "):";
+        else if (ctrl.slot.filter === "contact") {
+            return ctrl.slot.desc +" (" + "insert contact name here" + "):";
         }
         else {
-            return this.slot.desc +" (hired help):";
+            return ctrl.slot.desc +" (hired help):";
         }
     };
 
-    this.getSkillName = function() {
-        if (this.slot.spec) {
-            return (skills.nameSkill(this.slot.skill) + '/' +
-            skills.nameSpec(this.slot.skill,this.slot.spec));
+    ctrl.getSkillName = function() {
+        if (ctrl.slot.spec) {
+            return (skills.nameSkill(ctrl.slot.skill) + '/' +
+            skills.nameSpec(ctrl.slot.skill,ctrl.slot.spec));
         }
         //Otherwise
-        return skills.nameSkill(this.slot.skill);
+        return skills.nameSkill(ctrl.slot.skill);
     };
 
-    this.getTotalSkill = function() {
-        if (this.slot.filter == 'player') {
-            var plusses = (this.slot.ranks_spec ? this.slot.ranks_spec : 0)
-                + (this.slot.bonus_skill ? this.slot.bonus_skill : 0)
-                + (this.slot.bonus_spec ? this.slot.bonus_spec : 0);
+    ctrl.getTotalSkill = function() {
+        if (ctrl.slot.filter == 'player') {
+            var plusses = (ctrl.slot.ranks_spec ? ctrl.slot.ranks_spec : 0)
+                + (ctrl.slot.bonus_skill ? ctrl.slot.bonus_skill : 0)
+                + (ctrl.slot.bonus_spec ? ctrl.slot.bonus_spec : 0);
 
             if (plusses > 4) {
                 plusses = Math.floor((plusses - 4) / 2) + 4;
             }
 
-            return this.slot.ranks_skill + plusses;
+            return ctrl.slot.ranks_skill + plusses;
         }
 
         //TODO: implement non-player stuff
         return 0;
     };
 
-    this.calcSalary = function() {
-        if (isNaN(parseInt(this.slot.level))) return 0;
-        if (isNaN(this.getTotalSkill())) return 0;
-        return assets.calcSalary(parseInt(this.slot.level), this.getTotalSkill());
+    ctrl.calcSalary = function() {
+        if (isNaN(parseInt(ctrl.slot.level))) return 0;
+        if (isNaN(ctrl.getTotalSkill())) return 0;
+        return assets.calcSalary(parseInt(ctrl.slot.level), ctrl.getTotalSkill());
     };
 
-    this.updateJob = function() {
-        if (isNaN(parseInt(this.slot.level))) return;
-        if (isNaN(this.getTotalSkill())) return;
+    ctrl.updateJob = function() {
+        if (isNaN(parseInt(ctrl.slot.level))) return;
+        if (isNaN(ctrl.getTotalSkill())) return;
 
         var job = assets.getJob();
-        job.employer = this.slot.employer;
-        job.skill = this.slot.skill;
-        job.spec = this.slot.spec;
-        job.ranks = this.getTotalSkill();
-        job.level = parseInt(this.slot.level);
+        job.employer = ctrl.slot.employer;
+        job.skill = ctrl.slot.skill;
+        job.spec = ctrl.slot.spec;
+        job.ranks = ctrl.getTotalSkill();
+        job.level = parseInt(ctrl.slot.level);
 
-        this.slot.money = this.calcSalary();
-        money.changeMoney(this.slot.keyMoney, this.slot.money);
+        ctrl.slot.money = ctrl.calcSalary();
+        money.changeMoney(ctrl.slot.keyMoney, ctrl.slot.money);
 
-        this.disableJobEdit = true;
+        ctrl.disableJobEdit = true;
     };
 
-    this.removeClick = function() {
+    ctrl.removeClick = function() {
         if (confirm("This will remove the action. Are you sure?")) {
-            if (this.slot.keyMoney) {
-                money.removeMoney(this.slot.keyMoney);
+            if (ctrl.slot.keyMoney) {
+                money.removeMoney(ctrl.slot.keyMoney);
             }
-            actions.removeActionNum(this.slot.filter, this.num);
-            this.ctrl.externalChange();
+            actions.removeActionNum(ctrl.slot.filter, ctrl.num);
+            ctrl.ctrl.externalChange();
         }
     };
 
-    if (this.disableJobEdit && (this.slot.action == 'emp' || this.slot.action == 'over')) {
+    if (ctrl.disableJobEdit && (ctrl.slot.action == 'emp' || ctrl.slot.action == 'over')) {
         var job = assets.getJob();
-        this.slot.employer = job.employer;
-        this.slot.skill = job.skill;
-        this.slot.spec = job.spec;
-        this.slot.ranks_skill = skills.rankSkill(job.skill);
-        this.slot.ranks_spec = skills.rankSpec(job.skill, job.spec);
-        this.slot.level = job.level;
-        if (this.slot.action == 'emp')
-            this.slot.money = this.calcSalary();
+        ctrl.slot.employer = job.employer;
+        ctrl.slot.skill = job.skill;
+        ctrl.slot.spec = job.spec;
+        ctrl.slot.ranks_skill = skills.rankSkill(job.skill);
+        ctrl.slot.ranks_spec = skills.rankSpec(job.skill, job.spec);
+        ctrl.slot.level = job.level;
+        if (ctrl.slot.action == 'emp')
+            ctrl.slot.money = ctrl.calcSalary();
         else
-            this.slot.money = this.calcSalary()/2;
-        money.changeMoney(this.slot.keyMoney, this.slot.money);
+            ctrl.slot.money = ctrl.calcSalary()/2;
+        money.changeMoney(ctrl.slot.keyMoney, ctrl.slot.money);
     }
 }

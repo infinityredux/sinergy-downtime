@@ -11,7 +11,7 @@ mod.directive('sinFieldset', function() {
       collapsed: '@'
     },
     templateUrl: 'fragments/lib-general-fieldset.html',
-    link: function(scope, element, attrs, controllers) {
+    link: function(scope, element, attrs) {
       scope.test = attrs;
       scope.hide = (attrs.collapsed == "true");
       scope.fieldsetLegend = attrs.legend;

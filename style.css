@@ -19,54 +19,57 @@ td, td span {
   vertical-align: top;
 }
 
+/*noinspection CssUnusedSymbol*/
 .pad-right {
   padding-right: 10px;
 }
 
-
-
-
-
-
-
-
+/*noinspection CssUnusedSymbol*/
 .help {
   color: blue;
   font-style: italic;
   text-align: left;
 }
 
+/*noinspection CssUnusedSymbol*/
 .help-box {
   background: blue;
   color: white;
   cursor: help;
 }
 
+/*noinspection CssUnusedSymbol*/
 .opt-float-right {
   float: right;
 }
 
+/*noinspection CssUnusedSymbol*/
 .btn-float-size {
   width: 55px;
 }
 
+/*noinspection CssUnusedSymbol*/
 .sel-sizematch {
   width: 55px;
 }
 
+/*noinspection CssUnusedSymbol*/
 .inp-aligned {
   position: absolute;
   left: 165px;
 }
 
+/*noinspection CssUnusedSymbol*/
 .clickable {
   cursor: pointer;
 }
 
+/*noinspection CssUnusedSymbol*/
 .fieldset-open {
   border: 1px solid;
 }
 
+/*noinspection CssUnusedSymbol*/
 .fieldset-closed {
     border: 0 solid;
     border-top-width: 1px;
@@ -75,35 +78,42 @@ td, td span {
 
 /* Styles go here */
 
+/*noinspection CssUnusedSymbol*/
 .pane-link-group {
   display: block;
   margin: 15px 0;
 }
 
+/*noinspection CssUnusedSymbol*/
 .pane-link-active {
   border: 5px solid red;
   padding: 4px;
   cursor: pointer;
 }
 
+/*noinspection CssUnusedSymbol*/
 .pane-link-passive {
   border: 5px solid silver;
   padding: 4px;
   cursor: pointer;
 }
 
+/*noinspection CssUnusedSymbol*/
 #left-pane-links {
   float: left;
   /*margin: 0 10px;*/
   width: 90px;
 }
 
+/*noinspection CssUnusedSymbol*/
 #left-pane-links .pane-link-active {
   border: 0 solid white;
   padding: 0;
   background: red;
   color: white;
 }
+
+/*noinspection CssUnusedSymbol*/
 #left-pane-links .pane-link-passive {
   border: 0 solid white;
   padding: 0;
