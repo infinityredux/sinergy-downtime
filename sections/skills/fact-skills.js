@@ -25,10 +25,6 @@ mod.factory('skills', function(persist) {
         state.processed = false;
         state.pendingData = false;
 
-        state.tree = {};
-        state.treeTypes = [];
-
-
         state.index = {};
         state.types = {};
 
@@ -137,15 +133,12 @@ mod.factory('skills', function(persist) {
         enumerable: true
     });
 
+    /*
     Object.defineProperty(factory, 'processed', {
         get: function() { return state.processed; },
         enumerable: false
     });
-
-    Object.defineProperty(factory, 'tree', {
-        get: function() { return state.tree; },
-        enumerable: true
-    });
+    */
 
     Object.defineProperty(factory, 'types', {
         get: function() { return Object.values(state.types); },
@@ -153,7 +146,7 @@ mod.factory('skills', function(persist) {
     });
 
     Object.defineProperty(factory, 'bindings', {
-        get: function() { return state.treeBindings; },
+        get: function() { return state.bindings; },
         enumerable: true
     });
 
@@ -173,37 +166,42 @@ mod.factory('skills', function(persist) {
     // --------------------------------------------------
 
     factory.trainSkill = function(skill) {
-        if (state.tree[skill] === undefined) return false;
-        if (state.tree[skill].trained) return false;
-    
-        state.tree[skill].trained = true;
+        if (state.index[skill] === undefined) return false;
+        if (state.index[skill].type != 'skill') return false;
+        if (state.skills[skill].trained) return false;
+
+        state.skills[skill].trained = true;
+        addSkillBinding(skill);
         return true;
     };
   
-    factory.trainSpec = function(skill, spec) {
-        if (state.tree[skill] === undefined) return false;
-        if (state.tree[skill].specs[spec] === undefined) return false;
-        if (state.tree[skill].specs[spec].trained) return false;
-    
-        state.tree[skill].specs[spec].trained = true;
+    factory.trainSpec = function(spec) {
+        if (state.index[spec] === undefined) return false;
+        if (state.index[spec].type != 'spec') return false;
+        if (state.specs[spec].trained) return false;
+
+        state.specs[spec].trained = true;
+        addSpecBinding(spec);
         return true;
     };
   
     factory.wipeSkill = function(skill) {
-        if (state.tree[skill] === undefined) return false;
-        if (!state.tree[skill].trained) return false;
-    
-        state.tree[skill].trained = false;
-        state.tree[skill].rank = 0;
-        state.tree[skill].slots = 0;
-    
-        for(var spec in state.tree[skill].specs)
-            factory.state.wipeSpec(skill, spec);
+        if (state.index[skill] === undefined) return false;
+        if (state.index[skill].type != 'skill') return false;
+        if (!state.skills[skill].trained) return false;
+
+        state.skills[skill].trained = false;
+        state.skills[skill].rank = 0;
+        state.skills[skill].slots = 0;
+
+        for(var spec in filterSpecBySkill) {
+            factory.state.wipeSpec(spec);
+        }
 
         return true;
     };
 
-    factory.wipeSpec = function(skill, spec) {
+    factory.wipeSpec = function(spec) {
         if (state.tree[skill] === undefined) return false;
         if (state.tree[skill].specs[spec] === undefined) return false;
         if (!state.tree[skill].specs[spec].trained) return false;
@@ -213,6 +211,11 @@ mod.factory('skills', function(persist) {
         state.tree[skill].specs[spec].slots = 0;
         return true;
     };
+
+
+    function filterSpecBySkill() {
+
+    }
 
     // --------------------------------------------------
 
@@ -665,8 +668,7 @@ mod.factory('skills', function(persist) {
             }
         }
 
-        var specs = Object.keys(state.specs);
-        var combined = roots + skills + specs;
+        var combined = roots + skills + Object.keys(state.specs);
 
         for (key in keys) {
             data = factory.data.rawSkills[key];
