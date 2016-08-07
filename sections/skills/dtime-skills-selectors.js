@@ -41,8 +41,8 @@ mod.directive('dtSkillSelect', function() {
         controllerAs: 'ctrl',
         template: ''+
             '<span ng-show="bindFilter().length>0" >'+
-            '   <select ng-model="bindSkill" '+
-            '           ng-options="skill as skillTree[skill].name group by skillTree[skill].type for skill in bindFilter()" '+
+            '   <select ng-options="skill as skillTree[skill].name group by skillTree[skill].type for skill in bindFilter()" ' +
+            '           ng-model="bindSkill" '+
             '           ng-change="changed()" >'+
             '       <option value="" >--- select skill ---</option>'+
             '   </select>'+
@@ -85,8 +85,8 @@ mod.directive('dtSpecSelect', function() {
         template: ''+
             '<span ng-show="skills.filterTrained().length>0" >'+
             '   <select ng-model="bindSpec" '+
-            '            ng-options="spec as skillTree[bindSkill].specs[spec].name for spec in skills.filterSpecTrained(bindSkill)" '+
-            '            ng-change="changed()" >'+
+            '           ng-options="spec as skillTree[bindSkill].specs[spec].name for spec in skills.filterSpecTrained(bindSkill)" '+
+            '           ng-change="changed()" >'+
             '       <option value="" >--- no spec ---</option>'+
             '   </select>'+
             '   <input type="hidden" '+

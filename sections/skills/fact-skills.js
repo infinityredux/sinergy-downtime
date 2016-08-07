@@ -27,9 +27,89 @@ mod.factory('skills', function(persist) {
 
         state.tree = {};
         state.treeTypes = [];
+
+
+        state.index = {};
+        state.types = [];
+
+        state.skills = {};
+        state.specs = {};
+        state.bindings = {};
     }
 
     defaultState();
+
+    // --------------------------------------------------
+
+    function addSkillBinding(skill) {
+        if (skill === undefined)                return false;
+        if (state.skills[skill] === undefined)  return false;
+        if (!state.skills[skill].trained)       return false;
+
+        var binding = {};
+
+        Object.defineProperty(binding, 'rank', {
+            get: function() { return skills[skill].rank; },
+            set: function(val) {
+                skills[skill].rank = val;
+                changed = true;
+            },
+            enumerable: true
+        });
+
+        Object.defineProperty(binding, 'slots', {
+            get: function() { return skills[skill].slots; },
+            set: function(val) {
+                skills[skill].slots = val;
+                changed = true;
+            },
+            enumerable: true
+        });
+
+        state.bindings[skill] = binding;
+        return true;
+    }
+
+    function addSpecBinding(spec) {
+        if (spec === undefined)                 return false;
+        if (state.skills[spec] === undefined)   return false;
+        if (!state.skills[spec].trained)        return false;
+
+        var skill = state.specs[spec].parent;
+        if (state.skills[skill] === undefined)  return false;
+        if (!state.skills[skill].trained)       return false;
+
+        var binding = {};
+
+        Object.defineProperty(binding, 'rank', {
+            get: function() { return skills[spec].rank; },
+            set: function(val) {
+                skills[spec].rank = val;
+                changed = true;
+            },
+            enumerable: true
+        });
+
+        Object.defineProperty(binding, 'slots', {
+            get: function() { return skills[spec].slots; },
+            set: function(val) {
+                skills[spec].slots = val;
+                changed = true;
+            },
+            enumerable: true
+        });
+
+        state.bindings[skill] = binding;
+        return true;
+    }
+
+    function removeBinding(id) {
+        if (!state.treeBindings.hasOwnProperty(id))
+            return false;
+
+        delete state.treeBindings.id;
+        return true;
+    }
 
     // --------------------------------------------------
     // Object.keys(state).forEach(function(item) { ?? });
@@ -69,6 +149,11 @@ mod.factory('skills', function(persist) {
 
     Object.defineProperty(factory, 'types', {
         get: function() { return state.treeTypes; },
+        enumerable: true
+    });
+
+    Object.defineProperty(factory, 'bindings', {
+        get: function() { return state.treeBindings; },
         enumerable: true
     });
 
@@ -493,74 +578,74 @@ mod.factory('skills', function(persist) {
 
     // --------------------------------------------------
 
-    // TODO simplify this - multiple loops is redundant
+    /*
+     function skillUpdateSuccess(data) {
+     factory.data.rawSkills = data;
+     state.pendingData = false;
+     state.processed = false;
+     processDataTree();
+     }
+
+     function skillUpdateError() {
+     state.pendingData = false;
+     }
+
+     function pollServer() {
+     state.pendingData = true;
+     persist.dataFetch("rawSkills",
+     "https://inserturlhere.com/",
+     skillUpdateSuccess,
+     skillUpdateError,
+     factory.data.dataCacheTime);
+     }
+
+     pollServer();
+     */
+
+    // --------------------------------------------------
+
+    // TODO rework the skill data structures? do I really need a tree?
+    // It does allow some filters to work on a single data set, but there are also other ways of coding the filters.
+    // Separating the data from a tree structure into something flatter also allow us to perform a single iteration pass
+    // over the data instead of two...
+
     function processDataTree() {
-        var base;
-        var skill;
-        var spec;
-
-        for (base in factory.data.rawSkills) {
-            if (factory.data.rawSkills[base].parent === 0) {
-                state.treeTypes.push(factory.data.rawSkills[base].name);
+        for (var raw in factory.data.rawSkills) {
+            if (factory.data.rawSkills[raw].parent === 0) {
+                state.treeTypes.push(factory.data.rawSkills[raw].name);
             }
-        }
 
-        //TODO: would filters be more efficient than iterating through everything?
-
-        for (skill in factory.data.rawSkills) {
-            if (factory.data.rawSkills[skill].parent > 0 && factory.data.rawSkills[skill].parent <=4) {
-                base = factory.data.rawSkills[skill].parent;
-                state.tree[skill] = {
-                    id: skill,
-                    name: factory.data.rawSkills[skill].name,
+            if (factory.data.rawSkills[raw].parent > 0 && factory.data.rawSkills[raw].parent <=4) {
+                var base = factory.data.rawSkills[raw].parent;
+                state.tree[raw] = {
+                    id: raw,
+                    name: factory.data.rawSkills[raw].name,
                     type: factory.data.rawSkills[base].name,
-                    trained: factory.data.rawSkills[skill].trained ? true : false,
-                    rank: 0,
-                    slots: 0,
+                    trained: factory.data.rawSkills[raw].trained ? true : false,
+                    rank: factory.data.rawSkills[raw].rank > 0 ? factory.data.rawSkills[raw].rank : 0,
+                    slots: factory.data.rawSkills[raw].slots > 0 ? factory.data.rawSkills[raw].slots : 0,
                     specs: {}
                 };
             }
+
         }
-        for (spec in factory.data.rawSkills) {
-            if (factory.data.rawSkills[spec].parent > 4) {
-                skill = factory.data.rawSkills[spec].parent;
-                state.tree[skill].specs[spec] = {
-                    id: spec,
-                    name: factory.data.rawSkills[spec].name,
-                    trained: factory.data.rawSkills[spec].trained ? true : false,
-                    rank: 0,
-                    slots: 0
+
+        // Specs need to be added after skills, since the tree relies on the skill already existing
+        for (var raw in factory.data.rawSkills) {
+            if (factory.data.rawSkills[raw].parent > 4) {
+                var skill = factory.data.rawSkills[raw].parent;
+                state.tree[skill].specs[raw] = {
+                    id: raw,
+                    name: factory.data.rawSkills[raw].name,
+                    trained: factory.data.rawSkills[raw].trained ? true : false,
+                    rank: factory.data.rawSkills[raw].rank > 0 ? factory.data.rawSkills[raw].rank : 0,
+                    slots: factory.data.rawSkills[raw].slots > 0 ? factory.data.rawSkills[raw].slots : 0
                 };
             }
         }
 
         state.processed = true;
     }
-
-    /*
-    function skillUpdateSuccess(data) {
-        factory.data.rawSkills = data;
-        state.pendingData = false;
-        state.processed = false;
-        processDataTree();
-    }
-
-    function skillUpdateError() {
-        state.pendingData = false;
-    }
-
-    function pollServer() {
-        state.pendingData = true;
-        persist.dataFetch("rawSkills",
-            "https://inserturlhere.com/",
-            skillUpdateSuccess,
-            skillUpdateError,
-            factory.data.dataCacheTime);
-    }
-
-    pollServer();
-
-    */
 
     /**
      * TODO consider moving this into the function calls
