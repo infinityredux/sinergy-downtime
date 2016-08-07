@@ -33,23 +33,23 @@ function SkillController($scope, skills) {
 
     ctrl.addClick = function() {
         if (skills.newSelected === null) return;
-        skills.addSkill(skills.newSelected);
+        skills.trainSkill(skills.newSelected);
     };
 
     ctrl.addSpecClick = function(skill, spec) {
         if (skill === null) return;
         if (spec === null) return;
-        skills.addSpec(skill, spec);
+        skills.trainSpec(skill, spec);
     };
 
     ctrl.removeClick = function(skill) {
         if (skill === null) return;
-        skills.removeSkill(skill);
+        skills.wipeSkill(skill);
     };
 
     ctrl.removeSpecClick = function(skill, spec) {
         if (skill === null) return;
         if (spec === null) return;
-        skills.removeSpec(skill, spec);
+        skills.wipeSpec(skill, spec);
     };
 }
