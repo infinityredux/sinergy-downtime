@@ -366,11 +366,11 @@ mod.factory('skills', function(persist) {
         13:  {id:13,  parent:1, name:'Military'},
         14:  {id:14,  parent:1, name:'Net Lore'},
         15:  {id:15,  parent:1, name:'Netrunning'},
-        16:  {id:16,  parent:3, name:'Pharmocology'},
+        16:  {id:16,  parent:3, name:'Pharmacology'},
         17:  {id:17,  parent:1, name:'Psychology'},
         18:  {id:18,  parent:1, name:'Science'},
-        19:  {id:19,  parent:1, name:'Sstate.treetDeal'},
-        20:  {id:20,  parent:1, name:'Sstate.treetWise'},
+        19:  {id:19,  parent:1, name:'StreetDeal'},
+        20:  {id:20,  parent:1, name:'StreetWise'},
         21:  {id:21,  parent:1, name:'Survival'},
         22:  {id:22,  parent:2, name:'Dodge'},
         23:  {id:23,  parent:2, name:'Endurance'},
@@ -611,7 +611,8 @@ mod.factory('skills', function(persist) {
     function processData() {
         var keys = Object.keys(factory.data.rawSkills);
 
-        for (var key in keys) {
+        for (var i=0;i < keys.length; i++) {
+            var key = keys[i];
             var data = factory.data.rawSkills[key];
 
             if (data.parent === 0) {
@@ -625,7 +626,8 @@ mod.factory('skills', function(persist) {
 
         var roots = Object.keys(state.types);
 
-        for (key in keys) {
+        for (i=0;i < keys.length; i++) {
+            key = keys[i];
             data = factory.data.rawSkills[key];
 
             if (data.parent in roots) {
@@ -648,7 +650,8 @@ mod.factory('skills', function(persist) {
 
         var skills = Object.keys(state.skills);
 
-        for (key in keys) {
+        for (i=0;i < keys.length; i++) {
+            key = keys[i];
             data = factory.data.rawSkills[key];
 
             if (data.parent in skills) {
@@ -671,9 +674,10 @@ mod.factory('skills', function(persist) {
 
         var combined = roots + skills + Object.keys(state.specs);
 
-        for (key in keys) {
+        for (i=0;i < keys.length; i++) {
+            key = keys[i];
             data = factory.data.rawSkills[key];
-            if(!data.parent in combined) {
+            if(combined.indexOf(data.parent) == -1) {
                 state.index[key] = {
                     type: 'unknown',
                     name: data.name
