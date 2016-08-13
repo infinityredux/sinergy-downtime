@@ -279,49 +279,46 @@ mod.factory('skills', function(persist) {
     // --------------------------------------------------
 
     factory.rankSkill = function(skill) {
-        if (!(skill in state.tree)) return 0;
-        return state.tree[skill].rank;
+        if (!skill in state.skills) return 0;
+        return state.skills[skill].rank;
     };
 
-    factory.rankSpec = function(skill, spec) {
-        if (!(skill in state.tree)) return 0;
-        if (!(spec in state.tree[skill].specs)) return 0;
-        return state.tree[skill].specs[spec].rank;
+    factory.rankSpec = function(spec) {
+        if (!spec in state.specs) return 0;
+        return state.specs[spec].rank;
     };
 
     factory.slotsSkill = function(skill) {
-        if (!(skill in state.tree)) return 0;
-        return state.tree[skill].slots;
+        if (!skill in state.skills) return 0;
+        return state.skills[skill].slots;
     };
 
-    factory.slotsSpec = function(skill, spec) {
-        if (!(skill in state.tree)) return 0;
-        if (!(spec in state.tree[skill].specs)) return 0;
-        return state.tree[skill].specs[spec].slots;
+    factory.slotsSpec = function(spec) {
+        if (!spec in state.specs) return 0;
+        return state.specs[spec].slots;
     };
 
     factory.trainableSkill = function(skill) {
-        return factory.data.trainableSlotsSkill[state.tree[skill].rank];
+        return factory.data.trainableSlotsSkill[state.skills[skill].rank];
     };
 
     factory.trainableSpec = function(skill, spec) {
-        return factory.data.trainableSlotsSpec[state.tree[skill].specs[spec].rank];
+        return factory.data.trainableSlotsSpec[state.specs[spec].rank];
     };
 
     factory.nameSkill = function(skill) {
-        if (!(skill in state.tree)) return 'unknown';
-        return state.tree[skill].name;
+        if (!skill in state.skills) return 'unknown';
+        return state.skills[skill].name;
     };
 
-    factory.nameSpec = function(skill, spec) {
-        if (!(skill in state.tree)) return 'unknown';
-        if (!(spec in state.tree[skill].specs)) return 'unknown';
-        return state.tree[skill].specs[spec].name;
+    factory.nameSpec = function(spec) {
+        if (!spec in state.specs) return 'unknown';
+        return state.specs[spec].name;
     };
 
     factory.typeSkill = function(skill) {
-        if (!(skill in state.tree)) return 'unknown';
-        return state.tree[skill].type;
+        if (!skill in state.skills) return 'unknown';
+        return state.skills[skill].type;
     };
 
     // --------------------------------------------------
@@ -590,7 +587,7 @@ mod.factory('skills', function(persist) {
      factory.data.rawSkills = data;
      state.pendingData = false;
      state.processed = false;
-     processDataTree();
+     processData();
      }
 
      function skillUpdateError() {
@@ -611,7 +608,7 @@ mod.factory('skills', function(persist) {
 
     // --------------------------------------------------
 
-    function processDataTree() {
+    function processData() {
         var keys = Object.keys(factory.data.rawSkills);
 
         for (var key in keys) {
@@ -688,7 +685,7 @@ mod.factory('skills', function(persist) {
     }
 
     if (!state.processed)
-        processDataTree();
+        processData();
 
     // --------------------------------------------------
 

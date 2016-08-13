@@ -43,7 +43,7 @@ function ActionSlotController($scope, actions, assets, money, skills) {
     ctrl.getSkillName = function() {
         if (ctrl.slot.spec) {
             return (skills.nameSkill(ctrl.slot.skill) + '/' +
-            skills.nameSpec(ctrl.slot.skill,ctrl.slot.spec));
+            skills.nameSpec(ctrl.slot.spec));
         }
         //Otherwise
         return skills.nameSkill(ctrl.slot.skill);
@@ -105,7 +105,7 @@ function ActionSlotController($scope, actions, assets, money, skills) {
         ctrl.slot.skill = job.skill;
         ctrl.slot.spec = job.spec;
         ctrl.slot.ranks_skill = skills.rankSkill(job.skill);
-        ctrl.slot.ranks_spec = skills.rankSpec(job.skill, job.spec);
+        ctrl.slot.ranks_spec = skills.rankSpec(job.spec);
         ctrl.slot.level = job.level;
         if (ctrl.slot.action == 'emp')
             ctrl.slot.money = ctrl.calcSalary();
