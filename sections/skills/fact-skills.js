@@ -252,7 +252,7 @@ mod.factory('skills', function(persist) {
         });
     }
 
-    factory.filterSpecsBySkill = filterSpecsBySkill;
+    //factory.filterSpecsBySkill = filterSpecsBySkill;
 
     factory.filterSpecTrained = function(skill) {
         if (!skill) return [];
@@ -616,13 +616,13 @@ mod.factory('skills', function(persist) {
             }
         }
 
-        var roots = Object.keys(state.types);
+        var roots = Object.keys(state.types).map(function(val) {return parseInt(val);});
 
         for (i=0;i < keys.length; i++) {
             key = keys[i];
             data = factory.data.rawSkills[key];
 
-            if (data.parent in roots) {
+            if (roots.indexOf(data.parent) >= 0) {
                 state.index[key] = {
                     type: 'skill',
                     name: data.name
@@ -634,19 +634,19 @@ mod.factory('skills', function(persist) {
                     parent: data.parent,
                     type: state.types[data.parent],
                     trained: data.trained ? true : false,
-                    rank: data.rank > 0 ? factory.data.rawSkills[key].rank : 0,
-                    slots: data.slots > 0 ? factory.data.rawSkills[key].slots : 0
+                    rank: data.rank > 0 ? data.rank : 0,
+                    slots: data.slots > 0 ? data.slots : 0
                 };
             }
         }
 
-        var skills = Object.keys(state.skills);
+        var skills = Object.keys(state.skills).map(function(val) {return parseInt(val);});
 
         for (i=0;i < keys.length; i++) {
             key = keys[i];
             data = factory.data.rawSkills[key];
 
-            if (data.parent in skills) {
+            if (skills.indexOf(data.parent) >= 0) {
                 state.index[key] = {
                     type: 'spec',
                     name: data.name
@@ -664,7 +664,7 @@ mod.factory('skills', function(persist) {
             }
         }
 
-        var combined = roots + skills + Object.keys(state.specs);
+        var combined = roots + skills + Object.keys(state.specs).map(function(val) {return parseInt(val);});
 
         for (i=0;i < keys.length; i++) {
             key = keys[i];
