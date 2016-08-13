@@ -215,15 +215,7 @@ mod.factory('skills', function(persist) {
         if (!type in state.types)
             return false;
 
-        for (var skill in Object.keys(state.skills)) {
-            if (state.skills[skill].type == type) {
-                if (state.skills[skill].trained) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
+        return (factory.filterTypeTrained().length > 0);
     };
 
     factory.filterAll = function() {
