@@ -299,12 +299,12 @@ mod.factory('skills', function(persist) {
     };
 
     factory.nameSkill = function(skill) {
-        if (!skill in state.skills) return 'unknown';
+        if (!state.skills.hasOwnProperty(skill)) return 'unknown';
         return state.skills[skill].name;
     };
 
     factory.nameSpec = function(spec) {
-        if (!spec in state.specs) return 'unknown';
+        if (!state.specs.hasOwnProperty(spec)) return 'unknown';
         return state.specs[spec].name;
     };
 

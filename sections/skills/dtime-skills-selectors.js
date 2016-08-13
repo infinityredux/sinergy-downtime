@@ -38,7 +38,7 @@ mod.directive('dtSkillSelect', function() {
             $scope.skills = skills;
         },
         controllerAs: 'ctrl',
-        templateUrl: 'sections/skills/template-skill-select.html',
+        templateUrl: 'sections/skills/template-select-skill.html',
         link: function(scope, elem, attrs) {
             scope.showRank = !!attrs.rank;
             scope.changed = function() {
@@ -66,22 +66,7 @@ mod.directive('dtSpecSelect', function() {
             $scope.skillTree = skills.tree;
         },
         controllerAs: 'ctrl',
-        template: ''+
-            '<span ng-show="skills.filterSkillTrained().length>0" >'+
-            '   <select ng-model="bindSpec" '+
-            '           ng-options="spec as skillTree[bindSkill].specs[spec].name for spec in skills.filterSpecTrained(bindSkill)" '+
-            '           ng-change="changed()" >'+
-            '       <option value="" >--- no spec ---</option>'+
-            '   </select>'+
-            '   <input type="hidden" '+
-            '          ng-model="bindRank" >'+
-            '   <span ng-show="showRank" >'+
-            '       {{ (bindSpec ? " +" : "") + skillTree[bindSkill].specs[bindSpec].rank }}'+
-            '   </span>'+
-            '</span>'+
-            '<span ng-hide="skills.filterSkillTrained().length>0" >'+
-            '   No specs available'+
-            '</span>',
+        templateUrl: 'sections/skills/template-select-spec.html',
         link: function(scope, elem, attrs) {
             scope.showRank = !!attrs.rank;
             scope.changed = function() {
