@@ -83,7 +83,7 @@ mod.directive('dtSpecSelect', function() {
         },
         controllerAs: 'ctrl',
         template: ''+
-            '<span ng-show="skills.filterTrained().length>0" >'+
+            '<span ng-show="skills.filterSkillTrained().length>0" >'+
             '   <select ng-model="bindSpec" '+
             '           ng-options="spec as skillTree[bindSkill].specs[spec].name for spec in skills.filterSpecTrained(bindSkill)" '+
             '           ng-change="changed()" >'+
@@ -95,7 +95,7 @@ mod.directive('dtSpecSelect', function() {
             '       {{ (bindSpec ? " +" : "") + skillTree[bindSkill].specs[bindSpec].rank }}'+
             '   </span>'+
             '</span>'+
-            '<span ng-hide="skills.filterTrained().length>0" >'+
+            '<span ng-hide="skills.filterSkillTrained().length>0" >'+
             '   No specs available'+
             '</span>',
         link: function(scope, elem, attrs) {

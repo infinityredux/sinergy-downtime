@@ -1,5 +1,5 @@
 <sin-fieldset legend="Skills:">
-    <span ng-show="skills.filterUntrained().length>0">
+    <span ng-show="skills.filterSkillUntrained().length>0">
         <select ng-model="skills.newSelected"
                 ng-disabled="skills.lockSkillEdit"
                 ng-options="skill as skills.nameSkill(skill) group by skills.typeSkill(skill) for skill in skills.filterUntrained()" >
@@ -18,7 +18,7 @@
   
     <table width="100%">
         <thead>
-            <tr ng-show="skills.filterTrained().length>0">
+            <tr ng-show="skills.filterSkillTrained().length>0">
                 <th width="200px">Skill name</th>
                 <th width="65px">Ranks</th>
                 <th>Training</th>

@@ -193,8 +193,9 @@ mod.factory('skills', function(persist) {
         state.skills[skill].trained = false;
         state.skills[skill].rank = 0;
         state.skills[skill].slots = 0;
+        removeBinding(skill)
 
-        for(var spec in filterSpecBySkill) {
+        for(var spec in filterSpecsBySkill) {
             factory.state.wipeSpec(spec);
         }
 
@@ -202,73 +203,81 @@ mod.factory('skills', function(persist) {
     };
 
     factory.wipeSpec = function(spec) {
-        if (state.tree[skill] === undefined) return false;
-        if (state.tree[skill].specs[spec] === undefined) return false;
-        if (!state.tree[skill].specs[spec].trained) return false;
+        if (state.index[spec] === undefined) return false;
+        if (state.index[spec].type != 'spec') return false;
+        if (!state.specs[spec].trained) return false;
 
-        state.tree[skill].specs[spec].trained = false;
-        state.tree[skill].specs[spec].rank = 0;
-        state.tree[skill].specs[spec].slots = 0;
+        state.specs[spec].trained = false;
+        state.specs[spec].rank = 0;
+        state.specs[spec].slots = 0;
+        removeBinding(spec)
+
         return true;
     };
 
 
-    function filterSpecBySkill() {
-
+    function filterSpecsBySkill(skill) {
+        return Object.keys(state.specs).filter(function (val) {
+            return state.specs[val].parent == skill;
+        });
     }
 
     // --------------------------------------------------
 
     factory.isTypeTrained = function(type) {
-        for (var skill in state.tree) {
-            if (state.tree[skill].type == type) {
-                if (state.tree[skill].trained) {
+        if (!type in state.types)
+            return false;
+
+        for (var skill in Object.keys(state.skills)) {
+            if (state.skills[skill].type == type) {
+                if (state.skills[skill].trained) {
                     return true;
                 }
             }
         }
+
         return false;
     };
 
     factory.filterAll = function() {
-        return Object.keys(state.tree);
+        return Object.keys(state.skills) + Object.keys(state.specs);
     };
 
-    factory.filterNotType = function(type) {
-        return Object.keys(state.tree).filter(function(val) {
-            return (state.tree[val].type != type);
+    factory.filterSkillNotType = function(type) {
+        return Object.keys(state.skills).filter(function(val) {
+            return (state.skills[val].type != type);
         });
     };
 
-    factory.filterTrained = function() {
-        return Object.keys(state.tree).filter(function(val) {
-            return state.tree[val].trained;
+    factory.filterSkillTrained = function() {
+        return Object.keys(state.skills).filter(function(val) {
+            return state.skills[val].trained;
         });
     };
 
-    factory.filterUntrained = function() {
-        return Object.keys(state.tree).filter(function(val) {
-            return !state.tree[val].trained;
+    factory.filterSkillUntrained = function() {
+        return Object.keys(state.skills).filter(function(val) {
+            return !state.skills[val].trained;
         });
     };
 
     factory.filterTypeTrained = function(type) {
-        return Object.keys(state.tree).filter(function(val) {
-            return (state.tree[val].type == type) && state.tree[val].trained;
+        return Object.keys(state.skills).filter(function(val) {
+            return (state.skills[val].type == type) && state.skills[val].trained;
         });
     };
 
     factory.filterSpecTrained = function(skill) {
         if (!skill) return [];
-        return Object.keys(state.tree[skill].specs).filter(function(val) {
-            return state.tree[skill].specs[val].trained;
+        return Object.keys(state.specs).filter(function(val) {
+            return (state.specs[val].parent == skill) && state.specs[val].trained;
         });
     };
 
     factory.filterSpecUntrained = function(skill) {
         if (!skill) return [];
-        return Object.keys(state.tree[skill].specs).filter(function(val) {
-            return !state.tree[skill].specs[val].trained;
+        return Object.keys(state.specs).filter(function(val) {
+            return (state.specs[val].parent == skill) && !state.specs[val].trained;
         });
     };
 
