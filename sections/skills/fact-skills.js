@@ -100,15 +100,14 @@ mod.factory('skills', function(persist) {
     }
 
     function removeBinding(id) {
-        if (!state.treeBindings.hasOwnProperty(id))
+        if (!state.bindings.hasOwnProperty(id))
             return false;
 
-        delete state.treeBindings.id;
+        delete state.bindings.id;
         return true;
     }
 
     // --------------------------------------------------
-    // Object.keys(state).forEach(function(item) { ?? });
 
     Object.defineProperty(factory, 'hideSkillEdit', {
         get: function() {return state.hideSkillEdit;},
@@ -133,15 +132,12 @@ mod.factory('skills', function(persist) {
         enumerable: true
     });
 
-    /*
-    Object.defineProperty(factory, 'processed', {
-        get: function() { return state.processed; },
-        enumerable: false
-    });
-    */
-
     Object.defineProperty(factory, 'types', {
-        get: function() { return Object.values(state.types); },
+        get: function() {
+            return Object.keys(state.types).map(function (key) {
+                return state.types[key];
+            });
+        },
         enumerable: true
     });
 
@@ -196,10 +192,6 @@ mod.factory('skills', function(persist) {
         removeBinding(skill);
 
         filterSpecsBySkill(skill).forEach(factory.wipeSpec);
-
-/*        for(var spec in filterSpecsBySkill(skill)) {
-            factory.wipeSpec(spec);
-        }*/
 
         return true;
     };
