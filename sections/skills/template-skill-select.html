@@ -1,0 +1,14 @@
+<span ng-show="bindFilter().length>0" >
+    <select ng-options="skill as skills.nameSkill(skill) group by skills.typeSkill(skill) for skill in bindFilter()"
+            ng-model="bindSkill"
+            ng-change="changed()" >
+        <option value="" >--- select skill ---</option>
+    </select>
+    <input type="hidden" ng-model="bindRank" >
+    <span ng-show="showRank" >
+        {{ (bindSkill ? " Rank " : "") + skills.rankSkill(bindSkill) }}
+    </span>
+</span>
+<span ng-hide="bindFilter().length>0" >
+    No skills available
+</span>

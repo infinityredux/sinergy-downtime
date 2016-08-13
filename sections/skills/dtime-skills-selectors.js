@@ -36,25 +36,9 @@ mod.directive('dtSkillSelect', function() {
         },
         controller: function($scope, skills) {
             $scope.skills = skills;
-            $scope.skillTree = skills.tree;
         },
         controllerAs: 'ctrl',
-        template: ''+
-            '<span ng-show="bindFilter().length>0" >'+
-            '   <select ng-options="skill as skillTree[skill].name group by skillTree[skill].type for skill in bindFilter()" ' +
-            '           ng-model="bindSkill" '+
-            '           ng-change="changed()" >'+
-            '       <option value="" >--- select skill ---</option>'+
-            '   </select>'+
-            '   <input type="hidden" '+
-            '          ng-model="bindRank" >'+
-            '   <span ng-show="showRank" >'+
-            '       {{ (bindSkill ? " Rank " : "") + skillTree[bindSkill].rank }}'+
-            '   </span>'+
-            '</span>'+
-            '<span ng-hide="bindFilter().length>0" >'+
-            '   No skills available'+
-            '</span>',
+        templateUrl: 'sections/skills/template-skill-select.html',
         link: function(scope, elem, attrs) {
             scope.showRank = !!attrs.rank;
             scope.changed = function() {

@@ -12,8 +12,7 @@ mod.component('dtSkills', {
 function SkillController($scope, skills) {
     var ctrl = this;
     $scope.skills = skills;
-    $scope.skillTree = skills.tree;
-  
+
     ctrl.data = {
         descSkill: {
             0: { val: 0, desc: "0" },
