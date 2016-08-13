@@ -1,5 +1,5 @@
-Downtime development
-====================
+SINergy downtime helper
+=======================
 For full details of this project, see the link above, but this started out as a plunk 
 (http://plnkr.co) for me to work on developing a downtime helper for LARP game SINergy
 (http://www.sinergylarp.com).
