@@ -193,11 +193,13 @@ mod.factory('skills', function(persist) {
         state.skills[skill].trained = false;
         state.skills[skill].rank = 0;
         state.skills[skill].slots = 0;
-        removeBinding(skill)
+        removeBinding(skill);
 
-        for(var spec in filterSpecsBySkill) {
-            factory.state.wipeSpec(spec);
-        }
+        filterSpecsBySkill(skill).forEach(factory.wipeSpec);
+
+/*        for(var spec in filterSpecsBySkill(skill)) {
+            factory.wipeSpec(spec);
+        }*/
 
         return true;
     };
@@ -210,17 +212,10 @@ mod.factory('skills', function(persist) {
         state.specs[spec].trained = false;
         state.specs[spec].rank = 0;
         state.specs[spec].slots = 0;
-        removeBinding(spec)
+        removeBinding(spec);
 
         return true;
     };
-
-
-    function filterSpecsBySkill(skill) {
-        return Object.keys(state.specs).filter(function (val) {
-            return state.specs[val].parent == skill;
-        });
-    }
 
     // --------------------------------------------------
 
@@ -266,6 +261,14 @@ mod.factory('skills', function(persist) {
             return (state.skills[val].type == type) && state.skills[val].trained;
         });
     };
+
+    function filterSpecsBySkill(skill) {
+        return Object.keys(state.specs).filter(function (val) {
+            return state.specs[val].parent == skill;
+        });
+    }
+
+    factory.filterSpecsBySkill = filterSpecsBySkill;
 
     factory.filterSpecTrained = function(skill) {
         if (!skill) return [];
