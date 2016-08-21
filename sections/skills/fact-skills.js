@@ -212,7 +212,8 @@ mod.factory('skills', function(persist) {
     // --------------------------------------------------
 
     factory.isTypeTrained = function(type) {
-        if (!type in state.types)
+        //We've already defined this, so use it as a shortcut
+        if(factory.types.indexOf(type) < 0)
             return false;
 
         return (factory.filterTypeTrained().length > 0);
@@ -299,13 +300,11 @@ mod.factory('skills', function(persist) {
     };
 
     factory.nameSkill = function(skill) {
-        //console.log('nameSkill:' + skill);
         if (!state.skills.hasOwnProperty(skill)) return 'unknown';
         return state.skills[skill].name;
     };
 
     factory.nameSpec = function(spec) {
-        console.log('nameSpec:' + spec);
         if (!state.specs.hasOwnProperty(spec)) return 'unknown';
         return state.specs[spec].name;
     };
