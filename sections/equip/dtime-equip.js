@@ -1,6 +1,7 @@
 // Code goes here
 
 mod = angular.module('sin.dtime.equip', [
+  'sin.fact',
   'sin.fact.assets',
   'sin.fact.equip',
   'sin.fact.lifestyle',
@@ -19,12 +20,13 @@ mod.directive('dtEquip', function() {
   };
 });
 
-mod.controller('EquipController', function($scope, assets, equip, lifestyle, skills, persist) {
+mod.controller('EquipController', function($scope, dtime, assets, equip, lifestyle, skills, persist) {
   var ctrl = this;
+  $scope.dtime = dtime;
+  $scope.assetJob = assets.getJob();
   $scope.equip = equip;
   $scope.skills = skills;
-  $scope.assetJob = assets.getJob();
-  
+
   ctrl.state = {};
   ctrl.data = {
     types: {
