@@ -81,12 +81,10 @@
             <tr ng-repeat-end ng-repeat="spec in skills.filterSpecTrained(skill)">
                 <td class="pad-right">+ {{ skills.nameSpec(spec) }}</td>
                 <td class="pad-right">
-                    <select ng-model="skills.bindings[spec].rank"
-                            ng-options="opt.val as opt.desc for opt in ctrl.data.descSpec"
-                            class="sel-sizematch"
-                            ng-disabled="skills.lockSkillEdit"
-                            ng-change="skills.bindings[spec].slots=0" >
-                    </select>
+                    <dt-spec-rank
+                            spec="spec"
+                            disabled="skills.lockSkillEdit" >
+                    </dt-spec-rank>
                 </td>
                 <td class="pad-right">
                     <span ng-show="skills.trainableSpec(spec)>0">

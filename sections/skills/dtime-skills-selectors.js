@@ -26,6 +26,29 @@ mod.directive('dtSkillRank', function() {
     };
 });
 
+mod.directive('dtSpecRank', function() {
+    return {
+        restrict: 'E',
+        scope: {
+            spec: '=',
+            disabled: '='
+        },
+        controller: SkillController,
+        controllerAs: 'ctrl',
+        template: ''+
+        '<select ng-model="skills.bindings[spec].rank" '+
+        '        ng-options="opt.val as opt.desc for opt in ctrl.data.descSpec" '+
+        '        class="sel-sizematch" '+
+        '        ng-disabled="disabled" '+
+        '        ng-change="skills.bindings[spec].slots=0" >'+
+        '</select>',
+        link: function(scope, elem, attrs) {
+            if(!attrs.disabled)
+                attrs.disabled = 'false';
+        }
+    };
+});
+
 mod.directive('dtSkillSelect', function() {
     return {
         restrict: 'E',
