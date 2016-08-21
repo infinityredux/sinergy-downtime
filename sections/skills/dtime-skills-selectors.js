@@ -46,7 +46,7 @@ mod.directive('dtSkillSelect', function() {
                     scope.bindRank = 0;
                     return;
                 }
-                scope.bindRank = scope.bindings[scope.bindSkill].rank;
+                scope.bindRank = scope.skills.bindings[scope.bindSkill].rank;
             };
         }
     };
@@ -73,7 +73,7 @@ mod.directive('dtSpecSelect', function() {
                     scope.bindRank = 0;
                     return;
                 }
-                scope.bindRank = scope.bindings[scope.bindSpec].rank;
+                scope.bindRank = scope.skills.bindings[scope.bindSpec].rank;
             };
         }
     };
