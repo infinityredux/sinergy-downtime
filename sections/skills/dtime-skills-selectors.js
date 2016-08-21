@@ -3,7 +3,7 @@ mod = angular.module('sin.dtime.skills-selectors', [
     'sin.fact.skills'
 ]);
 
-mod.directive('dtRankSelect', function() {
+mod.directive('dtSkillRank', function() {
     return {
         restrict: 'E',
         scope: {
