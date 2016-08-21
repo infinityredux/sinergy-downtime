@@ -1,18 +1,23 @@
 <sin-fieldset legend="Skills:">
     <span ng-show="skills.filterSkillUntrained().length>0">
         <select ng-model="skills.newSelected"
+                ng-hide="skills.hideSkillEdit"
                 ng-disabled="skills.lockSkillEdit"
                 ng-options="skill as skills.nameSkill(skill) group by skills.typeSkill(skill) for skill in skills.filterSkillUntrained()" >
             <option value="">--- new skill ---</option>
         </select>
         <input type="button"
                value="Add"
+               ng-hide="skills.hideSkillEdit"
                ng-click="ctrl.addClick()"
                ng-disabled="skills.lockSkillEdit" />
     </span>
   
     <div class="opt-float-right">
-        <input type="checkbox" ng-model="skills.lockSkillEdit">
+        <input type="checkbox"
+               ng-hide="skills.hideSkillEdit"
+               ng-model="skills.lockSkillEdit"
+               title="Lock the skills to prevent editing." >
         Lock skills
     </div>
   
@@ -52,6 +57,7 @@
                         <input type="range"
                                min="0"
                                max="{{ skills.trainableSkill(skill) - 1 }}"
+                               title="Slots trained towards the next rank."
                                ng-model="skills.bindings[skill].slots"
                                ng-hide="skills.lockSkillEdit"
                                ng-disabled="skills.lockSkillEdit"
@@ -100,6 +106,7 @@
                         <input type="range"
                                min="0"
                                max="{{ skills.trainableSpec(spec) - 1 }}"
+                               title="Slots trained towards the next level of spec bonus."
                                ng-model="skills.bindings[spec].slots"
                                ng-hide="skills.lockSkillEdit"
                                ng-disabled="skills.lockSkillEdit"
