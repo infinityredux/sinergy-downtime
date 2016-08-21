@@ -26,15 +26,11 @@
             </tr>
         </thead>
 
-        {{ skills.types }}
-
         <tbody ng-repeat="type in skills.types">
-      
+
             <tr ng-show="skills.isTypeTrained(type)">
                 <th colspan=4>{{type}}</th>
             </tr>
-
-            <!-- {{skills.filterTypeTrained(type)}}-->
 
             <tr ng-repeat-start="skill in skills.filterTypeTrained(type)">
                 <td class="pad-right">
