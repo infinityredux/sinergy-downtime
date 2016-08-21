@@ -1,20 +1,15 @@
-<!DOCTYPE html>
-<!--HTML fragment / template for downtime equipment  -->
-
-<div ng-controller="EquipController as eq">
-
 {{equip.displayState();}}<br /><hr />
 {{equip.displayState('details');}}<br />
 
 <sin-fieldset legend="Equipment:">
     <select name="type"
-            ng-options="type.val as type.desc for type in eq.data.types"
-            ng-model="eq.state.type"
-            ng-change="eq.optChange()" >
+            ng-options="type.val as type.desc for type in ctrl.data.types"
+            ng-model="ctrl.state.type"
+            ng-change="ctrl.optChange()" >
         <option value="">--- select type ---</option>
     </select>
-    <input type="button" name="add" value="New" ng-click="eq.newClick()" /><br />
-    <span class="help" ng-show="eq.state.type && dtime.help">{{eq.data.types[eq.state.type].help}}<br /></span>
+    <input type="button" name="add" value="New" ng-click="ctrl.newClick()" /><br />
+    <span class="help" ng-show="ctrl.state.type && dtime.help">{{ctrl.data.types[ctrl.state.type].help}}<br /></span>
 </sin-fieldset>
 
 <sin-tabbed-panes initial="item">
@@ -91,5 +86,3 @@
 </sin-pane>
 
 </sin-tabbed-panes>
-
-</div>
