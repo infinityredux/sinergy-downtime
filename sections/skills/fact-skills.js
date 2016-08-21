@@ -659,8 +659,8 @@ mod.factory('skills', function(persist) {
                     parent: data.parent,
                     type: state.types[data.parent],
                     trained: data.trained ? true : false,
-                    rank: data.rank > 0 ? factory.data.rawSkills[key].rank : 0,
-                    slots: data.slots > 0 ? factory.data.rawSkills[key].slots : 0
+                    rank: data.rank > 0 ? data.rank : 0,
+                    slots: data.slots > 0 ? data.slots : 0
                 };
             }
         }
