@@ -294,16 +294,18 @@ mod.factory('skills', function(persist) {
         return factory.data.trainableSlotsSkill[state.skills[skill].rank];
     };
 
-    factory.trainableSpec = function(skill, spec) {
+    factory.trainableSpec = function(spec) {
         return factory.data.trainableSlotsSpec[state.specs[spec].rank];
     };
 
     factory.nameSkill = function(skill) {
+        //console.log('nameSkill:' + skill);
         if (!state.skills.hasOwnProperty(skill)) return 'unknown';
         return state.skills[skill].name;
     };
 
     factory.nameSpec = function(spec) {
+        console.log('nameSpec:' + spec);
         if (!state.specs.hasOwnProperty(spec)) return 'unknown';
         return state.specs[spec].name;
     };

@@ -35,10 +35,9 @@ function SkillController($scope, skills) {
         skills.trainSkill(skills.newSelected);
     };
 
-    ctrl.addSpecClick = function(skill, spec) {
-        if (skill === null) return;
+    ctrl.addSpecClick = function(spec) {
         if (spec === null) return;
-        skills.trainSpec(skill, spec);
+        skills.trainSpec(spec);
     };
 
     ctrl.removeClick = function(skill) {
@@ -46,8 +45,7 @@ function SkillController($scope, skills) {
         skills.wipeSkill(skill);
     };
 
-    ctrl.removeSpecClick = function(skill, spec) {
-        if (skill === null) return;
+    ctrl.removeSpecClick = function(spec) {
         if (spec === null) return;
         skills.wipeSpec(skill, spec);
     };

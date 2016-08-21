@@ -46,7 +46,7 @@ mod.directive('dtSkillSelect', function() {
                     scope.bindRank = 0;
                     return;
                 }
-                scope.bindRank = scope.skillTree[scope.bindSkill].rank;
+                scope.bindRank = scope.bindings[scope.bindSkill].rank;
             };
         }
     };
@@ -63,7 +63,6 @@ mod.directive('dtSpecSelect', function() {
         },
         controller: function($scope, skills) {
             $scope.skills = skills;
-            $scope.skillTree = skills.tree;
         },
         controllerAs: 'ctrl',
         templateUrl: 'sections/skills/template-select-spec.html',
@@ -74,7 +73,7 @@ mod.directive('dtSpecSelect', function() {
                     scope.bindRank = 0;
                     return;
                 }
-                scope.bindRank = scope.skillTree[scope.bindSkill].specs[scope.bindSpec].rank;
+                scope.bindRank = scope.bindings[scope.bindSpec].rank;
             };
         }
     };

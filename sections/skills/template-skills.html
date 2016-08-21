@@ -50,7 +50,7 @@
                         <input type="range"
                                min="0"
                                max="{{ skills.trainableSkill(skill) - 1 }}"
-                               ng-model="skillTree[skill].slots"
+                               ng-model="skills.bindings[skill].slots"
                                ng-hide="skills.lockSkillEdit"
                                ng-disabled="skills.lockSkillEdit"
                                class="sel-sizematch" />
@@ -61,12 +61,12 @@
                         <select ng-model="spec"
                                 ng-hide="skills.lockSkillEdit"
                                 ng-disabled="skills.lockSkillEdit"
-                                ng-options="spec as skills.nameSpec(skill,spec) for spec in skills.filterSpecUntrained(skill)">
+                                ng-options="spec as skills.nameSpec(spec) for spec in skills.filterSpecUntrained(skill)">
                         </select>
                         <input type="button"
                                ng-hide="skills.lockSkillEdit"
                                ng-disabled="skills.lockSkillEdit"
-                               ng-click="ctrl.addSpecClick(skill,spec)"
+                               ng-click="ctrl.addSpecClick(spec)"
                                value="Add Spec" />
                     </span>
                 </td>
@@ -81,22 +81,22 @@
                 </td>
             </tr>
             <tr ng-repeat-end ng-repeat="spec in skills.filterSpecTrained(skill)">
-                <td class="pad-right">+ {{ skills.nameSpec(skill,spec) }}</td>
+                <td class="pad-right">+ {{ skills.nameSpec(spec) }}</td>
                 <td class="pad-right">
-                    <select ng-model="skillTree[skill].specs[spec].rank"
+                    <select ng-model="skills.bindings[spec].rank"
                             ng-options="opt.val as opt.desc for opt in ctrl.data.descSpec"
                             class="sel-sizematch"
                             ng-disabled="skills.lockSkillEdit"
-                            ng-change="skillTree[skill].specs[spec].slots=0" >
+                            ng-change="skills.bindings[spec].slots=0" >
                     </select>
                 </td>
                 <td class="pad-right">
-                    <span ng-show="skills.trainableSpec(skill,spec)>0">
-                        {{ skills.slotsSpec(skill,spec) + '/' + skills.trainableSpec(skill,spec) + ' slots' }}
+                    <span ng-show="skills.trainableSpec(spec)>0">
+                        {{ skills.slotsSpec(spec) + '/' + skills.trainableSpec(spec) + ' slots' }}
                         <input type="range"
                                min="0"
-                               max="{{ skills.trainableSpec(skill,spec) - 1 }}"
-                               ng-model="skillTree[skill].specs[spec].slots"
+                               max="{{ skills.trainableSpec(spec) - 1 }}"
+                               ng-model="skills.bindings[spec].slots"
                                ng-hide="skills.lockSkillEdit"
                                ng-disabled="skills.lockSkillEdit"
                                class="sel-sizematch" />
@@ -106,7 +106,7 @@
                 <td>
                     <span class="opt-float-right">
                         <input type="button"
-                               ng-click="ctrl.removeSpecClick(skill,spec)"
+                               ng-click="ctrl.removeSpecClick(spec)"
                                ng-hide="skills.lockSkillEdit"
                                ng-disabled="skills.lockSkillEdit"
                                value="Remove" />
