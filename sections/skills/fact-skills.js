@@ -272,22 +272,22 @@ mod.factory('skills', function(persist) {
     // --------------------------------------------------
 
     factory.rankSkill = function(skill) {
-        if (!skill in state.skills) return 0;
+        if (!state.skills.hasOwnProperty(skill)) return 0;
         return state.skills[skill].rank;
     };
 
     factory.rankSpec = function(spec) {
-        if (!spec in state.specs) return 0;
+        if (!state.specs.hasOwnProperty(spec)) return 0;
         return state.specs[spec].rank;
     };
 
     factory.slotsSkill = function(skill) {
-        if (!skill in state.skills) return 0;
+        if (!state.skills.hasOwnProperty(skill)) return 0;
         return state.skills[skill].slots;
     };
 
     factory.slotsSpec = function(spec) {
-        if (!spec in state.specs) return 0;
+        if (!state.specs.hasOwnProperty(spec)) return 0;
         return state.specs[spec].slots;
     };
 
@@ -310,7 +310,7 @@ mod.factory('skills', function(persist) {
     };
 
     factory.typeSkill = function(skill) {
-        if (!skill in state.skills) return 'unknown';
+        if (!state.skills.hasOwnProperty(skill)) return 'unknown';
         return state.skills[skill].type;
     };
 
