@@ -68,8 +68,8 @@ mod.factory('skills', function(persist) {
 
     function addSpecBinding(spec) {
         if (spec === undefined)                 return false;
-        if (state.specs[spec] === undefined)   return false;
-        if (!state.specs[spec].trained)        return false;
+        if (state.specs[spec] === undefined)    return false;
+        if (!state.specs[spec].trained)         return false;
 
         var skill = state.specs[spec].parent;
         if (state.skills[skill] === undefined)  return false;
