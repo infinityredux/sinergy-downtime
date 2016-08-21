@@ -39,8 +39,12 @@
                 <td class="pad-right">
                     <dt-skill-rank
                             skill="skill"
+                            ng-hide="skills.lockSkillEdit"
                             disabled="skills.lockSkillEdit" >
                     </dt-skill-rank>
+                    <span ng-show="skills.lockSkillEdit" >
+                        {{ skills.rankSkill(skill); }}
+                    </span>
                 </td>
                 <td class="pad-right" >
                     <span ng-show="skills.trainableSkill(skill)>0">
@@ -83,8 +87,12 @@
                 <td class="pad-right">
                     <dt-spec-rank
                             spec="spec"
+                            ng-hide="skills.lockSkillEdit"
                             disabled="skills.lockSkillEdit" >
                     </dt-spec-rank>
+                    <span ng-show="skills.lockSkillEdit" >
+                        +{{ skills.rankSpec(spec); }}
+                    </span>
                 </td>
                 <td class="pad-right">
                     <span ng-show="skills.trainableSpec(spec)>0">
