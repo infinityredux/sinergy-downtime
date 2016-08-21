@@ -65,12 +65,13 @@ mod.directive('dtSkillSelect', function() {
         link: function(scope, elem, attrs) {
             scope.showRank = !!attrs.rank;
             scope.changed = function() {
-                if(!scope.bindSkill) {
-                    scope.bindRank = 0;
+                if(!scope.bindRank)
                     return;
-                }
-                scope.bindRank = scope.skills.bindings[scope.bindSkill].rank;
-            };
+                if (scope.skills.bindings[scope.bindSkill])
+                    scope.bindRank = scope.skills.bindings[scope.bindSkill].rank;
+                else
+                    scope.bindRank = 0;
+            }
         }
     };
 });
@@ -79,10 +80,10 @@ mod.directive('dtSpecSelect', function() {
     return {
         restrict: 'E',
         scope: {
-            bindFilter: '&filter',
             bindRank: '=rank',
             bindSpec: '=spec',
-            bindSkill: '=skill'
+            bindSkill: '=skill',
+            bindTrained: '=trained'
         },
         controller: function($scope, skills) {
             $scope.skills = skills;
@@ -90,14 +91,21 @@ mod.directive('dtSpecSelect', function() {
         controllerAs: 'ctrl',
         templateUrl: 'sections/skills/template-select-spec.html',
         link: function(scope, elem, attrs) {
+            if (!!scope.bindTrained) {
+                scope.filter = scope.skills.filterSpecTrained;
+            }
+            else {
+                scope.filter = scope.skills.filterSpecAll;
+            }
             scope.showRank = !!attrs.rank;
             scope.changed = function() {
-                if(!scope.bindSpec) {
-                    scope.bindRank = 0;
+                if(!scope.bindRank)
                     return;
-                }
-                scope.bindRank = scope.skills.bindings[scope.bindSpec].rank;
-            };
+                if (scope.skills.bindings[scope.bindSpec])
+                    scope.bindRank = scope.skills.bindings[scope.bindSpec].rank;
+                else
+                    scope.bindRank = 0;
+        };
         }
     };
 });

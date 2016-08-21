@@ -1,5 +1,5 @@
-<span ng-show="skills.filterSkillTrained().length>0" >
-    <select ng-options="spec as skills.nameSpec(spec) for spec in skills.filterSpecTrained(bindSkill)"
+<span ng-show="filter(bindSkill).length>0" >
+    <select ng-options="spec as skills.nameSpec(spec) for spec in filter(bindSkill)"
             ng-model="bindSpec"
             ng-change="changed()" >
         <option value="" >--- no spec ---</option>
@@ -10,6 +10,6 @@
         {{ (bindSpec ? " +" : "") + skills.rankSpec(bindSpec) }}
     </span>
 </span>
-<span ng-hide="skills.filterSkillTrained().length>0" >
+<span ng-hide="filter(bindSkill).length>0" >
     No specs available
 </span>

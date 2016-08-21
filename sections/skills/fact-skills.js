@@ -192,7 +192,7 @@ mod.factory('skills', function(persist) {
         state.skills[skill].slots = 0;
         removeBinding(skill);
 
-        filterSpecsBySkill(skill).forEach(factory.wipeSpec);
+        filterSpecAll(skill).forEach(factory.wipeSpec);
 
         return true;
     };
@@ -240,7 +240,7 @@ mod.factory('skills', function(persist) {
         });
     }
 
-    function filterSpecsBySkill(skill) {
+    function filterSpecAll(skill) {
         return Object.keys(state.specs).filter(function (val) {
             return state.specs[val].parent == skill;
         });
@@ -267,7 +267,7 @@ mod.factory('skills', function(persist) {
     factory.filterSkillTrained = filterSkillTrained;
     factory.filterSkillUntrained = filterSkillUntrained;
     factory.filterTypeTrained = filterTypeTrained;
-    //factory.filterSpecsBySkill = filterSpecsBySkill;
+    factory.filterSpecAll = filterSpecAll;
     factory.filterSpecTrained = filterSpecTrained;
     factory.filterSpecUntrained = filterSpecUntrained;
 

@@ -7,14 +7,14 @@
 {{equip.displayState('details');}}<br />
 
 <sin-fieldset legend="Equipment:">
-  <select name="type"
-          ng-options="type.val as type.desc for type in eq.data.types"
-          ng-model="eq.state.type" 
-          ng-change="eq.optChange()" >
-    <option value="">--- select type ---</option>
-  </select>
-  <input type="button" name="add" value="New" ng-click="eq.newClick()" /><br />
-  <span class="help" ng-show="eq.state.type && dtime.help">{{eq.data.types[eq.state.type].help}}<br /></span>
+    <select name="type"
+            ng-options="type.val as type.desc for type in eq.data.types"
+            ng-model="eq.state.type"
+            ng-change="eq.optChange()" >
+        <option value="">--- select type ---</option>
+    </select>
+    <input type="button" name="add" value="New" ng-click="eq.newClick()" /><br />
+    <span class="help" ng-show="eq.state.type && dtime.help">{{eq.data.types[eq.state.type].help}}<br /></span>
 </sin-fieldset>
 
 <sin-tabbed-panes initial="item">
@@ -53,8 +53,8 @@
         </td>
         <td>&nbsp; / &nbsp;</td>
         <td>
-          <dt-spec-select 
-              skill="item.skill" 
+          <dt-spec-select
+              skill="item.skill"
               spec="item.spec" >
           </dt-spec-select>          
         </td>
