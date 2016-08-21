@@ -212,11 +212,11 @@ mod.factory('skills', function(persist) {
     // --------------------------------------------------
 
     factory.isTypeTrained = function(type) {
-        //We've already defined this, so use it as a shortcut
+        //We've already defined this above, so use it as a shortcut
         if(factory.types.indexOf(type) < 0)
             return false;
 
-        return (factory.filterTypeTrained().length > 0);
+        return (factory.filterTypeTrained(type).length > 0);
     };
 
     factory.filterAll = function() {
