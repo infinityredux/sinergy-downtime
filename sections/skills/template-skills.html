@@ -25,7 +25,9 @@
                 <th colspan="2">&nbsp;</th>
             </tr>
         </thead>
-    
+
+        {{ skills.types }}
+
         <tbody ng-repeat="type in skills.types">
       
             <tr ng-show="skills.isTypeTrained(type)">

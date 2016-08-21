@@ -45,18 +45,18 @@ mod.factory('skills', function(persist) {
         var binding = {};
 
         Object.defineProperty(binding, 'rank', {
-            get: function() { return skills[skill].rank; },
+            get: function() { return state.skills[skill].rank; },
             set: function(val) {
-                skills[skill].rank = val;
+                state.skills[skill].rank = val;
                 changed = true;
             },
             enumerable: true
         });
 
         Object.defineProperty(binding, 'slots', {
-            get: function() { return skills[skill].slots; },
+            get: function() { return state.skills[skill].slots; },
             set: function(val) {
-                skills[skill].slots = val;
+                state.skills[skill].slots = val;
                 changed = true;
             },
             enumerable: true
@@ -78,18 +78,18 @@ mod.factory('skills', function(persist) {
         var binding = {};
 
         Object.defineProperty(binding, 'rank', {
-            get: function() { return skills[spec].rank; },
+            get: function() { return state.specs[spec].rank; },
             set: function(val) {
-                skills[spec].rank = val;
+                state.specs[spec].rank = val;
                 changed = true;
             },
             enumerable: true
         });
 
         Object.defineProperty(binding, 'slots', {
-            get: function() { return skills[spec].slots; },
+            get: function() { return state.specs[spec].slots; },
             set: function(val) {
-                skills[spec].slots = val;
+                state.specs[spec].slots = val;
                 changed = true;
             },
             enumerable: true
