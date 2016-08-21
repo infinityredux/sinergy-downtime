@@ -16,10 +16,9 @@ mod.component('dtEquip', {
     templateUrl: 'sections/equip/template-equip.html'
 });
 
-function EquipController($scope, dtime, assets, equip, lifestyle, skills, persist) {
+function EquipController($scope, dtime, equip, lifestyle, skills, persist) {
     var ctrl = this;
     $scope.dtime = dtime;
-    $scope.assetJob = assets.getJob();
     $scope.equip = equip;
     $scope.skills = skills;
 
