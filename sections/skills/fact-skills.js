@@ -95,7 +95,7 @@ mod.factory('skills', function(persist) {
             enumerable: true
         });
 
-        state.bindings[skill] = binding;
+        state.bindings[spec] = binding;
         return true;
     }
 
