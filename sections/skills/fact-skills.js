@@ -31,9 +31,23 @@ mod.factory('skills', function(persist) {
         state.skills = {};
         state.specs = {};
         state.bindings = {};
+        state.modifiers = {};
     }
 
     defaultState();
+
+    // --------------------------------------------------
+
+    persist.registerLoad(function() {
+        state = persist.doLoad('sin.fact.skills', state);
+        changed = false;
+    });
+    persist.registerSave(function() {
+        persist.doSave('sin.fact.skills', state);
+        changed = false;
+    });
+    persist.registerWipe(function() { defaultState(); });
+    persist.registerLongTerm(isChanged);
 
     // --------------------------------------------------
 
@@ -148,19 +162,6 @@ mod.factory('skills', function(persist) {
 
     // --------------------------------------------------
 
-    persist.registerLoad(function() {
-        state = persist.doLoad('sin.fact.skills', state);
-        changed = false;
-    });
-    persist.registerSave(function() {
-        persist.doSave('sin.fact.skills', state);
-        changed = false;
-    });
-    persist.registerWipe(function() { defaultState(); });
-    persist.registerLongTerm(isChanged);
-
-    // --------------------------------------------------
-
     factory.trainSkill = function(skill) {
         if (state.index[skill] === undefined) return false;
         if (state.index[skill].type != 'skill') return false;
@@ -211,41 +212,33 @@ mod.factory('skills', function(persist) {
 
     // --------------------------------------------------
 
-    factory.isTypeTrained = function(type) {
-        //We've already defined this above, so use it as a shortcut
-        if(factory.types.indexOf(type) < 0)
-            return false;
-
-        return (factory.filterTypeTrained(type).length > 0);
-    };
-
-    factory.filterAll = function() {
+    function filterAll() {
         return Object.keys(state.skills) + Object.keys(state.specs);
-    };
+    }
 
-    factory.filterSkillNotType = function(type) {
+    function filterSkillNotType(type) {
         return Object.keys(state.skills).filter(function(val) {
             return (state.skills[val].type != type);
         });
-    };
+    }
 
-    factory.filterSkillTrained = function() {
+    function filterSkillTrained() {
         return Object.keys(state.skills).filter(function(val) {
             return state.skills[val].trained;
         });
-    };
+    }
 
-    factory.filterSkillUntrained = function() {
+    function filterSkillUntrained () {
         return Object.keys(state.skills).filter(function(val) {
             return !state.skills[val].trained;
         });
-    };
+    }
 
-    factory.filterTypeTrained = function(type) {
+    function filterTypeTrained(type) {
         return Object.keys(state.skills).filter(function(val) {
             return (state.skills[val].type == type) && state.skills[val].trained;
         });
-    };
+    }
 
     function filterSpecsBySkill(skill) {
         return Object.keys(state.specs).filter(function (val) {
@@ -253,20 +246,39 @@ mod.factory('skills', function(persist) {
         });
     }
 
-    //factory.filterSpecsBySkill = filterSpecsBySkill;
-
-    factory.filterSpecTrained = function(skill) {
+    function filterSpecTrained(skill) {
         if (!skill) return [];
         return Object.keys(state.specs).filter(function(val) {
             return (state.specs[val].parent == skill) && state.specs[val].trained;
         });
-    };
+    }
 
-    factory.filterSpecUntrained = function(skill) {
+    function filterSpecUntrained(skill) {
         if (!skill) return [];
         return Object.keys(state.specs).filter(function(val) {
             return (state.specs[val].parent == skill) && !state.specs[val].trained;
         });
+    }
+
+    // --------------------------------------------------
+
+    factory.filterAll = filterAll;
+    factory.filterSkillNotType = filterSkillNotType;
+    factory.filterSkillTrained = filterSkillTrained;
+    factory.filterSkillUntrained = filterSkillUntrained;
+    factory.filterTypeTrained = filterTypeTrained;
+    //factory.filterSpecsBySkill = filterSpecsBySkill;
+    factory.filterSpecTrained = filterSpecTrained;
+    factory.filterSpecUntrained = filterSpecUntrained;
+
+    // --------------------------------------------------
+
+    factory.isTypeTrained = function(type) {
+        //We've already defined this above, so use it as a shortcut
+        if(factory.types.indexOf(type) < 0)
+            return false;
+
+        return (filterTypeTrained(type).length > 0);
     };
 
     // --------------------------------------------------
