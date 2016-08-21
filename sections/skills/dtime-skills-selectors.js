@@ -13,11 +13,11 @@ mod.directive('dtRankSelect', function() {
         controller: SkillController,
         controllerAs: 'ctrl',
         template: ''+
-            '<select ng-model="skillTree[skill].rank" '+
+            '<select ng-model="skills.bindings[skill].rank" '+
             '        ng-options="opt.val as opt.desc for opt in ctrl.data.descSkill" '+
             '        class="sel-sizematch" '+
             '        ng-disabled="disabled" '+
-            '        ng-change="skillTree[skill].slots=0" >'+
+            '        ng-change="skills.bindings[skill].slots=0" >'+
             '</select>',
         link: function(scope, elem, attrs) {
             if(!attrs.disabled)
