@@ -47,6 +47,6 @@ function SkillController($scope, skills) {
 
     ctrl.removeSpecClick = function(spec) {
         if (spec === null) return;
-        skills.wipeSpec(skill, spec);
+        skills.wipeSpec(spec);
     };
 }
