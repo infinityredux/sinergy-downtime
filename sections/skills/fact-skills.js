@@ -123,6 +123,26 @@ mod.factory('skills', function(persist) {
 
     // --------------------------------------------------
 
+    function addModifier(skill, id, modifier) {
+        if (!state.modifiers.hasOwnProperty(skill))     state.modifiers[skill] = {};
+        if (state.modifiers[skill].hasOwnProperty(id))  return false;
+
+        if (typeof modifier == 'function')  state.modifiers[skill][id] = modifier;
+        else                                state.modifiers[skill][id] = function() {return modifier};
+
+        return true;
+    }
+
+    function removeModifier (skill, id) {
+        if (!state.modifiers.hasOwnProperty(skill))     return false;
+        if (!state.modifiers[skill].hasOwnProperty(id)) return false;
+
+        delete state.modifiers[skill][id];
+        return true;
+    }
+    
+    // --------------------------------------------------
+
     Object.defineProperty(factory, 'hideSkillEdit', {
         get: function() {return state.hideSkillEdit;},
         enumerable: true
@@ -192,7 +212,7 @@ mod.factory('skills', function(persist) {
         state.skills[skill].slots = 0;
         removeBinding(skill);
 
-        filterSpecAll(skill).forEach(factory.wipeSpec);
+        filterSpecTrained(skill).forEach(factory.wipeSpec);
 
         return true;
     };
@@ -327,6 +347,13 @@ mod.factory('skills', function(persist) {
     };
 
     // --------------------------------------------------
+
+    function diminishingBonus(bonus) {
+        if (bonus < 4)
+            return bonus;
+
+        return 4 + Math.floor((bonus - 4) / 2);
+    }
 
     /*
     function convertSkillRankToSlots (rank) {
