@@ -123,10 +123,10 @@ mod.factory('skills', function(persist) {
     }
 
     function removeBinding(id) {
-        if (!state.bindings.hasOwnProperty(id))
+        if (!bindings.hasOwnProperty(id))
             return false;
 
-        delete state.bindings.id;
+        delete bindings.id;
         return true;
     }
 
