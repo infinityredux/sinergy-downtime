@@ -5,6 +5,9 @@ mod.factory('skills', function(persist) {
     var state = {};
     var changed = false;
 
+    var bindings = {};
+    var modifiers = {};
+
     factory.data = {
         dataCacheTime: (7 * 24 * 60 * 60 * 1000),   //one week in milliseconds
         trainableSlotsSkill: [1,2,4,6,10,-1],
@@ -30,8 +33,6 @@ mod.factory('skills', function(persist) {
 
         state.skills = {};
         state.specs = {};
-        state.bindings = {};
-        state.modifiers = {};
     }
 
     defaultState();
@@ -39,13 +40,16 @@ mod.factory('skills', function(persist) {
     // --------------------------------------------------
 
     persist.registerPreLoad(function() {
-        // Place holder if theory about bug is correct
-        // Will be necessary for modifications, I think
+        // Can't reload modifiers ourselves, since they may require external functions.
+        // So make certain we have a blank state before the load event fires for other
+        // factories to add these after they have loaded. (As we can't guarantee what
+        // order the load events would fire in.)
+        modifiers = {};
     });
     persist.registerLoad(function() {
         state = persist.doLoad('sin.fact.skills', state);
+        createBindings();
         changed = false;
-        rebuildBindings();
     });
     persist.registerSave(function() {
         persist.doSave('sin.fact.skills', state);
@@ -61,9 +65,9 @@ mod.factory('skills', function(persist) {
         if (state.skills[skill] === undefined)  return false;
         if (!state.skills[skill].trained)       return false;
 
-        var binding = {};
+        var bind = {};
 
-        Object.defineProperty(binding, 'rank', {
+        Object.defineProperty(bind, 'rank', {
             get: function() { return state.skills[skill].rank; },
             set: function(val) {
                 state.skills[skill].rank = val;
@@ -72,7 +76,7 @@ mod.factory('skills', function(persist) {
             enumerable: true
         });
 
-        Object.defineProperty(binding, 'slots', {
+        Object.defineProperty(bind, 'slots', {
             get: function() { return state.skills[skill].slots; },
             set: function(val) {
                 state.skills[skill].slots = val;
@@ -81,7 +85,7 @@ mod.factory('skills', function(persist) {
             enumerable: true
         });
 
-        state.bindings[skill] = binding;
+        bindings[skill] = bind;
         return true;
     }
 
@@ -94,9 +98,9 @@ mod.factory('skills', function(persist) {
         if (state.skills[skill] === undefined)  return false;
         if (!state.skills[skill].trained)       return false;
 
-        var binding = {};
+        var bind = {};
 
-        Object.defineProperty(binding, 'rank', {
+        Object.defineProperty(bind, 'rank', {
             get: function() { return state.specs[spec].rank; },
             set: function(val) {
                 state.specs[spec].rank = val;
@@ -105,7 +109,7 @@ mod.factory('skills', function(persist) {
             enumerable: true
         });
 
-        Object.defineProperty(binding, 'slots', {
+        Object.defineProperty(bind, 'slots', {
             get: function() { return state.specs[spec].slots; },
             set: function(val) {
                 state.specs[spec].slots = val;
@@ -114,7 +118,7 @@ mod.factory('skills', function(persist) {
             enumerable: true
         });
 
-        state.bindings[spec] = binding;
+        bindings[spec] = bind;
         return true;
     }
 
@@ -125,34 +129,40 @@ mod.factory('skills', function(persist) {
         delete state.bindings.id;
         return true;
     }
-    
-    function rebuildBindings() {
-        var rebuild = Object.keys(state.bindings);
-        state.bindings = {};
-        for (var i=0; i < rebuild.length; i++) {
-            // Future proofing by not using else (just in case)
-            if (state.index[rebuild[i]].type == 'skill')    addSkillBinding(rebuild[i]);
-            if (state.index[rebuild[i]].type == 'spec')     addSpecBinding(rebuild[i]);
+
+    function createBindings() {
+        bindings = {};
+
+        var keys = Object.keys(state.skills);
+        for (var i=0; i < keys.length; i++) {
+            if (state.skills[keys[i]].trained)
+                addSkillBinding(keys[i]);
+        }
+
+        keys = Object.keys(state.specs);
+        for (i=0; i < keys.length; i++) {
+            if (state.specs[keys[i]].trained)
+                addSpecBinding(keys[i]);
         }
     }
 
     // --------------------------------------------------
 
-    function addModifier(skill, id, modifier) {
-        if (!state.modifiers.hasOwnProperty(skill))     state.modifiers[skill] = {};
-        if (state.modifiers[skill].hasOwnProperty(id))  return false;
+    function addModifier(skill, id, mod) {
+        if (!modifiers.hasOwnProperty(skill))     modifiers[skill] = {};
+        if (modifiers[skill].hasOwnProperty(id))  return false;
 
-        if (typeof modifier == 'function')  state.modifiers[skill][id] = modifier;
-        else                                state.modifiers[skill][id] = function() {return modifier};
+        if (typeof mod == 'function')   modifiers[skill][id] = mod;
+        else                            modifiers[skill][id] = function() {return mod};
 
         return true;
     }
 
     function removeModifier (skill, id) {
-        if (!state.modifiers.hasOwnProperty(skill))     return false;
-        if (!state.modifiers[skill].hasOwnProperty(id)) return false;
+        if (!modifiers.hasOwnProperty(skill))     return false;
+        if (!modifiers[skill].hasOwnProperty(id)) return false;
 
-        delete state.modifiers[skill][id];
+        delete modifiers[skill][id];
         return true;
     }
     
@@ -191,7 +201,7 @@ mod.factory('skills', function(persist) {
     });
 
     Object.defineProperty(factory, 'bindings', {
-        get: function() { return state.bindings; },
+        get: function() { return bindings; },
         enumerable: true
     });
 
