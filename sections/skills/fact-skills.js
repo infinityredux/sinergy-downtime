@@ -38,9 +38,14 @@ mod.factory('skills', function(persist) {
 
     // --------------------------------------------------
 
+    persist.registerPreLoad(function() {
+        // Place holder if theory about bug is correct
+        // Will be necessary for modifications, I think
+    });
     persist.registerLoad(function() {
         state = persist.doLoad('sin.fact.skills', state);
         changed = false;
+        rebuildBindings();
     });
     persist.registerSave(function() {
         persist.doSave('sin.fact.skills', state);
@@ -119,6 +124,16 @@ mod.factory('skills', function(persist) {
 
         delete state.bindings.id;
         return true;
+    }
+    
+    function rebuildBindings() {
+        var rebuild = Object.keys(state.bindings);
+        state.bindings = {};
+        for (var i=0; i < rebuild.length; i++) {
+            // Future proofing by not using else (just in case)
+            if (state.index[rebuild[i]].type == 'skill')    addSkillBinding(rebuild[i]);
+            if (state.index[rebuild[i]].type == 'spec')     addSpecBinding(rebuild[i]);
+        }
     }
 
     // --------------------------------------------------
