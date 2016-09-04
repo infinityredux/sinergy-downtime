@@ -25,6 +25,7 @@ mod.factory('persist', function($rootScope) {
     // --------------------------------------------------
 
     factory.eventLoad = function() {
+        $rootScope.$emit('sinDTimePreLoad');
         $rootScope.$emit('sinDTimeLoad');
     };
 
@@ -57,6 +58,10 @@ mod.factory('persist', function($rootScope) {
     }
 
     // --------------------------------------------------
+
+    factory.registerPreLoad = function(listen) {
+        $rootScope.$on('sinDTimePreLoad', listen);
+    };
 
     factory.registerLoad = function(listen) {
         $rootScope.$on('sinDTimeLoad', listen);
