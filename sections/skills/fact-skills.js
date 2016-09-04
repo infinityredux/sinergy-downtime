@@ -5,6 +5,7 @@ mod.factory('skills', function(persist) {
     var state = {};
     var changed = false;
 
+    var filters = {};
     var bindings = {};
     var modifiers = {};
 
@@ -168,6 +169,16 @@ mod.factory('skills', function(persist) {
     
     // --------------------------------------------------
 
+    Object.defineProperty(factory, 'bindings', {
+        get: function() { return bindings; },
+        enumerable: true
+    });
+
+    Object.defineProperty(factory, 'filters', {
+        get: function() { return filters; },
+        enumerable: true
+    });
+
     Object.defineProperty(factory, 'hideSkillEdit', {
         get: function() {return state.hideSkillEdit;},
         enumerable: true
@@ -197,11 +208,6 @@ mod.factory('skills', function(persist) {
                 return state.types[key];
             });
         },
-        enumerable: true
-    });
-
-    Object.defineProperty(factory, 'bindings', {
-        get: function() { return bindings; },
         enumerable: true
     });
 
@@ -315,6 +321,17 @@ mod.factory('skills', function(persist) {
     factory.filterSpecAll = filterSpecAll;
     factory.filterSpecTrained = filterSpecTrained;
     factory.filterSpecUntrained = filterSpecUntrained;
+
+    filters['all']              = filterAll;
+    filters['typeTrained']      = filterTypeTrained;
+    filters['skillNotType']     = filterSkillNotType;
+    filters['skillTrained']     = filterSkillTrained;
+    filters['skillUntrained']   = filterSkillUntrained;
+    filters['specAll']          = filterSpecAll;
+    filters['specTrained']      = filterSpecTrained;
+    filters['specUntrained']    = filterSpecUntrained;
+
+    Object.freeze(filters);
 
     // --------------------------------------------------
 
