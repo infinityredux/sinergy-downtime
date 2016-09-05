@@ -397,7 +397,7 @@ mod.factory('skills', function(persist) {
         return 4 + Math.floor((bonus - 4) / 2);
     }
 
-    function calcSkillTotal(skill, spec, usage) {
+    factory.calcSkillTotal = function(skill, spec, usage) {
         if (!state.skills.hasOwnProperty(skill))    return -1;
         if (!state.specs.hasOwnProperty(spec))      return -1;
         if (state.specs[spec].parent != skill)      return -1;
@@ -425,7 +425,7 @@ mod.factory('skills', function(persist) {
         }
 
         return base + diminishingBonus(bonus) + penalty;
-    }
+    };
 
     /*
     function convertSkillRankToSlots (rank) {
