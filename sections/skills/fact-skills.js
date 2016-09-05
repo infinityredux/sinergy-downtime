@@ -407,16 +407,18 @@ mod.factory('skills', function(persist) {
         var penalty = 0;
 
         if (modifiers.hasOwnProperty(skill)) {
-            for (var mod in Object.keys(modifiers[skill])) {
-                var result = modifiers[skill][mod](usage);
+            var keys = Object.keys(modifiers[skill]);
+            for (var i=0; i < keys.length; i++) {
+                var result = modifiers[skill][keys[i]](usage);
                 if (result < 0) penalty += result;
                 else            bonus += result;
             }
         }
 
         if (modifiers.hasOwnProperty(spec)) {
-            for (mod in Object.keys(modifiers[spec])) {
-                result = modifiers[spec][mod](usage);
+            keys = Object.keys(modifiers[spec]);
+            for (i=0; i < keys.length; i++) {
+                result = modifiers[spec][keys[i]](usage);
                 if (result < 0) penalty += result;
                 else            bonus += result;
             }
