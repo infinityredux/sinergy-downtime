@@ -33,5 +33,6 @@ mod = angular.module('sin.dtime', [
     'sin.lib.fieldset',
     'sin.lib.help',
     'sin.lib.persist',
+    'sin.lib.registry',
     'sin.lib.panes'
 ]);
