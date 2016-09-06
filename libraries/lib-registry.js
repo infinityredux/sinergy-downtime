@@ -1,9 +1,33 @@
-mod = angular.module('sin.lib.registry', []);
+mod = angular.module('sin.lib.registry', ['sin.lib.persist']);
 
-mod.factory('registry', function() {
+mod.factory('registry', function(persist) {
     var factory = {};
-    var register = {};
-    var keys = [];
+    var register;
+    var keys;
+
+    // --------------------------------------------------
+
+    function defaultState() {
+        register = {};
+        keys = [];
+    }
+
+    defaultState();
+
+    // --------------------------------------------------
+
+    persist.registerLoad(function() {
+        register    = persist.doLoad('sin.lib.register', register);
+        keys        = Object.keys(register);
+    });
+    persist.registerSave(function() {
+        persist.doSave('sin.lib.register', register);
+    });
+    persist.registerWipe(function() {
+        defaultState();
+    });
+
+    // --------------------------------------------------
 
     factory.isRegistered = function (key) {
         return keys.indexOf(key) > -1;
