@@ -4,77 +4,26 @@
 <sin-fieldset legend="Equipment:">
     <select name="type"
             ng-options="type.val as type.desc for type in ctrl.data.types"
-            ng-model="ctrl.state.type"
+            ng-model="equip.optType"
             ng-change="ctrl.optChange()" >
         <option value="">--- select type ---</option>
     </select>
     <input type="button" name="add" value="New" ng-click="ctrl.newClick()" /><br />
-    <span class="help" ng-show="ctrl.state.type && dtime.help">{{ctrl.data.types[ctrl.state.type].help}}<br /></span>
+    <span class="help" ng-show="equip.optType && dtime.showHelp">{{ctrl.data.types[equip.optType].help}}<br /></span>
 </sin-fieldset>
 
 <sin-tabbed-panes initial="item">
-<div class="pane-link-group">
-  <sin-pane-link tab="item" ng-show="equip.getEquipTotal()>0">Items</sin-pane-link>
-  <sin-pane-link tab="cyber" ng-show="equip.getEquipCount('cyber')>0">Cyberware</sin-pane-link>
-  <sin-pane-link tab="bio" ng-show="equip.getEquipCount('bio')>0">Bioware</sin-pane-link>
-  <sin-pane-link tab="deck" ng-show="equip.getEquipCount('deck')>0">Cyberdecks</sin-pane-link>
-  <sin-pane-link tab="software" ng-show="equip.getEquipCount('software')>0">Software</sin-pane-link>
-  <sin-pane-link tab="contact" ng-show="equip.getEquipCount('contact')>0">Contacts</sin-pane-link>
-  <sin-pane-link tab="corp" ng-show="equip.getEquipCount('corp')>0">Corporation</sin-pane-link>
-  <sin-pane-link tab="misc" ng-show="false">Misc</sin-pane-link>
-</div>
+    <div class="pane-link-group">
+        <sin-pane-link tab="item"       ng-show="equip.getEquipTotal()>0">Items</sin-pane-link>
+        <sin-pane-link tab="cyber"      ng-show="equip.getEquipCount('cyber')>0">Cyberware</sin-pane-link>
+        <sin-pane-link tab="bio"        ng-show="equip.getEquipCount('bio')>0">Bioware</sin-pane-link>
+        <sin-pane-link tab="deck"       ng-show="equip.getEquipCount('deck')>0">Cyberdecks</sin-pane-link>
+        <sin-pane-link tab="software"   ng-show="equip.getEquipCount('software')>0">Software</sin-pane-link>
+        <sin-pane-link tab="contact"    ng-show="equip.getEquipCount('contact')>0">Contacts</sin-pane-link>
+    </div>
 
-<sin-pane ng-repeat="item in equip.getEquipList()" tab="{{item.type}}">
-  <sin-fieldset legend="{{item.name}}">
-    Name / description:
-    <input 
-      type="text" 
-      ng-model="item.name" />
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <th>Skill</th>
-        <th>&nbsp;</th>
-        <th>Spec</th>
-        <th>Ranks</th>
-        <th>&nbsp;</th>
-        <th>Bonus or Upkeep</th>
-      </tr>
-      <tr>
-        <td>
-          <dt-skill-select 
-              filter="skills.filterSkillNotType('Soul')"
-              skill="item.skill" >
-          </dt-skill-select>          
-        </td>
-        <td>&nbsp; / &nbsp;</td>
-        <td>
-          <dt-spec-select
-              skill="item.skill"
-              spec="item.spec" >
-          </dt-spec-select>          
-        </td>
-        <td>
-          <select>
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
-        </td>
-        <td>&nbsp; / &nbsp;</td>
-        <td>
-          <select>
-            <option value="0">0</option>
-            <option value="1">+1</option>
-            <option value="2">+2</option>
-            <option value="3">+3</option>
-          </select>
-        </td>
-      </tr>
-    </table>
-  </sin-fieldset>
-</sin-pane>
+    <sin-pane ng-repeat="item in equip.getEquipList()" tab="{{item.type}}">
+        <dt-equip-item item="item"></dt-equip-item>
+    </sin-pane>
 
 </sin-tabbed-panes>
