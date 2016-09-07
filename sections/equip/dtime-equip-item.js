@@ -1,6 +1,7 @@
 mod = angular.module('sin.dtime.equip-item', [
     'sin.dtime.equip',
-    'sin.fact.equip'
+    'sin.fact.equip',
+    'sin.lib.fieldset'
 ]);
 
 mod.directive('dtEquipItem', function() {
@@ -11,7 +12,7 @@ mod.directive('dtEquipItem', function() {
         },
         controller: EquipItemController,
         controllerAs: 'ctrl',
-        templateUrl: 'sections/equip/template-equip.html'
+        templateUrl: 'sections/equip/template-equip-item.html'
     }
 });
 

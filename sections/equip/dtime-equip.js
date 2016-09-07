@@ -5,9 +5,7 @@ mod = angular.module('sin.dtime.equip', [
   'sin.fact.assets',
   'sin.fact.equip',
   'sin.fact.lifestyle',
-  'sin.fact.skills',
-  'sin.lib.fieldset',
-  'sin.lib.persist'
+  'sin.lib.fieldset'
   ]);
 
 mod.component('dtEquip', {
@@ -16,14 +14,12 @@ mod.component('dtEquip', {
     templateUrl: 'sections/equip/template-equip.html'
 });
 
-function EquipController($scope, dtime, equip, lifestyle, skills, persist) {
+function EquipController($scope, dtime, equip, lifestyle) {
     var ctrl = this;
     $scope.dtime = dtime;
     $scope.equip = equip;
     $scope.lifestyle = lifestyle;
-    $scope.skills = skills;
 
-    ctrl.state = {};
     ctrl.data = {
         types: {
             item:     {val: "item", desc: "Item", help:"A piece of equipment that doesn't fit in the other types. This includes guns, armour, tools, etc."},
@@ -35,35 +31,17 @@ function EquipController($scope, dtime, equip, lifestyle, skills, persist) {
         }
     };
 
-    function defaultState() {
-        ctrl.state.type = '';
-    }
-
-    defaultState();
-
-    persist.registerLoad(function() {
-        ctrl.state = persist.doLoad('sin.dtime.equip:state', ctrl.state);
-    });
-
-    persist.registerSave(function() {
-        persist.doSave('sin.dtime.equip:state', ctrl.state);
-    });
-
-    persist.registerWipe(function() {
-        defaultState();
-    });
-
     ctrl.optChange = function () {
 
     };
 
     ctrl.newClick = function() {
-        if (ctrl.state.type === '')
+        if ( equip.optType === '')
             return false;
 
         var item = {};
         item.name = 'Test item';
-        item.type = ctrl.state.type;
+        item.type = equip.optType;
 
         var details = {};
 

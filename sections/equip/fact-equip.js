@@ -17,6 +17,9 @@ mod.factory('equip', function(persist, registry) {
             software: {},
             contact: {}
         };
+
+        state.optType = '';
+        state.items = {};
     }
 
     defaultState();
@@ -48,7 +51,7 @@ mod.factory('equip', function(persist, registry) {
         var key = registry.generateKey('equip', item);
 
         if (item.type === undefined)
-            item.type = type;
+            item.type = state.optType;
         if (!state.details.hasOwnProperty(item.type))
             item.type = 'item';
 
