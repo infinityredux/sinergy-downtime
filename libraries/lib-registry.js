@@ -39,7 +39,7 @@ mod.factory('registry', function(persist) {
         do      { id = Math.floor(Math.random()*16777215).toString(16); }
         while   ( keys.indexOf(id) > -1 );
 
-        keys.append(id);
+        keys.push(id);
         register[id] = {
             type:   type,
             data:   store
