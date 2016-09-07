@@ -20,6 +20,7 @@ function EquipController($scope, dtime, equip, lifestyle, skills, persist) {
     var ctrl = this;
     $scope.dtime = dtime;
     $scope.equip = equip;
+    $scope.lifestyle = lifestyle;
     $scope.skills = skills;
 
     ctrl.state = {};
@@ -34,9 +35,9 @@ function EquipController($scope, dtime, equip, lifestyle, skills, persist) {
         }
     };
 
-    var defaultState = function() {
+    function defaultState() {
         ctrl.state.type = '';
-    };
+    }
 
     defaultState();
 
@@ -67,5 +68,9 @@ function EquipController($scope, dtime, equip, lifestyle, skills, persist) {
         var details = {};
 
         equip.addEquip(item, details);
+    };
+
+    ctrl.removeClick = function () {
+
     };
 }
