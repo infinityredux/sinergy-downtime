@@ -16,6 +16,7 @@ mod = angular.module('sin.dtime', [
     'sin.dtime.actions-slot',
     'sin.dtime.assets',
     'sin.dtime.equip',
+    'sin.dtime.equip-item',
     'sin.dtime.events',
     'sin.dtime.lifestyle',
     'sin.dtime.money',
