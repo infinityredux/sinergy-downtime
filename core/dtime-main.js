@@ -34,10 +34,10 @@ function DowntimeMainController($scope, dtime, actions, lifestyle, money, persis
         autoLoad: 'Automatically load the last saved data when the page is opened.',
         showHelp: 'Enable help descriptions, in addition to these tooltips, for extra context with certain selections.',
         direct: 'Submit the email to the downtime address, copied to your email; if disabled, will only be sent to your email.',
-        player: 'Player',
-        char:   'Character',
-        email:  'Email',
-        month:  'Month'
+        player: 'Player help',
+        char:   'Character help',
+        email:  'Email help',
+        month:  'Month help'
     };
 
     // --------------------------------------------------

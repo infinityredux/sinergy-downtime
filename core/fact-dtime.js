@@ -34,7 +34,8 @@ mod.factory('dtime', function(actions, persist) {
             player: '',
             autoLoad : false,
             directSumbit: true,
-            showHelp: true
+            showHelp: true,
+            editCharacter: true
         };
         changed = false;
     }
