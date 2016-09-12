@@ -2,24 +2,57 @@
 {{equip.displayState('details');}}<br />
 
 <sin-fieldset legend="Equipment:">
+    <span class="opt-float-right">
+        <input type="button" name="add" value="Add New" ng-click="ctrl.newClick(name)" /><br />
+    </span>
+
     <select name="type"
             ng-options="type.val as type.desc for type in ctrl.data.types"
             ng-model="equip.optType"
             ng-change="ctrl.optChange()" >
         <option value="">--- select type ---</option>
     </select>
-    <input type="button" name="add" value="New" ng-click="ctrl.newClick()" /><br />
-    <span class="help" ng-show="equip.optType && dtime.showHelp">{{ctrl.data.types[equip.optType].help}}<br /></span>
+    <span class="help" ng-show="equip.optType && dtime.showHelp">{{ctrl.data.types[equip.optType].help}}</span>
+    <br />
+
+    <span ng-show="equip.optType">
+        <br />
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <td>Name: </td>
+                <td>
+                    <input type="text"
+                           ng-model="name" />
+                </td>
+            </tr>
+            <tr>
+                <td>Skill: </td>
+                <td>
+                    <dt-skill-select filter="skills.filterSkillNotType('Soul')"
+                                     skill="item.skill" >
+                    </dt-skill-select>
+                    <br />
+                    <dt-spec-select skill="item.skill"
+                                    spec="item.spec" >
+                    </dt-spec-select>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </span>
 </sin-fieldset>
 
 <sin-tabbed-panes initial="item">
     <div class="pane-link-group">
-        <sin-pane-link tab="item"       ng-show="equip.getEquipTotal()>0">Items</sin-pane-link>
-        <sin-pane-link tab="cyber"      ng-show="equip.getEquipCount('cyber')>0">Cyberware</sin-pane-link>
-        <sin-pane-link tab="bio"        ng-show="equip.getEquipCount('bio')>0">Bioware</sin-pane-link>
-        <sin-pane-link tab="deck"       ng-show="equip.getEquipCount('deck')>0">Cyberdecks</sin-pane-link>
-        <sin-pane-link tab="software"   ng-show="equip.getEquipCount('software')>0">Software</sin-pane-link>
-        <sin-pane-link tab="contact"    ng-show="equip.getEquipCount('contact')>0">Contacts</sin-pane-link>
+        <sin-pane-link tab="item"       ng-show="equip.getEquipTotal()>0" >Items</sin-pane-link>
+        <sin-pane-link tab="cyber"      ng-show="equip.getEquipCount('cyber')>0" >Cyberware</sin-pane-link>
+        <sin-pane-link tab="bio"        ng-show="equip.getEquipCount('bio')>0" >Bioware</sin-pane-link>
+        <sin-pane-link tab="deck"       ng-show="equip.getEquipCount('deck')>0" >Cyberdecks</sin-pane-link>
+        <sin-pane-link tab="software"   ng-show="equip.getEquipCount('software')>0" >Software</sin-pane-link>
+        <sin-pane-link tab="contact"    ng-show="equip.getEquipCount('contact')>0" >Contacts</sin-pane-link>
     </div>
 
     <sin-pane ng-repeat="item in equip.getEquipList()" tab="{{item.type}}">

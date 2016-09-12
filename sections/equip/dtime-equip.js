@@ -35,12 +35,12 @@ function EquipController($scope, dtime, equip, lifestyle) {
 
     };
 
-    ctrl.newClick = function() {
+    ctrl.newClick = function(name) {
         if ( equip.optType === '')
             return false;
 
         var item = {};
-        item.name = 'Test item';
+        item.name = name;
         item.type = equip.optType;
 
         var details = {};
