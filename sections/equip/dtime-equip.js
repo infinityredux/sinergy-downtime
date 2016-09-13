@@ -31,21 +31,31 @@ function EquipController($scope, dtime, equip, lifestyle) {
         }
     };
 
-    ctrl.optChange = function () {
+    ctrl.state = {};
+    
+    function defaultState() {
+        ctrl.state.optType = '';
+        ctrl.state.txtName = '';
+    }
+    
+    defaultState();
+
+    ctrl.typeChange = function () {
 
     };
 
-    ctrl.newClick = function(name) {
-        if ( equip.optType === '')
+    ctrl.newClick = function() {
+        if ( ctrl.state.optType === '')
             return false;
 
         var item = {};
-        item.name = name;
-        item.type = equip.optType;
+        item.type = ctrl.state.optType;
+        item.name = ctrl.state.txtName;
 
         var details = {};
 
         equip.addEquip(item, details);
+        defaultState();
     };
 
     ctrl.removeClick = function () {

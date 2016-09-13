@@ -3,26 +3,26 @@
 
 <sin-fieldset legend="Equipment:">
     <span class="opt-float-right">
-        <input type="button" name="add" value="Add New" ng-click="ctrl.newClick(name)" /><br />
+        <input type="button" name="add" value="Add New" ng-click="ctrl.newClick()" /><br />
     </span>
 
     <select name="type"
             ng-options="type.val as type.desc for type in ctrl.data.types"
-            ng-model="equip.optType"
-            ng-change="ctrl.optChange()" >
+            ng-model="ctrl.state.optType"
+            ng-change="ctrl.typeChange()" >
         <option value="">--- select type ---</option>
     </select>
-    <span class="help" ng-show="equip.optType && dtime.showHelp">{{ctrl.data.types[equip.optType].help}}</span>
+    <span class="help" ng-show="ctrl.state.optType && dtime.showHelp">{{ctrl.data.types[ctrl.state.optType].help}}</span>
     <br />
 
-    <span ng-show="equip.optType">
+    <span ng-show="ctrl.state.optType">
         <br />
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <td>Name: </td>
                 <td>
                     <input type="text"
-                           ng-model="name" />
+                           ng-model="ctrl.state.txtName" />
                 </td>
             </tr>
             <tr>
