@@ -18,7 +18,6 @@ mod.factory('equip', function(persist, registry) {
             contact: {}
         };
 
-        state.optType = '';
         state.items = {};
     }
 

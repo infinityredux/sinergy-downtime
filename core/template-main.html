@@ -7,7 +7,6 @@
                value="Send Downtime"
                title="Generate and submit the downtime email. This will wipe any saved downtime information that is not re-usable." />
         <br />
-        <br />
         <input type="button"
                ng-click="ctrl.resetClick()"
                name="reset"
@@ -15,6 +14,11 @@
                title="" />
         <br />
         <br />
+
+        <sin-help ng-show="dtime.showHelp" help="ctrl.help.editCharacter"></sin-help>
+        <input type="checkbox"
+               ng-model="dtime.editCharacter" />
+        Edit Character <br />
 
         <sin-help ng-show="dtime.showHelp" help="ctrl.help.autoLoad"></sin-help>
         <input type="checkbox"
@@ -98,7 +102,7 @@
 
     <br />
     <!--Simple or Advanced here --><br />
-    <br />
+    <!-- br /-->
 
     Submission month:
     <select ng-model="dtime.month"
@@ -106,6 +110,9 @@
             ng-options="item.num as item.long for item in dtime.calendar">
     </select>
     <sin-help ng-show="dtime.showHelp" help="ctrl.help.month"></sin-help>
+    <br />
+    <br />
+    <br />
 
     <!--br/>
     Months to submit:
