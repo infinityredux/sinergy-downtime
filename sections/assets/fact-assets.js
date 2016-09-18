@@ -37,6 +37,15 @@ mod.factory('assets', function(persist, skills) {
 
     // --------------------------------------------------
 
+    Object.defineProperty(job, 'employer', {
+        get: function() { return state.job.employer; },
+        set: function(val) {
+            state.job.employer = '' + val;
+            changed = true;
+        },
+        enumerable: true
+    });
+
     Object.defineProperty(job, 'skill', {
         get: function() { return '' + state.job.skill; },
         set: function(val) {
@@ -64,6 +73,8 @@ mod.factory('assets', function(persist, skills) {
         enumerable: true
     });
 
+    // --------------------------------------------------
+
     Object.defineProperty(factory, 'job', {
         get: function() { return job; },
         enumerable: true
@@ -76,12 +87,13 @@ mod.factory('assets', function(persist, skills) {
 
     // --------------------------------------------------
 
+    // TODO remove this and references to it
     factory.getJob = function() {
         return {};
     };
 
     factory.calcJobRanks = function() {
-        return skills.calcSkillTotal(state.job.skill, state.job.skill, 'job');
+        return skills.calcSkillTotal(state.job.skill, state.job.spec, 'job');
     };
 
     factory.calcSalary = function() {
