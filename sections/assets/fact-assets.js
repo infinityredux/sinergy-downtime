@@ -16,7 +16,6 @@ mod.factory('assets', function(persist, skills) {
                 employer: 'Generic Employer',
                 skill: 0,
                 spec: 0,
-                ranks: 0,
                 level: -1
             }
         };
@@ -37,6 +36,24 @@ mod.factory('assets', function(persist, skills) {
     });
 
     // --------------------------------------------------
+
+    Object.defineProperty(job, 'skill', {
+        get: function() { return '' + state.job.skill; },
+        set: function(val) {
+            state.job.skill = parseInt(val);
+            changed = true;
+        },
+        enumerable: true
+    });
+
+    Object.defineProperty(job, 'spec', {
+        get: function() { return '' + state.job.spec; },
+        set: function(val) {
+            state.job.spec = parseInt(val);
+            changed = true;
+        },
+        enumerable: true
+    });
 
     Object.defineProperty(job, 'level', {
         get: function() { return '' + state.job.level; },
@@ -60,18 +77,21 @@ mod.factory('assets', function(persist, skills) {
     // --------------------------------------------------
 
     factory.getJob = function() {
-        return state.job;
+        return {};
     };
 
-    factory.getFinances = function() {
-        return state.finances;
+    factory.calcJobRanks = function() {
+        return skills.calcSkillTotal(state.job.skill, state.job.skill, 'job');
     };
 
-    // --------------------------------------------------
+    factory.calcSalary = function() {
+        if (state.job.level < 0)
+            return 0;
+        if (state.job.skill == 0)
+            return 0;
 
-    factory.calcSalary = function(level, ranks) {
-        skills.rankSkill(state.job.skill);
-        return (level + 1) * ranks * 50;
+        var ranks = factory.calcJobRanks();
+        return (state.job.level + 1) * ranks * 50;
     };
 
     // --------------------------------------------------

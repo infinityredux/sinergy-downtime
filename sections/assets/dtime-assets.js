@@ -1,4 +1,7 @@
-mod = angular.module('sin.dtime.assets', ['sin.fact.assets']);
+mod = angular.module('sin.dtime.assets', [
+    'sin.fact.assets',
+    'sin.fact.skills'
+]);
 
 mod.component('dtAssets', {
     controller: AssetsController,
@@ -6,7 +9,8 @@ mod.component('dtAssets', {
     templateUrl: 'sections/assets/template-assets.html'
 });
 
-function AssetsController($scope, assets) {
+function AssetsController($scope, assets, skills) {
     $scope.assets = assets;
+    $scope.skills = skills;
     $scope.actSlot = {};
 }

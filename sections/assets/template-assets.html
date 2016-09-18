@@ -2,20 +2,20 @@
     Assets here
 
     <span>
-        <span class="opt-float-right">
+        <!--span class="opt-float-right">
             <input type="button" value="Update Job" ng-click="actSlot.updateJob()"/>
             &nbsp; &nbsp;
-        </span>
+        </span-->
 
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <td>Skill:</td>
                 <td>
-                    <dt-skill-select filter="skills.treeFilterTrained()" skill="actSlot.slot.skill" rank="actSlot.slot.ranks_skill">
+                    <dt-skill-select filter="skills.filterSkillTrained()" skill="assets.job.skill">
                     </dt-skill-select>
                     <br/>
 
-                    <dt-spec-select skill="actSlot.slot.skill" spec="actSlot.slot.spec" rank="actSlot.slot.ranks_spec">
+                    <dt-spec-select skill="actSlot.slot.skill" spec="assets.job.spec">
                     </dt-spec-select>
                     <br/>
 
@@ -53,7 +53,7 @@
         </table>
 
         Monthly salary:
-        { actSlot.calcSalary() }}cr
+        {{ assets.calcSalary() }}cr
     </span>
 
     <hr/>
