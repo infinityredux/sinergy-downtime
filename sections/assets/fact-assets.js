@@ -7,19 +7,17 @@ mod.factory('assets', function(persist, skills) {
     var factory = {};
     var state = {};
 
+    var job = {};
+    var changed = false;
+
     var defaultState = function() {
         state = {
             job: {
-                employer: 'Default Employer',
+                employer: 'Generic Employer',
                 skill: 0,
                 spec: 0,
                 ranks: 0,
-                level: 0
-            },
-            finances: {
-                onHand: 0,
-                stored: 0,
-                debt: 0
+                level: -1
             }
         };
     };
@@ -31,13 +29,32 @@ mod.factory('assets', function(persist, skills) {
     persist.registerLoad(function() {
         state = persist.doLoad('sin.fact.assets', state);
     });
-
     persist.registerSave(function() {
         persist.doSave('sin.fact.assets', state);
     });
-
     persist.registerWipe(function() {
         defaultState();
+    });
+
+    // --------------------------------------------------
+
+    Object.defineProperty(job, 'level', {
+        get: function() { return '' + state.job.level; },
+        set: function(val) {
+            state.job.level = parseInt(val);
+            changed = true;
+        },
+        enumerable: true
+    });
+
+    Object.defineProperty(factory, 'job', {
+        get: function() { return job; },
+        enumerable: true
+    });
+
+    Object.defineProperty(factory, 'stateJob', {
+        get: function() { return state.job; },
+        enumerable: true
     });
 
     // --------------------------------------------------

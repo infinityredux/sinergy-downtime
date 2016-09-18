@@ -1,3 +1,63 @@
 <sin-fieldset legend="Assets:">
     Assets here
+
+    <span>
+        <span class="opt-float-right">
+            <input type="button" value="Update Job" ng-click="actSlot.updateJob()"/>
+            &nbsp; &nbsp;
+        </span>
+
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <td>Skill:</td>
+                <td>
+                    <dt-skill-select filter="skills.treeFilterTrained()" skill="actSlot.slot.skill" rank="actSlot.slot.ranks_skill">
+                    </dt-skill-select>
+                    <br/>
+
+                    <dt-spec-select skill="actSlot.slot.skill" spec="actSlot.slot.spec" rank="actSlot.slot.ranks_spec">
+                    </dt-spec-select>
+                    <br/>
+
+                    {{'Total skill: ' + actSlot.getTotalSkill() }}
+                    <br/>
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td>Employer: &nbsp; </td>
+                <td>
+                    <input type="text" placeholder="Company name" ng-model="actSlot.slot.employer"/>
+                    <br/>
+                    <select ng-model="assets.job.level">
+                        <option value=-1>--- no job ---</option>
+                        <option value="0">50cr, level 0 @ 0pt</option>
+                        <option value="1">100cr, level 1</option>
+                        <option value="2">150cr, level 2</option>
+                        <option value="3">200cr, level 3</option>
+                        <option value="4">250cr, level 4</option>
+                        <option value="5">300cr, level 5 @ 1pt</option>
+                        <option value="6">350cr, level 6</option>
+                        <option value="7">400cr, level 7</option>
+                        <option value="8">450cr, level 8</option>
+                        <option value="9">500cr, level 9 @ 2pts</option>
+                        <option value="10">550cr, level 10</option>
+                        <option value="11">600cr, level 11</option>
+                        <option value="12">650cr, level 12</option>
+                        <option value="13">700cr, level 13</option>
+                    </select>
+                    <br/>
+                    &nbsp;
+                </td>
+            </tr>
+        </table>
+
+        Monthly salary:
+        { actSlot.calcSalary() }}cr
+    </span>
+
+    <hr/>
+    {{ assets.job }}<br />
+    {{ assets.stateJob }}
+
 </sin-fieldset>

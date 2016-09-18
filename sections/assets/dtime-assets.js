@@ -8,4 +8,5 @@ mod.component('dtAssets', {
 
 function AssetsController($scope, assets) {
     $scope.assets = assets;
+    $scope.actSlot = {};
 }
