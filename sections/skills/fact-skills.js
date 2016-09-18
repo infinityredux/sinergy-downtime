@@ -399,8 +399,10 @@ mod.factory('skills', function(persist) {
 
     factory.calcSkillTotal = function(skill, spec, usage) {
         if (!state.skills.hasOwnProperty(skill))    return -1;
-        if (!state.specs.hasOwnProperty(spec))      return -1;
-        if (state.specs[spec].parent != skill)      return -1;
+        if (spec) {
+            if (!state.specs.hasOwnProperty(spec))      return -1;
+            if (state.specs[spec].parent != skill)      return -1;
+        }
 
         var base = state.skills[skill].rank;
         var bonus = spec ? state.specs[spec].rank : 0;
