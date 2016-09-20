@@ -10,7 +10,21 @@ mod.component('dtAssets', {
 });
 
 function AssetsController($scope, assets, skills) {
+    var ctrl = this;
     $scope.assets = assets;
     $scope.skills = skills;
-    $scope.actSlot = {};
+
+    ctrl.createJob = function() {
+        if (assets.job.level > -1)
+            return;
+
+        assets.job.level = 0;
+    };
+
+    ctrl.removeJob = function() {
+        if (assets.job.level < 0)
+            return;
+
+        assets.resetJob();
+    };
 }

@@ -11,15 +11,18 @@ mod.factory('assets', function(persist, skills) {
     var changed = false;
 
     var defaultState = function() {
-        state = {
-            job: {
-                employer: 'Generic Employer',
+        state = {};
+        defaultJob();
+    };
+
+    function defaultJob() {
+        state.job = {
+            employer: 'Generic Employer',
                 skill: 0,
                 spec: 0,
                 level: -1
-            }
         };
-    };
+    }
 
     defaultState();
 
@@ -80,16 +83,16 @@ mod.factory('assets', function(persist, skills) {
         enumerable: true
     });
 
-    Object.defineProperty(factory, 'stateJob', {
-        get: function() { return state.job; },
-        enumerable: true
-    });
-
     // --------------------------------------------------
 
     // TODO remove this and references to it
     factory.getJob = function() {
         return {};
+    };
+
+    factory.resetJob = function() {
+        defaultJob();
+        changed = true;
     };
 
     factory.calcJobRanks = function() {
