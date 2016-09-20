@@ -48,7 +48,7 @@
                 </dt-spec-select>
                 <br/>
 
-                Total skill: {{ assets.calcJobRanks() }}
+                Total skill: {{ assets.calcJobRanks() >=0 ? assets.calcJobRanks() : 0  }}
                 <br/>
                 &nbsp;
             </td>
@@ -59,7 +59,6 @@
                 <input type="text" placeholder="Company name" ng-model="assets.job.employer"/>
                 <br/>
                 <select ng-model="assets.job.level">
-                    <!--option value=-1>--- no job ---</option-->
                     <option value="0">50cr, level 0 @ 0pt</option>
                     <option value="1">100cr, level 1</option>
                     <option value="2">150cr, level 2</option>
