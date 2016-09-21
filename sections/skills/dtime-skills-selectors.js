@@ -105,7 +105,7 @@ mod.directive('dtSpecSelect', function() {
                     scope.bindRank = scope.skills.bindings[scope.bindSpec].rank;
                 else
                     scope.bindRank = 0;
-        };
+            };
         }
     };
 });
