@@ -52,7 +52,6 @@
         <sin-pane-link tab="bio"        ng-show="equip.getEquipCount('bio')>0" >Bioware</sin-pane-link>
         <sin-pane-link tab="deck"       ng-show="equip.getEquipCount('deck')>0" >Cyberdecks</sin-pane-link>
         <sin-pane-link tab="software"   ng-show="equip.getEquipCount('software')>0" >Software</sin-pane-link>
-        <sin-pane-link tab="contact"    ng-show="equip.getEquipCount('contact')>0" >Contacts</sin-pane-link>
     </div>
 
     <sin-pane ng-repeat="item in equip.getEquipList()" tab="{{item.type}}">

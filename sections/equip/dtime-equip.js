@@ -26,8 +26,7 @@ function EquipController($scope, dtime, equip, lifestyle) {
             cyber:    {val: "cyber", desc: "Cyberware", help:"An item of cyberware installed in one or more locations (slots) in the human body."},
             bio:      {val: "bio", desc: "Bioware", help:"An item of bioware installed anywhere in the body."},
             deck:     {val: "deck", desc: "Cyberdeck", help:"Any variety of cyberdeck or server.  For a cyberware deck you will need to add the item in both this section and cyberware."},
-            software: {val: "software", desc: "Software", help: "Software that runs on a cyberdeck."},
-            contact:  {val: "contact", desc: "Contact", help: "A contact or friend that can assist you in downtime"}
+            software: {val: "software", desc: "Software", help: "Software that runs on a cyberdeck."}
         }
     };
 

@@ -14,8 +14,7 @@ mod.factory('equip', function(persist, registry) {
             cyber: {},
             bio: {},
             deck: {},
-            software: {},
-            contact: {}
+            software: {}
         };
 
         state.items = {};
