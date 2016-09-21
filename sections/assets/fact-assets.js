@@ -53,6 +53,8 @@ mod.factory('assets', function(persist, skills) {
         get: function() { return '' + state.job.skill; },
         set: function(val) {
             state.job.skill = parseInt(val);
+            if (isNaN(state.job.skill))
+                state.job.skill = 0;
             changed = true;
         },
         enumerable: true
@@ -62,6 +64,8 @@ mod.factory('assets', function(persist, skills) {
         get: function() { return '' + state.job.spec; },
         set: function(val) {
             state.job.spec = parseInt(val);
+            if (isNaN(state.job.spec))
+                state.job.spec = 0;
             changed = true;
         },
         enumerable: true
