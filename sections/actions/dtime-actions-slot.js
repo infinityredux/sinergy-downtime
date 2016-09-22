@@ -26,7 +26,7 @@ mod.directive('dtActionSlot', function() {
 function ActionSlotController($scope, actions, assets, money, skills) {
     var ctrl = this;
     $scope.skills = skills;
-    ctrl.disableJobEdit = (assets.getJob().level>0);
+    ctrl.disableJobEdit = (assets.job.level>0);
 
     ctrl.getLegend = function() {
         if (ctrl.slot.filter === "player") {
@@ -76,7 +76,7 @@ function ActionSlotController($scope, actions, assets, money, skills) {
         if (isNaN(parseInt(ctrl.slot.level))) return;
         if (isNaN(ctrl.getTotalSkill())) return;
 
-        var job = assets.getJob();
+        var job = assets.job;
         job.employer = ctrl.slot.employer;
         job.skill = ctrl.slot.skill;
         job.spec = ctrl.slot.spec;
@@ -100,7 +100,7 @@ function ActionSlotController($scope, actions, assets, money, skills) {
     };
 
     if (ctrl.disableJobEdit && (ctrl.slot.action == 'emp' || ctrl.slot.action == 'over')) {
-        var job = assets.getJob();
+        var job = assets.job;
         ctrl.slot.employer = job.employer;
         ctrl.slot.skill = job.skill;
         ctrl.slot.spec = job.spec;

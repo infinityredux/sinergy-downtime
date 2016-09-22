@@ -23,7 +23,7 @@ function ActionController ($scope, actions, assets, money, persist, skills) {
     $scope.skills = skills;
 
     //Temporary for debug purpose
-    $scope.assetJob = assets.getJob();
+    $scope.assetJob = assets.job;
 
     ctrl.state = {};
     ctrl.data = {
@@ -176,7 +176,7 @@ function ActionController ($scope, actions, assets, money, persist, skills) {
         ctrl.state.option_disable = {};
         ctrl.state.month_tab = "month1";
 
-        ctrl.state.disableJobEdit = (assets.getJob().level > 0);
+        ctrl.state.disableJobEdit = (assets.job.level > 0);
 
         updateOptions();
     };
