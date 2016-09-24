@@ -166,6 +166,9 @@ mod.factory('skills', function(persist) {
         delete modifiers[skill][id];
         return true;
     }
+
+    factory.addModifier = addModifier;
+    factory.removeModifier = removeModifier;
     
     // --------------------------------------------------
 

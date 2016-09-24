@@ -25,9 +25,15 @@
         </tr>
         <tr>
             <td>Contacts:</td>
-            <td>?</td>
+            <td>
+                <span>None</span>
+                <span>0 contacts</span>
+                <span>and</span>
+                <span>0 friends</span>
+            </td>
         </tr>
     </table>
+    {{ assets.contacts }}
 </sin-fieldset>
 
 <sin-fieldset legend="Job" ng-show="assets.job.level > -1">
@@ -82,4 +88,38 @@
 
     <hr/>
     {{ assets.job }}
+</sin-fieldset>
+
+<sin-fieldset ng-repeat="(id,contact) in assets.contacts" legend="Contact - {{ contact.name }}">
+    <span class="opt-float-right">
+        <input type="button"
+               value="Delete"
+               ng-click="ctrl.removeContact(id)" />
+    </span>
+    <table>
+        <tr>
+            <td>Name:</td>
+            <td>
+                <input type="text"
+                       ng-model="contact.name" />
+            </td>
+        </tr>
+        <tr>
+            <td>Type:</td>
+            <td>
+                <input type="radio" ng-model="contact.type" value="1" />
+                Contact
+
+                <input type="radio" ng-model="contact.type" value="2" />
+                Friend
+            </td>
+        </tr>
+        <tr>
+            <td>Skill:</td>
+            <td>
+                <dt-skill-select filter="skills.filterSkillNotType('Soul')" skill="assets.contacts[id].skill">
+                </dt-skill-select>
+            </td>
+        </tr>
+    </table>
 </sin-fieldset>

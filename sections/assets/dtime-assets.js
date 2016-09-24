@@ -27,4 +27,12 @@ function AssetsController($scope, assets, skills) {
 
         assets.resetJob();
     };
+
+    ctrl.createContact = function() {
+        assets.createContact();
+    };
+
+    ctrl.removeContact = function(id) {
+        assets.deleteContact(id);
+    };
 }
