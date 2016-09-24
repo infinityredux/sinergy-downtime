@@ -143,9 +143,26 @@ mod.factory('assets', function(persist, registry, skills) {
         return true;
     };
 
+    factory.typeContact = function(id) {
+        if (!state.contacts.hasOwnProperty(id))
+            return 'unknown';
+        if (state.contacts[id].type == 1)
+            return 'Contact';
+        if (state.contacts[id].type == 2)
+            return 'Friend';
+        return 'unknown'
+    };
+
+    factory.countContact = function(type) {
+        return Object.keys(state.contacts).filter(function (id) {
+            return state.contacts[id].type == type;
+        }).length;
+    };
+
     function makeContactBinding(id) {
         var binding = {};
 
+        // TODO: make this more robust... but need to more clearly define usages first
         function modifier(usage) {
             if (usage == 'job')
                 return 0;

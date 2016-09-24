@@ -26,14 +26,14 @@
         <tr>
             <td>Contacts:</td>
             <td>
-                <span>None</span>
-                <span>0 contacts</span>
-                <span>and</span>
-                <span>0 friends</span>
+                <span ng-hide="assets.countContact(1) > 0 || assets.countContact(2) > 0">None</span>
+                <span ng-show="assets.countContact(1) > 0 || assets.countContact(2) > 0">
+                    {{ assets.countContact(1); }} contact(s) and {{ assets.countContact(2); }} friend(s)
+                </span>
             </td>
         </tr>
     </table>
-    {{ assets.contacts }}
+    <!-- {{ assets.contacts }} -->
 </sin-fieldset>
 
 <sin-fieldset legend="Job" ng-show="assets.job.level > -1">
@@ -90,7 +90,7 @@
     {{ assets.job }}
 </sin-fieldset>
 
-<sin-fieldset ng-repeat="(id,contact) in assets.contacts" legend="Contact - {{ contact.name }}">
+<sin-fieldset ng-repeat="(id,contact) in assets.contacts" legend="{{ assets.typeContact(id) }} - {{ contact.name }}">
     <span class="opt-float-right">
         <input type="button"
                value="Delete"
@@ -108,10 +108,10 @@
             <td>Type:</td>
             <td>
                 <input type="radio" ng-model="contact.type" value="1" />
-                Contact
+                Contact (3/+1)
 
                 <input type="radio" ng-model="contact.type" value="2" />
-                Friend
+                Friend (5/+2)
             </td>
         </tr>
         <tr>
