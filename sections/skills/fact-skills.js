@@ -270,46 +270,53 @@ mod.factory('skills', function(persist) {
         return Object.keys(state.skills) + Object.keys(state.specs);
     }
 
-    function filterSkillNotType(type) {
-        return Object.keys(state.skills).filter(function(val) {
+    function filterSkillNotType(type, data) {
+        if (!data) data = Object.keys(state.skills);
+        return data.filter(function(val) {
             return (state.skills[val].type != type);
         });
     }
 
-    function filterSkillTrained() {
-        return Object.keys(state.skills).filter(function(val) {
+    function filterSkillTrained(noop, data) {
+        if (!data) data = Object.keys(state.skills);
+        return data.filter(function(val) {
             return state.skills[val].trained;
         });
     }
 
-    function filterSkillUntrained () {
-        return Object.keys(state.skills).filter(function(val) {
+    function filterSkillUntrained (noop, data) {
+        if (!data) data = Object.keys(state.skills);
+        return data.filter(function(val) {
             return !state.skills[val].trained;
         });
     }
 
-    function filterTypeTrained(type) {
-        return Object.keys(state.skills).filter(function(val) {
+    function filterTypeTrained(type, data) {
+        if (!data) data = Object.keys(state.skills);
+        return data.filter(function(val) {
             return (state.skills[val].type == type) && state.skills[val].trained;
         });
     }
 
-    function filterSpecAll(skill) {
-        return Object.keys(state.specs).filter(function (val) {
+    function filterSpecAll(skill, data) {
+        if (!data) data = Object.keys(state.specs);
+        return data.filter(function (val) {
             return state.specs[val].parent == skill;
         });
     }
 
-    function filterSpecTrained(skill) {
+    function filterSpecTrained(skill, data) {
         if (!skill) return [];
-        return Object.keys(state.specs).filter(function(val) {
+        if (!data) data = Object.keys(state.specs);
+        return data.filter(function(val) {
             return (state.specs[val].parent == skill) && state.specs[val].trained;
         });
     }
 
-    function filterSpecUntrained(skill) {
+    function filterSpecUntrained(skill, data) {
         if (!skill) return [];
-        return Object.keys(state.specs).filter(function(val) {
+        if (!data) data = Object.keys(state.specs);
+        return data.filter(function(val) {
             return (state.specs[val].parent == skill) && !state.specs[val].trained;
         });
     }
@@ -335,6 +342,14 @@ mod.factory('skills', function(persist) {
     filters['specUntrained']    = filterSpecUntrained;
 
     Object.freeze(filters);
+
+    // --------------------------------------------------
+
+    factory.filter = function(filter, param, data) {
+        if (!filters.hasOwnProperty(filter))    return [];
+        if (!data)                              data = filterAll();
+        return filters[filter](param, data);
+    };
 
     // --------------------------------------------------
 
