@@ -33,7 +33,6 @@
             </td>
         </tr>
     </table>
-    <!-- {{ assets.contacts }} -->
 </sin-fieldset>
 
 <sin-fieldset legend="Job" ng-show="assets.job.level > -1">
@@ -63,8 +62,12 @@
             <td>Employer: &nbsp; </td>
             <td>
                 <input type="text" placeholder="Company name" ng-model="assets.job.employer"/>
-                <br/>
-                <select ng-model="assets.job.level">
+            </td>
+        </tr>
+        <tr>
+            <td><label for="job-rank">Job rank: </label></td>
+            <td>
+                <select id="job-rank" ng-model="assets.job.level" >
                     <option value="0">50cr, level 0 @ 0pt</option>
                     <option value="1">100cr, level 1</option>
                     <option value="2">150cr, level 2</option>
@@ -80,17 +83,12 @@
                     <option value="12">650cr, level 12</option>
                     <option value="13">700cr, level 13</option>
                 </select>
-                <br/>
-                &nbsp;
             </td>
         </tr>
     </table>
-
-    <hr/>
-    {{ assets.job }}
 </sin-fieldset>
 
-<sin-fieldset ng-repeat="(id,contact) in assets.contacts" legend="{{ assets.typeContact(id) }} - {{ contact.name }}">
+<sin-fieldset ng-repeat="(id,contact) in assets.contacts" legend="{{ assets.typeContact(id) }} - {{ contact.name }} ( {{ skills.nameSkill(contact.skill) }} )">
     <span class="opt-float-right">
         <input type="button"
                value="Delete"
@@ -101,17 +99,18 @@
             <td>Name:</td>
             <td>
                 <input type="text"
-                       ng-model="contact.name" />
+                       ng-model="contact.name"
+                       placeholder="Contact name" />
             </td>
         </tr>
         <tr>
             <td>Type:</td>
             <td>
-                <input type="radio" ng-model="contact.type" value="1" />
-                Contact (3/+1)
+                <input type="radio" ng-model="contact.type" id="contact-type-1" value="1" />
+                <label for="contact-type-1">Contact (3/+1)</label>
 
-                <input type="radio" ng-model="contact.type" value="2" />
-                Friend (5/+2)
+                <input type="radio" ng-model="contact.type" id="contact-type-2" value="2" />
+                <label for="contact-type-2">Friend (5/+2)</label>
             </td>
         </tr>
         <tr>
