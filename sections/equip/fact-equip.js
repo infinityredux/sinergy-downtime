@@ -6,17 +6,9 @@ mod = angular.module('sin.fact.equip', [
 mod.factory('equip', function(persist, registry) {
     var factory = {};
     var state = {};
+    var changed = false;
 
     function defaultState() {
-        state.list = {};
-        state.details = {
-            item: {},
-            cyber: {},
-            bio: {},
-            deck: {},
-            software: {}
-        };
-
         state.items = {};
     }
 
@@ -26,82 +18,55 @@ mod.factory('equip', function(persist, registry) {
 
     persist.registerLoad(function() {
         state = persist.doLoad('sin.fact.equip', state);
+        changed = false;
     });
     persist.registerSave(function() {
         persist.doSave('sin.fact.equip', state);
+        changed = false;
     });
     persist.registerWipe(function() {
         defaultState();
+        changed = false;
     });
 
     // --------------------------------------------------
 
-    factory.displayState = function(info) {
-        if (info == 'details')
-            return JSON.stringify(state.details);
-
-        return JSON.stringify(state.list);
-    };
-
-    // --------------------------------------------------
-
-    factory.addEquip = function(item, dets) {
+    factory.addEquip = function(item) {
         var key = registry.generateKey('equip', item);
+        state.items[key] = item;
 
-        if (item.type === undefined)
-            item.type = state.optType;
-        if (!state.details.hasOwnProperty(item.type))
-            item.type = 'item';
-
-        dets.key = key;
-        state.list[key] = item;
-        state.details[item.type][key] = dets;
+        return key;
     };
 
     factory.removeEquip = function(key) {
-        if (!(key in state.list))
-            return null;
+        if (Object.keys(state.items).indexOf(key) < 0)
+            return false;
 
-        var out = state.list[key];
         delete state.list[key];
         delete state.details[out.type][key];
 
-        return out;
-    };
+        delete state.items[key];
 
-    // Equipment amendment function is not required.
-    // An item in the ng-repeat updating a property does
-    // propagate to the object stored in the factory.
-
-    // --------------------------------------------------
-
-    factory.getEquipList = function() {
-        return state.list;
-    };
-
-    factory.getEquipTypes = function() {
-        return Object.keys(state.details);
-    };
-
-    factory.getEquipTypeDetails = function(type) {
-        return state.details[type];
-    };
-
-    factory.getEquipKeyDetails = function(key) {
-        return state.details[state.list[key].type][key];
+        return true;
     };
 
     // --------------------------------------------------
 
-    factory.getEquipCount = function(type) {
-        if (state.details[type] === undefined)
-            return -1;
+    Object.defineProperty(factory, 'list', {
+        get: function () { return state.items; },
+        enumerable: true
+    });
 
-        return Object.keys(state.details[type]).length;
+    // --------------------------------------------------
+
+    factory.countEquip = function(type) {
+        return Object.keys(state.items)
+            .filter(function (key) { return state.items[key].type == type; })
+            .length;
     };
 
-    factory.getEquipTotal = function() {
-        return Object.keys(state.list).length;
+    factory.countEquipTotal = function() {
+        return Object.keys(state.items).length;
     };
 
     // --------------------------------------------------

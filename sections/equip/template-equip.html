@@ -1,5 +1,4 @@
-{{equip.displayState();}}<br /><hr />
-{{equip.displayState('details');}}<br />
+{{equip.list}}<br />
 
 <sin-fieldset legend="Equipment:">
     <span class="opt-float-right">
@@ -29,11 +28,11 @@
                 <td>Skill: </td>
                 <td>
                     <dt-skill-select filter="skills.filterSkillNotType('Soul')"
-                                     skill="item.skill" >
+                                     skill="ctrl.state.selSkill" >
                     </dt-skill-select>
                     <br />
-                    <dt-spec-select skill="item.skill"
-                                    spec="item.spec" >
+                    <dt-spec-select skill="ctrl.state.selSkill"
+                                    spec="ctrl.state.selSpec" >
                     </dt-spec-select>
                 </td>
             </tr>
@@ -47,14 +46,14 @@
 
 <sin-tabbed-panes initial="item">
     <div class="pane-link-group">
-        <sin-pane-link tab="item"       ng-show="equip.getEquipTotal()>0" >Items</sin-pane-link>
-        <sin-pane-link tab="cyber"      ng-show="equip.getEquipCount('cyber')>0" >Cyberware</sin-pane-link>
-        <sin-pane-link tab="bio"        ng-show="equip.getEquipCount('bio')>0" >Bioware</sin-pane-link>
-        <sin-pane-link tab="deck"       ng-show="equip.getEquipCount('deck')>0" >Cyberdecks</sin-pane-link>
-        <sin-pane-link tab="software"   ng-show="equip.getEquipCount('software')>0" >Software</sin-pane-link>
+        <sin-pane-link tab="item"       ng-show="equip.countEquipTotal()>0" >Items</sin-pane-link>
+        <sin-pane-link tab="cyber"      ng-show="equip.countEquip('cyber')>0" >Cyberware</sin-pane-link>
+        <sin-pane-link tab="bio"        ng-show="equip.countEquip('bio')>0" >Bioware</sin-pane-link>
+        <sin-pane-link tab="deck"       ng-show="equip.countEquip('deck')>0" >Cyberdecks</sin-pane-link>
+        <sin-pane-link tab="software"   ng-show="equip.countEquip('software')>0" >Software</sin-pane-link>
     </div>
 
-    <sin-pane ng-repeat="item in equip.getEquipList()" tab="{{item.type}}">
-        <dt-equip-item item="item"></dt-equip-item>
+    <sin-pane ng-repeat="(id, item) in equip.list" tab="{{item.type}}">
+        <dt-equip-item id="id" item="item"></dt-equip-item>
     </sin-pane>
 </sin-tabbed-panes>

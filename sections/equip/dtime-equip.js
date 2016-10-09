@@ -1,12 +1,13 @@
 // Code goes here
 
 mod = angular.module('sin.dtime.equip', [
-  'sin.fact',
-  'sin.fact.assets',
-  'sin.fact.equip',
-  'sin.fact.lifestyle',
-  'sin.lib.fieldset'
-  ]);
+    'sin.fact',
+    'sin.fact.assets',
+    'sin.fact.equip',
+    'sin.fact.skills',
+    'sin.fact.lifestyle',
+    'sin.lib.fieldset'
+]);
 
 mod.component('dtEquip', {
     controller: EquipController,
@@ -14,11 +15,12 @@ mod.component('dtEquip', {
     templateUrl: 'sections/equip/template-equip.html'
 });
 
-function EquipController($scope, dtime, equip, lifestyle) {
+function EquipController($scope, dtime, equip, lifestyle, skills) {
     var ctrl = this;
     $scope.dtime = dtime;
     $scope.equip = equip;
     $scope.lifestyle = lifestyle;
+    $scope.skills = skills;
 
     ctrl.data = {
         types: {
@@ -31,12 +33,14 @@ function EquipController($scope, dtime, equip, lifestyle) {
     };
 
     ctrl.state = {};
-    
+
     function defaultState() {
         ctrl.state.optType = '';
         ctrl.state.txtName = '';
+        ctrl.state.selSkill = 0;
+        ctrl.state.selSpec = 0;
     }
-    
+
     defaultState();
 
     ctrl.typeChange = function () {
@@ -50,14 +54,12 @@ function EquipController($scope, dtime, equip, lifestyle) {
         var item = {};
         item.type = ctrl.state.optType;
         item.name = ctrl.state.txtName;
+        item.skill = ctrl.state.selSkill;
+        item.spec = ctrl.state.selSpec;
 
         var details = {};
 
         equip.addEquip(item, details);
         defaultState();
-    };
-
-    ctrl.removeClick = function () {
-
     };
 }
