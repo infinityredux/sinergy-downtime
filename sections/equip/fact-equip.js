@@ -40,16 +40,80 @@ mod.factory('equip', function(persist, registry) {
 
     // --------------------------------------------------
 
-    function addBinding(key) {
+    function addItemBinding(item) {
 
 
 
-        var bind = {}
+        var bind = {};
 
+        Object.defineProperty(bind, 'type', {
+            get: function() { return state.items[item].type; },
+            enumerable: true
+        });
 
+        Object.defineProperty(bind, 'name', {
+            get: function() { return state.items[item].name; },
+            set: function(val) {
+                state.items[item].name = val;
+                changed = true;
+            },
+            enumerable: true
+        });
+
+        Object.defineProperty(bind, 'legality', {
+            get: function() { return '' + state.items[item].legality; },
+            set: function(val) {
+                state.items[item].legality = parseInt(val);
+                if (isNaN(state.items[item].legality))
+                    state.items[item].legality = 0;
+                changed = true;
+            },
+            enumerable: true
+        });
+
+        bind.effects = {};
+        var keys = Object.keys(state.items[item].effects);
+        for (var i=0; i < keys.length; i++) {
+            var effect = {};
+
+            Object.defineProperty(effect, 'skill', {
+                get: function() { return '' + state.items[item].effects[keys[i]].skill; },
+                set: function(val) {
+                    state.items[item].effects[keys[i]].skill = parseInt(val);
+                    if (isNaN(state.items[item].effects[keys[i]].skill))
+                        state.items[item].effects[keys[i]].skill = 0;
+                    changed = true;
+                },
+                enumerable: true
+            });
+
+            Object.defineProperty(effect, 'spec', {
+                get: function() { return '' + state.items[item].effects[keys[i]].spec; },
+                set: function(val) {
+                    state.items[item].effects[keys[i]].spec = parseInt(val);
+                    if (isNaN(state.items[item].effects[keys[i]].spec))
+                        state.items[item].effects[keys[i]].spec = 0;
+                    changed = true;
+                },
+                enumerable: true
+            });
+
+            bind.effects[keys[i]] = effect;
+        }
+
+        bindings[item] = bind;
+        return true;
+    }
+    
+    function addEffectBinding(item, effect) {
+        
     }
 
-    function removeBinding(key) {
+    function removeItemBinding(item) {
+
+    }
+    
+    function removeEffectBinding(item, effect) {
 
     }
 
@@ -58,7 +122,7 @@ mod.factory('equip', function(persist, registry) {
 
         var keys = Object.keys(state.items);
         for (var i=0; i < keys.length; i++) {
-            addBinding(keys[i]);
+            addItemBinding(keys[i]);
         }
     }
 
@@ -153,11 +217,9 @@ mod.factory('equip', function(persist, registry) {
         }
 
         if (number >= 1) {
-            number -= 1;
             if (!first)
                 result = '/' + result;
             result = 'M' + result;
-            first = false;
         }
 
         return result;
