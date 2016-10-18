@@ -41,8 +41,8 @@ mod.factory('equip', function(persist, registry) {
     // --------------------------------------------------
 
     function addItemBinding(item) {
-
-
+        if (item === undefined)                 return false;
+        if (state.items[item] === undefined)    return false;
 
         var bind = {};
 
@@ -72,41 +72,48 @@ mod.factory('equip', function(persist, registry) {
         });
 
         bind.effects = {};
+        bindings[item] = bind;
+
         var keys = Object.keys(state.items[item].effects);
         for (var i=0; i < keys.length; i++) {
-            var effect = {};
-
-            Object.defineProperty(effect, 'skill', {
-                get: function() { return '' + state.items[item].effects[keys[i]].skill; },
-                set: function(val) {
-                    state.items[item].effects[keys[i]].skill = parseInt(val);
-                    if (isNaN(state.items[item].effects[keys[i]].skill))
-                        state.items[item].effects[keys[i]].skill = 0;
-                    changed = true;
-                },
-                enumerable: true
-            });
-
-            Object.defineProperty(effect, 'spec', {
-                get: function() { return '' + state.items[item].effects[keys[i]].spec; },
-                set: function(val) {
-                    state.items[item].effects[keys[i]].spec = parseInt(val);
-                    if (isNaN(state.items[item].effects[keys[i]].spec))
-                        state.items[item].effects[keys[i]].spec = 0;
-                    changed = true;
-                },
-                enumerable: true
-            });
-
-            bind.effects[keys[i]] = effect;
+            addEffectBinding(item, keys[i]);
         }
 
-        bindings[item] = bind;
         return true;
     }
     
     function addEffectBinding(item, effect) {
-        
+        if (item === undefined)                                 return false;
+        if (effect === undefined)                               return false;
+        if (state.items[item] === undefined)                    return false;
+        if (state.items[item].effects[effect] === undefined)    return false;
+
+        var bind = {};
+
+        Object.defineProperty(bind, 'skill', {
+            get: function() { return '' + state.items[item].effects[keys[i]].skill; },
+            set: function(val) {
+                state.items[item].effects[keys[i]].skill = parseInt(val);
+                if (isNaN(state.items[item].effects[keys[i]].skill))
+                    state.items[item].effects[keys[i]].skill = 0;
+                changed = true;
+            },
+            enumerable: true
+        });
+
+        Object.defineProperty(bind, 'spec', {
+            get: function() { return '' + state.items[item].effects[keys[i]].spec; },
+            set: function(val) {
+                state.items[item].effects[keys[i]].spec = parseInt(val);
+                if (isNaN(state.items[item].effects[keys[i]].spec))
+                    state.items[item].effects[keys[i]].spec = 0;
+                changed = true;
+            },
+            enumerable: true
+        });
+
+        bindings[item].effects[effect] = bind;
+        return true;
     }
 
     function removeItemBinding(item) {
