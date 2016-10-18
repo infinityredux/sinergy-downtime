@@ -4,8 +4,6 @@ mod = angular.module('sin.dtime.equip', [
     'sin.fact',
     'sin.fact.assets',
     'sin.fact.equip',
-    'sin.fact.skills',
-    'sin.fact.lifestyle',
     'sin.lib.fieldset'
 ]);
 
@@ -15,12 +13,10 @@ mod.component('dtEquip', {
     templateUrl: 'sections/equip/template-equip.html'
 });
 
-function EquipController($scope, dtime, equip, lifestyle, skills) {
+function EquipController($scope, dtime, equip) {
     var ctrl = this;
     $scope.dtime = dtime;
     $scope.equip = equip;
-    $scope.lifestyle = lifestyle;
-    $scope.skills = skills;
 
     ctrl.data = {
         types: {
