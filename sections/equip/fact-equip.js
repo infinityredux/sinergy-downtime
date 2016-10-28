@@ -142,9 +142,6 @@ mod.factory('equip', function(persist, registry) {
 
     // --------------------------------------------------
 
-    // TODO create bindings type system here
-    // Integer legality isn't compatible with the selector, as normal
-
     factory.addEquip = function(type) {
         var equip = registry.generateKey('equip');
         var bonus = registry.generateKey('equip-bonus');
@@ -160,14 +157,16 @@ mod.factory('equip', function(persist, registry) {
         };
 
         state.items[equip] = item;
+        addItemBinding(equip);
         return equip;
     };
 
-    factory.removeEquip = function(key) {
-        if (Object.keys(state.items).indexOf(key) < 0)
+    factory.removeEquip = function(equip) {
+        if (Object.keys(state.items).indexOf(equip) < 0)
             return false;
 
-        delete state.items[key];
+        delete state.items[equip];
+        removeItemBinding(equip);
         return true;
     };
 
