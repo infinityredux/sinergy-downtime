@@ -117,11 +117,21 @@ mod.factory('equip', function(persist, registry) {
     }
 
     function removeItemBinding(item) {
+        if (item === undefined)                 return false;
+        if (bindings[item] === undefined)    return false;
 
+        delete bindings[item];
+        return true;
     }
     
     function removeEffectBinding(item, effect) {
+        if (item === undefined)                                 return false;
+        if (effect === undefined)                               return false;
+        if (bindings[item] === undefined)                    return false;
+        if (bindings[item].effects[effect] === undefined)    return false;
 
+        delete bindings[item].effects[effect];
+        return true;
     }
 
     function createBindings() {
