@@ -28,4 +28,14 @@ function EquipItemController($scope, equip, skills) {
             console.error('EquipItemController: removing an item of id "' + $scope.id + '" failed.');
         }
     };
+
+    ctrl.newEffectClick = function () {
+        equip.addEquipEffect($scope.id);
+    };
+
+    ctrl.removeEffectClick = function(effect) {
+        if (!equip.removeEquipEffect($scope.id, effect)) {
+            console.error('EquipItemController: removing an item effect of ids "' + $scope.id + '" and "' + effect + '" failed.');
+        }
+    }
 }

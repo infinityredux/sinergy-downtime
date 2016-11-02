@@ -180,6 +180,27 @@ mod.factory('equip', function(persist, registry) {
         return true;
     };
 
+    factory.addEquipEffect = function(equip) {
+        var bonus = registry.generateKey('equip-bonus');
+        state.items[equip].effects[bonus] = {
+            skill: 0,
+            spec: 0
+        };
+        addEffectBinding(equip, bonus);
+        return true
+    };
+
+    factory.removeEquipEffect = function(equip, effect) {
+        if (Object.keys(state.items).indexOf(equip) < 0)
+            return false;
+        if (Object.keys(state.items[equip].effects).indexOf(effect) < 0)
+            return false;
+
+        delete state.items[equip].effects[effect];
+        removeEffectBinding(equip, effect);
+        return true;
+    };
+
     // --------------------------------------------------
 
     factory.countEquip = function(type) {
