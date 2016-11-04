@@ -112,6 +112,28 @@ mod.factory('equip', function(persist, registry) {
             enumerable: true
         });
 
+        Object.defineProperty(bind, 'base', {
+            get: function() { return '' + state.items[item].effects[keys[i]].base; },
+            set: function(val) {
+                state.items[item].effects[keys[i]].base = parseInt(val);
+                if (isNaN(state.items[item].effects[keys[i]].base))
+                    state.items[item].effects[keys[i]].base = 0;
+                changed = true;
+            },
+            enumerable: true
+        });
+
+        Object.defineProperty(bind, 'plus', {
+            get: function() { return '' + state.items[item].effects[keys[i]].plus; },
+            set: function(val) {
+                state.items[item].effects[keys[i]].plus = parseInt(val);
+                if (isNaN(state.items[item].effects[keys[i]].plus))
+                    state.items[item].effects[keys[i]].plus = 0;
+                changed = true;
+            },
+            enumerable: true
+        });
+
         bindings[item].effects[effect] = bind;
         return true;
     }
@@ -163,7 +185,9 @@ mod.factory('equip', function(persist, registry) {
         item.effects = {};
         item.effects[bonus] = {
             skill: 0,
-            spec: 0
+            spec: 0,
+            base: 0,
+            plus: 0
         };
 
         state.items[equip] = item;
@@ -184,7 +208,9 @@ mod.factory('equip', function(persist, registry) {
         var bonus = registry.generateKey('equip-bonus');
         state.items[equip].effects[bonus] = {
             skill: 0,
-            spec: 0
+            spec: 0,
+            base: 0,
+            plus: 0
         };
         addEffectBinding(equip, bonus);
         return true
