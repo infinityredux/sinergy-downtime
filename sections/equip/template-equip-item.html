@@ -49,7 +49,7 @@
         <tr ng-repeat-end >
             <td>Effect: </td>
             <td>
-                <select>
+                <select ng-model="effect.base">
                     <option value="0">--</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -58,7 +58,7 @@
                     <option value="5">5</option>
                 </select>
                 &nbsp; / &nbsp;
-                <select>
+                <select ng-model="effect.plus">
                     <option value="0">--</option>
                     <option value="1">+1</option>
                     <option value="2">+2</option>
