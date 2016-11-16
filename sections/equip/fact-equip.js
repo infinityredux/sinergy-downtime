@@ -175,8 +175,13 @@ mod.factory('equip', function(persist, registry) {
         if (Object.keys(state.items).indexOf(equip) < 0)
             return false;
 
-        delete state.items[equip];
+        state.items[equip].effects.forEach(function(object, effect) {
+            factory.removeEquipEffect(equip, effect);
+        });
+
         removeItemBinding(equip);
+        registry.removeKey(equip);
+        delete state.items[equip];
         return true;
     };
 
@@ -196,8 +201,9 @@ mod.factory('equip', function(persist, registry) {
         if (Object.keys(state.items[equip].effects).indexOf(effect) < 0)
             return false;
 
-        delete state.items[equip].effects[effect];
         removeEffectBinding(equip, effect);
+        registry.removeKey(effect);
+        delete state.items[equip].effects[effect];
         return true;
     };
 
