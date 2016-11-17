@@ -57,12 +57,12 @@ mod.factory('storage', function() {
             }
         }
 
-        // Random 4 character block of letters A to Z and numbers 0 to 9
-        function keyBlock() { return Math.floor(Math.random()*1679616).toString(36); }
+        // Random character block of letters A to Z and numbers 0 to 9
+        function keyBlock(len) { return Math.floor(Math.random()*Math.pow(36,len)).toString(36); }
         var id;
 
         // Construct 16 character id, and make certain we haven't randomly created something that already exists
-        do      { id = keyBlock() + keyBlock() + keyBlock() + keyBlock() }
+        do      { id = keyBlock(8) + '-' + keyBlock(8); }
         while   ( uids.hasOwnProperty(id) );
 
         uids[id] = {
