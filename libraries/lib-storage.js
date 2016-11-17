@@ -10,7 +10,7 @@ mod.factory('storage', function() {
 
     // --------------------------------------------------
 
-    function retrieveStorage(obj) {
+    function retrieveStorage(obj, schema) {
         if (typeof(Storage) !== "undefined")
             throw new Error("localStorage is not available");
 
@@ -28,7 +28,7 @@ mod.factory('storage', function() {
 
         if (state) {
             if (!localStorage.hasOwnProperty(state))
-                localStorage[state] = createStore(state);
+                localStorage[state] = createStorage(state);
             return localStorage[state];
         }
 
@@ -36,9 +36,24 @@ mod.factory('storage', function() {
     }
 
 
-    function createStore(state) {
+    function createStorage(state, schema) {
         var store = {};
+        var config = {
+            get: function(obj, prop) {
+                if(schema.hasOwnProperty(prop)) {
+
+                }
+            },
+            set: function(obj, prop, value) {
+
+            }
+        };
+
+        var px = new Proxy(store, config);
+
         store.state = state;
+        store.proxy = px;
+        store.schema = schema;
 
         return store;
     }
