@@ -1,13 +1,12 @@
-mod = angular.module('sin.lib.store', []);
+mod = angular.module('sin.lib.storage', []);
 
-mod.factory('store', function() {
+mod.factory('storage', function() {
     var factory = {};
     var uids = {};
 
     // --------------------------------------------------
 
-    factory.getState = retrieveStorage;
-    factory.getUI = retrieveStorage;
+    factory.retrieveStorage = retrieveStorage;
 
     // --------------------------------------------------
 
@@ -50,11 +49,17 @@ mod.factory('store', function() {
         return uids.hasOwnProperty(id);
     }
 
-    function generateUID(type, data) {
-        var id;
+    function createUID(type, val, parent) {
+        if (parent !== undefined) {
+            if (!isUID(parent)) {
+                console.error("Attempt to create UID with invalid parent: " + parent);
+                return undefined;
+            }
+        }
 
         // Random 4 character block of letters A to Z and numbers 0 to 9
         function keyBlock() { return Math.floor(Math.random()*1679616).toString(36); }
+        var id;
 
         // Construct 16 character id, and make certain we haven't randomly created something that already exists
         do      { id = keyBlock() + keyBlock() + keyBlock() + keyBlock() }
@@ -62,21 +67,28 @@ mod.factory('store', function() {
 
         uids[id] = {
             type:   type,
-            data:   data
+            data:   val,
+            parent: parent
         };
 
         return id;
     }
 
-    function updateUID(id, data) {
-        if (!isRegistered(id))
+    function readUID(id) {
+        if (!isUID(id))
+            return undefined;
+        return uids[id].data;
+    }
+
+    function updateUID(id, val) {
+        if (!isUID(id))
             return false;
-        register[id].data = data;
+        uids[id].data = val;
         return true;
     }
 
-    function removeUID(key) {
-        if (!isRegistered(key))
+    function deleteUID(key) {
+        if (!isUID(key))
             return false;
         delete uids[key];
         return true;
