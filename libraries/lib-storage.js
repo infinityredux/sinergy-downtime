@@ -61,7 +61,8 @@ mod.factory('storage', function() {
         function keyBlock(len) { return Math.floor(Math.random()*Math.pow(36,len)).toString(36); }
         var id;
 
-        // Construct 16 character id, and make certain we haven't randomly created something that already exists
+        // Construct an id with 16 randomised characters
+        // Then make certain we haven't randomly created a UID that already exists
         do      { id = keyBlock(8) + '-' + keyBlock(8); }
         while   ( uids.hasOwnProperty(id) );
 
@@ -95,6 +96,20 @@ mod.factory('storage', function() {
     }
 
     // --------------------------------------------------
+
+    function setStringUID(id, val) {
+        updateUID(id, ''+val);
+    }
+
+    function setNumberUID(id, val) {
+        if (!isNumber(val)) {
+            val = parseInt(val);
+            if (isNaN(val))
+                val = 0;
+        }
+        updateUID(id, val);
+    }
+
     // --------------------------------------------------
     // --------------------------------------------------
 
