@@ -86,7 +86,7 @@ mod.factory('storage', function() {
     function createProxy(store) {
         var config = {
             get: function(obj, prop) {
-                if(!store.schema.hasOwnProperty(prop)) {
+                if (!store.schema.hasOwnProperty(prop)) {
                     console.warn('Attempt to access "' + prop + '" on "' + store.type + '" storage object. This ' +
                         'property is not defined in the configuration.');
                     throw new ReferenceError("Invalid property.")
@@ -96,6 +96,23 @@ mod.factory('storage', function() {
                 return readUID(id);
             },
             set: function(obj, prop, val) {
+                if (!store.schema.hasOwnProperty(prop)) {
+                    console.warn('Attempt to update "' + prop + '" on "' + store.type + '" storage object. This ' +
+                        'property is not defined in the configuration.');
+                    throw new ReferenceError("Invalid property.")
+                }
+
+                var id = store.map[prop];
+                if (store.schema[prop] == 'string') {
+                    setStringUID(id, val);
+                    // TODO error handling?
+                }
+                if (store.schema[prop] == 'number') {
+                    setNumberUID(id, val);
+                    // TODO error handling?
+                }
+
+                // All other cases?
 
             },
             deleteProperty: function() {
@@ -167,7 +184,7 @@ mod.factory('storage', function() {
     // --------------------------------------------------
 
     function setStringUID(id, val) {
-        updateUID(id, ''+val);
+        return updateUID(id, ''+val);
     }
 
     function setNumberUID(id, val) {
@@ -176,7 +193,7 @@ mod.factory('storage', function() {
             if (isNaN(val))
                 val = 0;
         }
-        updateUID(id, val);
+        return updateUID(id, val);
     }
 
     // --------------------------------------------------
