@@ -89,7 +89,8 @@ mod.factory('storage', function() {
                 if (!store.schema.hasOwnProperty(prop)) {
                     console.warn('Attempt to access "' + prop + '" on "' + store.type + '" storage object. This ' +
                         'property is not defined in the configuration.');
-                    throw new ReferenceError("Invalid property.")
+                    throw new ReferenceError("Invalid property.");
+                    // TODO change the exception here
                 }
 
                 var id = store.map[prop];
@@ -99,21 +100,27 @@ mod.factory('storage', function() {
                 if (!store.schema.hasOwnProperty(prop)) {
                     console.warn('Attempt to update "' + prop + '" on "' + store.type + '" storage object. This ' +
                         'property is not defined in the configuration.');
-                    throw new ReferenceError("Invalid property.")
+                    throw new ReferenceError("Invalid property.");
+                    // TODO change the exception here
                 }
 
                 var id = store.map[prop];
-                if (store.schema[prop] == 'string') {
-                    setStringUID(id, val);
-                    // TODO error handling?
-                }
-                if (store.schema[prop] == 'number') {
-                    setNumberUID(id, val);
-                    // TODO error handling?
-                }
 
-                // All other cases?
+                switch (store.schema[prop]) {
+                    case 'string':
+                        setStringUID(id, val);
+                        // TODO error handling?
+                        break;
 
+                    case 'number':
+                        setNumberUID(id, val);
+                        // TODO error handling?
+                        break;
+
+                    default:
+                        throw new SchemaException('Schema property "' + prop + '" on "' + store.type + '" storage ' +
+                            'object is "' + store.schema[prop] + '" type, which is not understood.');
+                }
             },
             deleteProperty: function() {
 
@@ -200,3 +207,23 @@ mod.factory('storage', function() {
     // --------------------------------------------------
 
 });
+
+/**
+ * Custom exception for Schema errors.
+ * Used as an indication that the schema itself is in some way invalid or corrupt.
+ *
+ * @param message The message describing a specific cause of this exception.
+ * @constructor
+ */
+function SchemaException(message) {
+    this.message = message;
+    this.name = "SchemaException";
+}
+
+/**
+ * Make certain the exception outputs an appropriate message when used as a string (e.g. error console)
+ * @returns {string} A combination of the exception name and message.
+ */
+SchemaException.prototype.toString = function() {
+    return this.name + ": '" + this.message + "'";
+};
