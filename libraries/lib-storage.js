@@ -104,13 +104,17 @@ mod.factory('storage', function() {
 
                 switch (store.schema[prop]) {
                     case 'string':
-                        setStringUID(id, val);
-                        // TODO error handling?
+                        if (!setStringUID(id, val)) {
+                            throw new UpdateFailedException('Attempt to update "' + prop + '" on "' + store.type +
+                                '" storage object with value "'+ val + '" failed.');
+                        }
                         break;
 
                     case 'number':
-                        setNumberUID(id, val);
-                        // TODO error handling?
+                        if (!setNumberUID(id, val)) {
+                            throw new UpdateFailedException('Attempt to update "' + prop + '" on "' + store.type +
+                                '" storage object with value "'+ val + '" failed.');
+                        }
                         break;
 
                     default:
