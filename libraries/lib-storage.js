@@ -87,10 +87,8 @@ mod.factory('storage', function() {
         var config = {
             get: function(obj, prop) {
                 if (!store.schema.hasOwnProperty(prop)) {
-                    console.warn('Attempt to access "' + prop + '" on "' + store.type + '" storage object. This ' +
-                        'property is not defined in the configuration.');
-                    throw new ReferenceError("Invalid property.");
-                    // TODO change the exception here
+                    throw new InvalidPropertyException('Attempt to update "' + prop + '" on "' + store.type +
+                        '" storage object. This property is not defined in the schema configuration.');
                 }
 
                 var id = store.map[prop];
@@ -98,10 +96,8 @@ mod.factory('storage', function() {
             },
             set: function(obj, prop, val) {
                 if (!store.schema.hasOwnProperty(prop)) {
-                    console.warn('Attempt to update "' + prop + '" on "' + store.type + '" storage object. This ' +
-                        'property is not defined in the configuration.');
-                    throw new ReferenceError("Invalid property.");
-                    // TODO change the exception here
+                    throw new InvalidPropertyException('Attempt to update "' + prop + '" on "' + store.type +
+                        '" storage object. This property is not defined in the schema configuration.');
                 }
 
                 var id = store.map[prop];
@@ -119,7 +115,7 @@ mod.factory('storage', function() {
 
                     default:
                         throw new SchemaException('Schema property "' + prop + '" on "' + store.type + '" storage ' +
-                            'object is "' + store.schema[prop] + '" type, which is not understood.');
+                            'object of type "' + store.schema[prop] + '" is not understood.');
                 }
             },
             deleteProperty: function() {
@@ -225,5 +221,44 @@ function SchemaException(message) {
  * @returns {string} A combination of the exception name and message.
  */
 SchemaException.prototype.toString = function() {
+    return this.name + ": '" + this.message + "'";
+};
+
+/**
+ * Custom exception for invalid property access.
+ * Used as an indication that an attempt was made to access (read or update) a property that does not exist in the
+ * current schema.
+ *
+ * @param message The message describing a specific cause of this exception.
+ * @constructor
+ */
+function InvalidPropertyException(message) {
+    this.message = message;
+    this.name = "SchemaException";
+}
+
+/**
+ * Make certain the exception outputs an appropriate message when used as a string (e.g. error console)
+ * @returns {string} A combination of the exception name and message.
+ */
+InvalidPropertyException.prototype.toString = function() {
+    return this.name + ": '" + this.message + "'";
+};
+
+/**
+ *
+ * @param message
+ * @constructor
+ */
+function UpdateFailedException(message) {
+    this.message = message;
+    this.name = "SchemaException";
+}
+
+/**
+ * Make certain the exception outputs an appropriate message when used as a string (e.g. error console)
+ * @returns {string} A combination of the exception name and message.
+ */
+UpdateFailedException.prototype.toString = function() {
     return this.name + ": '" + this.message + "'";
 };
