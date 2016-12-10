@@ -2,6 +2,7 @@ mod = angular.module('sin.lib.storage', []);
 
 mod.factory('storage', function() {
     var factory = {};
+    var proxies = {};
 
     // --------------------------------------------------
 
@@ -13,7 +14,9 @@ mod.factory('storage', function() {
 
     function retrieveStorage(obj, schema) {
         if (typeof(Storage) !== "undefined")
-            throw new Error("localStorage is not available but is required for this library to work");
+            throw new Error("localStorage is not available but is required for this library to work.");
+        if (typeof(Proxy) !== "undefined")
+            throw new Error("Proxy (ES6 feature) is not available but is required for this library to work.");
         if (!localStorage.hasOwnProperty('roots'))
             localStorage.roots = {};
         if (!localStorage.hasOwnProperty('uids'))
@@ -44,7 +47,8 @@ mod.factory('storage', function() {
             }
             // Note: creating proxy here avoids issues with serialising a function into local storage, which was an
             // issue with prior forms of data binding (recreation when the data was loaded again).
-            return createProxy(localStorage.roots[origin]);
+            proxies[origin] = createProxy(localStorage.roots[origin]);
+            return proxies[origin].proxy;
         }
 
         throw new InvalidOriginException("Unexpected parameter type '" + typeof obj + "' with value: " + obj);
@@ -106,9 +110,10 @@ mod.factory('storage', function() {
     /**
      *
      * @param store
-     * @returns {Proxy}
+     * @returns {Proxy.revocable}
      */
     function createProxy(store) {
+        // TODO do I need to change references to store within config to obj for this to work?
         var config = {
             get: function(obj, prop) {
                 if (!store.schema.hasOwnProperty(prop)) {
@@ -146,15 +151,20 @@ mod.factory('storage', function() {
                         throw new SchemaException('Schema property "' + prop + '" on "' + store.origin + '" storage ' +
                             'object of type "' + store.schema[prop] + '" is not understood.');
                 }
-            },
-            deleteProperty: function() {},
-            defineProperty: function() {}
+            }
+            // Note to self:
+            // Define and delete creating children?
+            // Would work for complex data objects in the schema perhaps?
+            // deleteProperty: function() {},
+            // defineProperty: function() {},
+            // getPrototypeOf: function() {},
+            // setPrototypeOf: function() {}
         };
 
-        // Relies of ES6 existing to work correctly
+        // Relies on ES6 existing to work correctly
         // If if doesn't, can do a work around with Object.defineProperty in a loop through the schema properties
         // This would create a data binding object, but it would lack the runtime flexibility of a true proxy
-        return new Proxy(store, config);
+        return new Proxy.revocable(store, config);
     }
 
     // --------------------------------------------------
@@ -284,6 +294,12 @@ mod.factory('storage', function() {
     function importStorage(data) {
         var p = JSON.parse(data);
         if (p.roots && p.uids) {
+            // There is no guarantee that any existing member of roots will still be present after import
+            // So we need to revoke all existing proxies, forcing the rest of the code to require these
+            for (var prox in proxies) {
+                prox.revoke();
+            }
+            proxies = {};
             localStorage.roots = p.roots;
             localStorage.uids = p.uids;
             return true;
@@ -294,6 +310,8 @@ mod.factory('storage', function() {
     // --------------------------------------------------
 
 });
+
+// ======================================================
 
 /**
  * Custom exception for cases where an invalid parameter type is provided as the origin for the storage object.
@@ -344,16 +362,7 @@ function UpdateFailedException(message) {
     this.name = "UpdateFailedException";
 }
 
-/**
- * ?
- *
- * @param message
- * @constructor
- */
-function ExpiredProxyException(message) {
-    this.message = message;
-    this.name = "ExpiredProxyException";
-}
+// ======================================================
 
 /**
  * Make certain the exception outputs an appropriate message when used as a string (e.g. error console)
@@ -367,4 +376,3 @@ InvalidOriginException.prototype.toString = exceptionString;
 SchemaException.prototype.toString = exceptionString;
 InvalidPropertyException.prototype.toString = exceptionString;
 UpdateFailedException.prototype.toString = exceptionString;
-ExpiredProxyException.prototype.toString = exceptionString;
