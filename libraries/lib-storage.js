@@ -14,37 +14,37 @@ mod.factory('storage', function() {
         if (typeof(Storage) !== "undefined")
             throw new Error("localStorage is not available");
 
-        var key = null;
+        var origin = null;
 
-        if (typeof obj == "string")     key = obj;
-        if (typeof obj == "function")   key = obj();
+        if (typeof obj == "string")     origin = obj;
+        if (typeof obj == "function")   origin = obj();
         if (typeof obj == "object") {
             if (obj.hasOwnProperty("storageKey")) {
                 if (typeof obj['storageKey'] == "function") {
-                    key = obj['storageKey']();
+                    origin = obj['storageKey']();
                 }
             }
         }
 
-        if (key) {
-            if (!localStorage.hasOwnProperty(key)) {
-                localStorage[key] = createStorage(key, schema);
+        if (origin) {
+            if (!localStorage.hasOwnProperty(origin)) {
+                localStorage[origin] = createStorage(origin, schema);
             }
             else {
                 if (schema !== undefined)
-                    updateStorageSchema(localStorage[key], schema);
+                    updateStorageSchema(localStorage[origin], schema);
             }
-            return createProxy(localStorage[key]);
+            return createProxy(localStorage[origin]);
         }
 
-        throw new Error("unexpected parameter type '" + typeof obj + "' with value: " + obj);
+        throw new InvalidOriginException("Unexpected parameter type '" + typeof obj + "' with value: " + obj);
     }
 
 
-    function createStorage(type, schema) {
+    function createStorage(origin, schema) {
         var store = {};
 
-        store.type = type;
+        store.origin = origin;
         store.map = {};
         store.schema = {};
         updateStorageSchema(store, schema);
@@ -68,7 +68,7 @@ mod.factory('storage', function() {
             if (!store.schema.hasOwnProperty(key)) {
                 var raw = '';
                 // TODO insert sane default values here
-                map[key] = createUID(store.type, raw);
+                map[key] = createUID(store.origin, raw);
             }
         });
 
@@ -87,7 +87,7 @@ mod.factory('storage', function() {
         var config = {
             get: function(obj, prop) {
                 if (!store.schema.hasOwnProperty(prop)) {
-                    throw new InvalidPropertyException('Attempt to update "' + prop + '" on "' + store.type +
+                    throw new InvalidPropertyException('Attempt to update "' + prop + '" on "' + store.origin +
                         '" storage object. This property is not defined in the schema configuration.');
                 }
 
@@ -96,7 +96,7 @@ mod.factory('storage', function() {
             },
             set: function(obj, prop, val) {
                 if (!store.schema.hasOwnProperty(prop)) {
-                    throw new InvalidPropertyException('Attempt to update "' + prop + '" on "' + store.type +
+                    throw new InvalidPropertyException('Attempt to update "' + prop + '" on "' + store.origin +
                         '" storage object. This property is not defined in the schema configuration.');
                 }
 
@@ -105,29 +105,25 @@ mod.factory('storage', function() {
                 switch (store.schema[prop]) {
                     case 'string':
                         if (!setStringUID(id, val)) {
-                            throw new UpdateFailedException('Attempt to update "' + prop + '" on "' + store.type +
+                            throw new UpdateFailedException('Attempt to update "' + prop + '" on "' + store.origin +
                                 '" storage object with value "'+ val + '" failed.');
                         }
                         break;
 
                     case 'number':
                         if (!setNumberUID(id, val)) {
-                            throw new UpdateFailedException('Attempt to update "' + prop + '" on "' + store.type +
+                            throw new UpdateFailedException('Attempt to update "' + prop + '" on "' + store.origin +
                                 '" storage object with value "'+ val + '" failed.');
                         }
                         break;
 
                     default:
-                        throw new SchemaException('Schema property "' + prop + '" on "' + store.type + '" storage ' +
+                        throw new SchemaException('Schema property "' + prop + '" on "' + store.origin + '" storage ' +
                             'object of type "' + store.schema[prop] + '" is not understood.');
                 }
             },
-            deleteProperty: function() {
-
-            },
-            defineProperty: function() {
-
-            }
+            deleteProperty: function() {},
+            defineProperty: function() {}
         };
 
         // Relies of ES6 existing to work correctly
@@ -209,6 +205,25 @@ mod.factory('storage', function() {
 });
 
 /**
+ *
+ *
+ * @param message
+ * @constructor
+ */
+function InvalidOriginException(message) {
+    this.message = message;
+    this.name = "InvalidOriginException";
+}
+
+/**
+ * Make certain the exception outputs an appropriate message when used as a string (e.g. error console)
+ * @returns {string} A combination of the exception name and message.
+ */
+InvalidOriginException.prototype.toString = function() {
+    return this.name + ": '" + this.message + "'";
+};
+
+/**
  * Custom exception for Schema errors.
  * Used as an indication that the schema itself is in some way invalid or corrupt.
  *
@@ -238,7 +253,7 @@ SchemaException.prototype.toString = function() {
  */
 function InvalidPropertyException(message) {
     this.message = message;
-    this.name = "SchemaException";
+    this.name = "InvalidPropertyException";
 }
 
 /**
@@ -256,7 +271,7 @@ InvalidPropertyException.prototype.toString = function() {
  */
 function UpdateFailedException(message) {
     this.message = message;
-    this.name = "SchemaException";
+    this.name = "UpdateFailedException";
 }
 
 /**
