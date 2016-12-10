@@ -2,7 +2,6 @@ mod = angular.module('sin.lib.storage', []);
 
 mod.factory('storage', function() {
     var factory = {};
-    var uids = {};
 
     // --------------------------------------------------
 
@@ -12,7 +11,11 @@ mod.factory('storage', function() {
 
     function retrieveStorage(obj, schema) {
         if (typeof(Storage) !== "undefined")
-            throw new Error("localStorage is not available");
+            throw new Error("localStorage is not available but is required for this library to work");
+        if (!localStorage.hasOwnProperty('roots'))
+            localStorage.roots = {};
+        if (!localStorage.hasOwnProperty('uids'))
+            localStorage.uids = {};
 
         var origin = null;
 
@@ -20,6 +23,9 @@ mod.factory('storage', function() {
         if (typeof obj == "function")   origin = obj();
         if (typeof obj == "object") {
             if (obj.hasOwnProperty("storageKey")) {
+                if (typeof obj['storageKey'] == "string") {
+                    origin = obj['storageKey'];
+                }
                 if (typeof obj['storageKey'] == "function") {
                     origin = obj['storageKey']();
                 }
@@ -27,20 +33,27 @@ mod.factory('storage', function() {
         }
 
         if (origin) {
-            if (!localStorage.hasOwnProperty(origin)) {
-                localStorage[origin] = createStorage(origin, schema);
+            if (!localStorage.roots.hasOwnProperty(origin)) {
+                localStorage.roots[origin] = createStorage(origin, schema);
             }
             else {
                 if (schema !== undefined)
-                    updateStorageSchema(localStorage[origin], schema);
+                    updateStorageSchema(localStorage.roots[origin], schema);
             }
-            return createProxy(localStorage[origin]);
+            // Note: creating proxy here avoids issues with serialising a function into local storage, which was an
+            // issue with prior forms of data binding (recreation when the data was loaded again).
+            return createProxy(localStorage.roots[origin]);
         }
 
         throw new InvalidOriginException("Unexpected parameter type '" + typeof obj + "' with value: " + obj);
     }
 
-
+    /**
+     *
+     * @param origin
+     * @param schema
+     * @returns {{}}
+     */
     function createStorage(origin, schema) {
         var store = {};
 
@@ -52,6 +65,11 @@ mod.factory('storage', function() {
         return store;
     }
 
+    /**
+     *
+     * @param store
+     * @param newSchema
+     */
     function updateStorageSchema(store, newSchema) {
         var map = {};
 
@@ -83,6 +101,11 @@ mod.factory('storage', function() {
         store.map = map;
     }
 
+    /**
+     *
+     * @param store
+     * @returns {Proxy}
+     */
     function createProxy(store) {
         var config = {
             get: function(obj, prop) {
@@ -134,10 +157,22 @@ mod.factory('storage', function() {
 
     // --------------------------------------------------
 
+    /**
+     *
+     * @param id
+     * @returns {boolean}
+     */
     function isUID(id) {
-        return uids.hasOwnProperty(id);
+        return localStorage.uids.hasOwnProperty(id);
     }
 
+    /**
+     *
+     * @param type
+     * @param val
+     * @param parent
+     * @returns {*}
+     */
     function createUID(type, val, parent) {
         if (parent !== undefined) {
             if (!isUID(parent)) {
@@ -153,9 +188,9 @@ mod.factory('storage', function() {
         // Construct an id with 16 randomised characters
         // Then make certain we haven't randomly created a UID that already exists
         do      { id = keyBlock(8) + '-' + keyBlock(8); }
-        while   ( uids.hasOwnProperty(id) );
+        while   ( localStorage.uids.hasOwnProperty(id) );
 
-        uids[id] = {
+        localStorage.uids[id] = {
             type:   type,
             data:   val,
             parent: parent
@@ -164,32 +199,60 @@ mod.factory('storage', function() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     * @returns {undefined}
+     */
     function readUID(id) {
         if (!isUID(id))
             return undefined;
-        return uids[id].data;
+        return localStorage.uids[id].data;
     }
 
+    /**
+     *
+     * @param id
+     * @param val
+     * @returns {boolean}
+     */
     function updateUID(id, val) {
         if (!isUID(id))
             return false;
-        uids[id].data = val;
+        localStorage.uids[id].data = val;
         return true;
     }
 
+    /**
+     *
+     * @param id
+     * @returns {boolean}
+     */
     function deleteUID(id) {
         if (!isUID(id))
             return false;
-        delete uids[id];
+        delete localStorage.uids[id];
         return true;
     }
 
     // --------------------------------------------------
 
+    /**
+     *
+     * @param id
+     * @param val
+     * @returns {boolean}
+     */
     function setStringUID(id, val) {
         return updateUID(id, ''+val);
     }
 
+    /**
+     *
+     * @param id
+     * @param val
+     * @returns {boolean}
+     */
     function setNumberUID(id, val) {
         if (!isNumber(val)) {
             val = parseInt(val);
@@ -205,7 +268,7 @@ mod.factory('storage', function() {
 });
 
 /**
- *
+ * Custom exception for cases where an invalid parameter type is provided as the origin for the storage object.
  *
  * @param message
  * @constructor
@@ -265,6 +328,9 @@ InvalidPropertyException.prototype.toString = function() {
 };
 
 /**
+ * Custom exception for an error condition when updating a UID.
+ * Used to indicate that the internal function updateUID returned false, indicating a problem updating the ID.  As such,
+ * this may be an indication that the data stored has somehow become corrupt.
  *
  * @param message
  * @constructor
