@@ -153,7 +153,7 @@ mod.factory('storage', function() {
 
         // Relies of ES6 existing to work correctly
         // If if doesn't, can do a work around with Object.defineProperty in a loop through the schema properties
-        // This would create a data binding object, but it would also lack the runtime flexibility of a true proxy
+        // This would create a data binding object, but it would lack the runtime flexibility of a true proxy
         return new Proxy(store, config);
     }
 
@@ -307,14 +307,6 @@ function InvalidOriginException(message) {
 }
 
 /**
- * Make certain the exception outputs an appropriate message when used as a string (e.g. error console)
- * @returns {string} A combination of the exception name and message.
- */
-InvalidOriginException.prototype.toString = function() {
-    return this.name + ": '" + this.message + "'";
-};
-
-/**
  * Custom exception for Schema errors.
  * Used as an indication that the schema itself is in some way invalid or corrupt.
  *
@@ -325,14 +317,6 @@ function SchemaException(message) {
     this.message = message;
     this.name = "SchemaException";
 }
-
-/**
- * Make certain the exception outputs an appropriate message when used as a string (e.g. error console)
- * @returns {string} A combination of the exception name and message.
- */
-SchemaException.prototype.toString = function() {
-    return this.name + ": '" + this.message + "'";
-};
 
 /**
  * Custom exception for invalid property access.
@@ -348,14 +332,6 @@ function InvalidPropertyException(message) {
 }
 
 /**
- * Make certain the exception outputs an appropriate message when used as a string (e.g. error console)
- * @returns {string} A combination of the exception name and message.
- */
-InvalidPropertyException.prototype.toString = function() {
-    return this.name + ": '" + this.message + "'";
-};
-
-/**
  * Custom exception for an error condition when updating a UID.
  * Used to indicate that the internal function updateUID returned false, indicating a problem updating the ID.  As such,
  * this may be an indication that the data stored has somehow become corrupt.
@@ -369,9 +345,26 @@ function UpdateFailedException(message) {
 }
 
 /**
+ * ?
+ *
+ * @param message
+ * @constructor
+ */
+function ExpiredProxyException(message) {
+    this.message = message;
+    this.name = "ExpiredProxyException";
+}
+
+/**
  * Make certain the exception outputs an appropriate message when used as a string (e.g. error console)
  * @returns {string} A combination of the exception name and message.
  */
-UpdateFailedException.prototype.toString = function() {
+function exceptionString() {
     return this.name + ": '" + this.message + "'";
-};
+}
+
+InvalidOriginException.prototype.toString = exceptionString;
+SchemaException.prototype.toString = exceptionString;
+InvalidPropertyException.prototype.toString = exceptionString;
+UpdateFailedException.prototype.toString = exceptionString;
+ExpiredProxyException.prototype.toString = exceptionString;
