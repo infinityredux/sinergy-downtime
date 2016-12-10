@@ -5,6 +5,8 @@ mod.factory('storage', function() {
 
     // --------------------------------------------------
 
+    factory.exportStorage = exportStorage;
+    factory.importStorage = importStorage;
     factory.retrieveStorage = retrieveStorage;
 
     // --------------------------------------------------
@@ -263,6 +265,32 @@ mod.factory('storage', function() {
     }
 
     // --------------------------------------------------
+
+    /**
+     *
+     */
+    function exportStorage() {
+        return JSON.stringify({
+            roots: localStorage.roots,
+            uids: localStorage.uids
+        });
+    }
+
+    /**
+     *
+     * @param data
+     * @returns {boolean}
+     */
+    function importStorage(data) {
+        var p = JSON.parse(data);
+        if (p.roots && p.uids) {
+            localStorage.roots = p.roots;
+            localStorage.uids = p.uids;
+            return true;
+        }
+        return false;
+    }
+
     // --------------------------------------------------
 
 });
