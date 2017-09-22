@@ -4,18 +4,24 @@
 <div> <!--ng-controller="ActionController as act"-->
 <sin-tabbed-panes initial="{{act.state.month_tab}}">
 
+    <!--
     {{actions.getFilterActions("player");}}<br/>
     {{actions.getFilterActions("contact");}}<br/>
     {{actions.getFilterActions("hireling");}}<br/>
     {{dtime}}<br/>
+    -->
 
     <sin-fieldset legend="Actions:" ng-form="actForm">
         <span class="opt-float-right">
+
+        </span>
+        <span>
             <input type="radio" ng-model="act.state.person" ng-change="act.personChange()"
                    ng-disabled="actions.getFilterCount('player') >= 4" value="player" />Player
             <input type="radio" ng-model="act.state.person" ng-change="act.personChange()" value="contact" />Contact
             <input type="radio" ng-model="act.state.person" ng-change="act.personChange()" value="hireling" />Hireling
         </span>
+        <br />
 
         <select name="action"
                 ng-model="act.state.add"

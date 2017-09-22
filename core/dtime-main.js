@@ -54,7 +54,8 @@ function DowntimeMainController($scope, dtime, actions, lifestyle, money, persis
     };
 
     ctrl.sendClick = function() {
-        if (confirm('Submit downtime and wipe temporary data?')) {
+        if (confirm('Submit downtime and wipe temporary data?\n(NOTE: in this demonstration version it does not ' +
+                'actually submit any data.)')) {
             if (persist.isStorageAvailable()) {
                 persist.eventWipe();
             }
